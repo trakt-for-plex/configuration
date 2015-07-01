@@ -1,0 +1,14 @@
+<form class="login panel">
+  <h5>Sign in to your plex.tv account</h5>
+
+  <div class="row">
+    <label>Username
+      <input type="text" ng-model="credentials.username"/>
+    </label>
+    <label>Password
+      <input type="password" ng-model="credentials.password"/>
+    </label>
+
+    <input class="button small" type="submit" value="Sign in" ng-click="submit()"/>
+  </div>
+</form>
