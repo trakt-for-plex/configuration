@@ -1,1 +1,23 @@
-<p>#/server</p>
+<div class="options small-12 small-centered large-6 large-centered columns">
+  <div class="group" ng-repeat="(key, group) in groups">
+    <div class="row">
+      <h5>{{ group.name }}</h5>
+    </div>
+
+    <div class="row">
+      <co-option class="columns" ng-repeat="option in group.options" option="option" ></co-option>
+    </div>
+
+    <div class="sub-group row">
+      <div class="columns" ng-repeat="(key, group) in group.groups">
+        <div class="row">
+          <h6>{{ group.name }}</h6>
+        </div>
+
+        <div class="row">
+          <co-option class="columns" ng-repeat="option in group.options" option="option" ></co-option>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

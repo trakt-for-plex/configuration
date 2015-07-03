@@ -110,3 +110,26 @@ body {
     }
   }
 }
+
+.options {
+  margin-top: 3%;
+
+  h5, h6 {
+    padding: 5px 10px;
+
+    background-color: rgba(0,0,0,0.15);
+  }
+
+  .group, .sub-group {
+    label {
+      padding: 5px 10px;
+    }
+
+    input {
+      margin: 0 10px 10px;
+    }
+  }
+
+  .sub-group {
+  }
+}
