@@ -78,7 +78,7 @@ angular.module('configurationApp')
         var self = this;
 
         return server.get(path, config).then(function(response) {
-          var data = unpack(response.data);
+          var data = JSON.parse(unpack(response.data));
 
           console.debug('[%s] Response', server.identifier, data);
 
