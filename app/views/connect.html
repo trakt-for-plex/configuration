@@ -1,0 +1,12 @@
+<div class="connect panel small-10 small-centered large-3 large-centered columns" ng-switch="state">
+  <div class="servers" ng-switch-default>
+    <div class="row server" ng-repeat="server in servers" ng-click="select(server)">
+      <div class="name small-12">{{ server.name }}</div>
+      <div class="error small-12" ng-show="server.error">{{ server.error.message }}</div>
+    </div>
+  </div>
+
+  <div class="status" ng-switch-when="connecting">
+    <div class="busy"><div class="spinner"></div></div>
+  </div>
+</div>

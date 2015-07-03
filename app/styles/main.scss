@@ -12,6 +12,36 @@ body {
   padding: 0;
 }
 
+.busy .spinner {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+  background-color: #333;
+
+  border-radius: 100%;
+  -webkit-animation: scaleout 1.0s infinite ease-in-out;
+  animation: scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes scaleout {
+  0% { -webkit-transform: scale(0.0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes scaleout {
+  0% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 100% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+      opacity: 0;
+    }
+}
+
 .panel.login {
   width: 320px;
 
@@ -25,5 +55,58 @@ body {
 
   h5 {
     margin-bottom: 20px;
+  }
+}
+
+.panel.connect {
+  height: 300px;
+
+  margin-top: 5%;
+  padding: 0;
+
+  .servers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    overflow-y: scroll;
+
+    .server {
+      padding: 10px 15px;
+
+      .error {
+        font-size: 10px;
+      }
+    }
+
+    .server:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+    }
+  }
+
+  .status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 298px;
+
+    background-color: #f2f2f2;
+
+    .busy {
+      position: relative;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      .spinner {
+        margin: 0 auto;
+      }
+    }
   }
 }

@@ -28,15 +28,25 @@ angular
 
     // Setup routes
     $routeProvider
-      .when('/login', {
-        templateUrl: 'views/login.html',
-        controller: 'LoginController',
-        controllerAs: 'login'
+      .when('/', {
+        templateUrl: 'views/home.html',
+        controller: 'HomeController',
+        controllerAs: 'home'
       })
       .when('/accounts', {
         templateUrl: 'views/configuration/accounts.html',
         controller: 'AccountsController',
         controllerAs: 'accounts'
+      })
+      .when('/connect', {
+        templateUrl: 'views/connect.html',
+        controller: 'ConnectController',
+        controllerAs: 'home'
+      })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginController',
+        controllerAs: 'login'
       })
       .when('/server', {
         templateUrl: 'views/configuration/server.html',
@@ -47,7 +57,7 @@ angular
         redirectTo: '/login'
       });
   })
-  .run(function(PlexAuthentication, $location, $rootScope) {
+  .run(function(PAuthentication, $location, $rootScope) {
     $rootScope.$a = {
       originalPath: null,
 
@@ -62,14 +72,14 @@ angular
         return;
       }
 
-      if(!PlexAuthentication.authenticated()) {
+      if(!PAuthentication.authenticated()) {
         $rootScope.$a.authenticated = false;
 
         next.resolve = angular.extend(next.resolve || {}, {
           __authenticate__: function() {
-            PlexAuthentication.get().then(function() {
+            PAuthentication.get().then(function() {
               $rootScope.$a.authenticated = true;
-              $rootScope.$a.user = PlexAuthentication.user();
+              $rootScope.$a.user = PAuthentication.user();
 
               console.log('authenticated');
             }, function() {
@@ -81,6 +91,10 @@ angular
         });
       } else {
         $rootScope.$a.authenticated = true;
+      }
+
+      if($rootScope.$s === null || typeof $rootScope.$s === 'undefined') {
+        $location.path('/connect');
       }
     });
   });

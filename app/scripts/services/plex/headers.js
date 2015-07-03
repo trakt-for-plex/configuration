@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('PlexHeaders', function() {
+  .factory('PHeaders', function() {
     var parser = new UAParser(),
         result = parser.getResult();
 

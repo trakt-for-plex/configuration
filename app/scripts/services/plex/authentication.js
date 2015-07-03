@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('PlexAuthentication', function(PlexHeaders, $http, $q) {
+  .factory('PAuthentication', function(PHeaders, $http, $q) {
     var user = null;
 
     return {
@@ -76,7 +76,7 @@ angular.module('configurationApp')
         var request = {
           method: 'GET',
           url: 'https://plex.tv/users/account',
-          headers: $.extend(PlexHeaders.get(), {
+          headers: $.extend(PHeaders.get(), {
             'X-Plex-Token': token
           })
         };
