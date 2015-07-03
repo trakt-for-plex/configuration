@@ -33,7 +33,12 @@ angular
         controller: 'HomeController',
         controllerAs: 'home'
       })
-      .when('/accounts', {
+      .when('/configuration/server', {
+        templateUrl: 'views/configuration/server.html',
+        controller: 'ServerController',
+        controllerAs: 'server'
+      })
+      .when('/configuration/accounts', {
         templateUrl: 'views/configuration/accounts.html',
         controller: 'AccountsController',
         controllerAs: 'accounts'
@@ -47,11 +52,6 @@ angular
         templateUrl: 'views/login.html',
         controller: 'LoginController',
         controllerAs: 'login'
-      })
-      .when('/server', {
-        templateUrl: 'views/configuration/server.html',
-        controller: 'ServerController',
-        controllerAs: 'server'
       })
       .otherwise({
         redirectTo: '/login'
