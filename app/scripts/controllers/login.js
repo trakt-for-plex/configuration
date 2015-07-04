@@ -16,7 +16,7 @@ angular.module('configurationApp')
 
     $scope.submit = function() {
       PAuthentication.login($scope.credentials).then(function() {
-        $location.path($scope.$a.originalPath);
+        $location.path($scope.$r.originalPath);
       }, function() {
         console.log('login error');
       });

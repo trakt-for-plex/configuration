@@ -59,10 +59,12 @@ angular
   })
   .run(function(PAuthentication, $location, $rootScope) {
     $rootScope.$a = {
-      originalPath: null,
-
       authenticated: false,
       user: null
+    };
+
+    $rootScope.$r = {
+      originalPath: null
     };
 
     $rootScope.$on('$routeChangeStart', function(event, next) {
@@ -83,7 +85,7 @@ angular
 
               console.log('authenticated');
             }, function() {
-              $rootScope.$a.originalPath = next.originalPath;
+              $rootScope.$r.originalPath = next.originalPath;
 
               $location.path('/login');
             });
@@ -93,7 +95,13 @@ angular
         $rootScope.$a.authenticated = true;
       }
 
+      if(controller === 'ConnectController') {
+        return;
+      }
+
       if($rootScope.$s === null || typeof $rootScope.$s === 'undefined') {
+        $rootScope.$r.originalPath = next.originalPath;
+
         $location.path('/connect');
       }
     });

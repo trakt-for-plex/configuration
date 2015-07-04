@@ -36,7 +36,8 @@ angular.module('configurationApp')
           console.log('Authentication successful');
 
           $rootScope.$s = server;
-          $location.path('/');
+
+          $location.path($scope.$r.originalPath);
         }, function() {
           console.log('Authentication failed', server);
 
