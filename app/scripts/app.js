@@ -54,7 +54,7 @@ angular
         controllerAs: 'login'
       })
       .otherwise({
-        redirectTo: '/login'
+        redirectTo: '/'
       });
   })
   .run(function(PAuthentication, $location, $rootScope) {
@@ -64,7 +64,24 @@ angular
     };
 
     $rootScope.$r = {
-      originalPath: null
+      path: null,
+      search: null,
+
+      redirect: function() {
+        // Update path
+        if(this.path !== null) {
+          $location.path(this.path);
+        } else {
+          $location.path('/');
+        }
+
+        // Update path
+        if(this.search !== null) {
+          $location.search(this.search);
+        } else {
+          $location.search('');
+        }
+      }
     };
 
     $rootScope.$on('$routeChangeStart', function(event, next) {
@@ -85,9 +102,11 @@ angular
 
               console.log('authenticated');
             }, function() {
-              $rootScope.$r.originalPath = next.originalPath;
+              $rootScope.$r.path = $location.path();
+              $rootScope.$r.search = $location.search();
 
               $location.path('/login');
+              $location.search('');
             });
           }
         });
@@ -100,9 +119,11 @@ angular
       }
 
       if($rootScope.$s === null || typeof $rootScope.$s === 'undefined') {
-        $rootScope.$r.originalPath = next.originalPath;
+        $rootScope.$r.path = $location.path();
+        $rootScope.$r.search = $location.search();
 
         $location.path('/connect');
+        $location.search('');
       }
     });
   });

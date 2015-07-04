@@ -37,7 +37,7 @@ angular.module('configurationApp')
 
           $rootScope.$s = server;
 
-          $location.path($scope.$r.originalPath);
+          $scope.$r.redirect();
         }, function() {
           console.log('Authentication failed', server);
 
