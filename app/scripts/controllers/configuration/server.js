@@ -22,12 +22,17 @@ angular.module('configurationApp')
             name: groupName,
             groups: {},
 
+            enabled: null,
             options: []
           };
         }
 
         if(option.group.length === 1) {
-          group.options.push(option);
+          if(option.key.endsWith('.enabled') && option.type =='boolean') {
+            group.enabled = option;
+          } else {
+            group.options.push(option);
+          }
         } else {
           var o = angular.copy(option);
 
