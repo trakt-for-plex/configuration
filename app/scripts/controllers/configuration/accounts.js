@@ -12,7 +12,7 @@ angular.module('configurationApp')
     $scope.accounts = {};
     $scope.account = null;
 
-    function select(id) {
+    function selectAccount(id) {
       id = parseInt(id);
 
       if(id === null || isNaN(id)) {
@@ -35,6 +35,16 @@ angular.module('configurationApp')
       });
     }
 
+    function select() {
+      if(typeof $routeParams.id !== 'undefined') {
+        // Load account from parameter
+        selectAccount($routeParams.id);
+      } else {
+        // Load first account
+        $location.search('id', Object.keys($scope.accounts)[0]);
+      }
+    }
+
     // Retrieve accounts from server
     $rootScope.$s.call('account.list', [], {full: true}).then(function(accounts) {
       // Parse accounts
@@ -45,17 +55,11 @@ angular.module('configurationApp')
       });
 
       // Trigger initial account load
-      if(typeof $routeParams.id !== 'undefined') {
-        // Load account from parameter
-        select($routeParams.id);
-      } else {
-        // Load first account
-        $location.search('id', Object.keys($scope.accounts)[0]);
-      }
+      select();
     });
 
     // Watch for selected account change
     $scope.$on("$routeUpdate", function() {
-      select($routeParams.id);
+      select();
     });
   });
