@@ -41,7 +41,8 @@ angular
       .when('/configuration/accounts', {
         templateUrl: 'views/configuration/accounts.html',
         controller: 'AccountsController',
-        controllerAs: 'accounts'
+        controllerAs: 'accounts',
+        reloadOnSearch: false
       })
       .when('/connect', {
         templateUrl: 'views/connect.html',
