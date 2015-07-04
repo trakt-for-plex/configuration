@@ -8,7 +8,7 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('AccountsController', function (Option, $location, $rootScope, $routeParams, $scope) {
+  .controller('AccountsController', function (Account, Option, $location, $rootScope, $routeParams, $scope) {
     $scope.accounts = {};
     $scope.account = null;
 
@@ -25,7 +25,8 @@ angular.module('configurationApp')
       // Set current account
       $scope.account = $scope.accounts[id];
 
-      console.log('account', $scope.account);
+      // Update account status
+      updateAccount($scope.account);
 
       // Retrieve account options
       $rootScope.$s.call('option.list', [], {account: id}).then(function(options) {
@@ -33,6 +34,19 @@ angular.module('configurationApp')
 
         Option.parse($scope.account.preferences, options);
       });
+    }
+
+    function updateAccount(account) {
+      var trakt = account.trakt,
+          plex = account.plex;
+
+      // Update trakt authentication status
+      trakt.authorization.valid =
+        trakt.authorization.basic.valid ||
+        trakt.authorization.oauth.valid;
+
+      plex.authorization.valid =
+        plex.authorization.basic.valid;
     }
 
     function select() {
@@ -48,8 +62,10 @@ angular.module('configurationApp')
     // Retrieve accounts from server
     $rootScope.$s.call('account.list', [], {full: true}).then(function(accounts) {
       // Parse accounts
-      $scope.accounts = _.indexBy(_.filter(accounts, function(account) {
+      $scope.accounts = _.indexBy(_.map(_.filter(accounts, function(account) {
         return account.id > 0;
+      }), function(account) {
+        return new Account(account);
       }), function(account) {
         return account.id;
       });

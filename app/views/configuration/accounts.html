@@ -19,6 +19,46 @@
       </div>
     </div>
 
+    <div class="authentication group">
+      <div class="row header">
+        <div class="small-8 large-10 columns">
+          <h5>Authentication</h5>
+        </div>
+      </div>
+
+      <tabset>
+        <tab heading="trakt" data-valid="{{ account.trakt.authorization.valid }}">
+          <accordion close-others="true">
+            <accordion-group heading="OAuth" data-valid="{{ account.trakt.authorization.oauth.valid }}" is-open="true">
+              <label>Authentication PIN
+                <input type="password" ng-model="account.trakt.authorization.oauth.code" />
+              </label>
+            </accordion-group>
+            <accordion-group heading="Basic" data-valid="{{ account.trakt.authorization.basic.valid }}">
+              <label>Username
+                <input type="text" ng-model="account.trakt.authorization.basic.username" />
+              </label>
+              <label>Password
+                <input type="password" ng-model="account.trakt.authorization.basic.password" />
+              </label>
+            </accordion-group>
+          </accordion>
+        </tab>
+        <tab heading="plex" data-valid="{{ account.plex.authorization.valid }}">
+          <accordion close-others="true">
+            <accordion-group heading="Basic" data-valid="{{ account.plex.authorization.basic.valid }}" is-open="true">
+              <label>Username
+                <input type="text" ng-model="account.plex.authorization.basic.username" />
+              </label>
+              <label>Password
+                <input type="password" ng-model="account.plex.authorization.basic.password" />
+              </label>
+            </accordion-group>
+          </accordion>
+        </tab>
+      </tabset>
+    </div>
+
     <div class="group" ng-repeat="(key, group) in account.preferences">
       <div class="row header">
         <div class="small-8 large-10 columns">
