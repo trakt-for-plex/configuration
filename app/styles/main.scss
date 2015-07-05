@@ -18,6 +18,31 @@ body {
   padding: 0;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 0 5px;
+
+  font-size: 10px;
+
+  i {
+    font-size: 14px;
+
+    color: #CCC;
+  }
+
+  a:hover i, a.active i {
+    color: #888;
+  }
+
+  .connection-info {
+    display: inline-block;
+  }
+}
+
 .busy .spinner {
   width: 40px;
   height: 40px;
