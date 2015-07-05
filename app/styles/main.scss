@@ -18,6 +18,26 @@ body {
   padding: 0;
 }
 
+button, a {
+  outline: none;
+}
+
+button.secondary:focus {
+  background-color: #e7e7e7;
+}
+
+button.secondary:hover {
+  background-color: #b9b9b9;
+}
+
+button:focus {
+  background-color: #008CBA;
+}
+
+button:hover {
+  background-color: #007095;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
