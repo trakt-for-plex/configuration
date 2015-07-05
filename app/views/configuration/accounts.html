@@ -7,20 +7,70 @@
     </ul>
 
     <div class="actions">
-      <button class="tiny secondary" title="Refresh accounts" ng-click="refresh()"><i class="fi-refresh"></i></button>
-      <button class="tiny secondary" title="Create account" ng-click="create()"><i class="fi-plus"></i></button>
+      <button class="refresh ladda-button tiny secondary"
+              data-style="zoom-out"
+              data-spinner-color="#333333"
+              data-spinner-size="24"
+              title="Refresh accounts"
+              ng-click="refresh()"
+        >
+        <span class="ladda-label">
+          <i class="fi-refresh"></i>
+        </span>
+      </button>
+      <button class="create ladda-button tiny secondary"
+              data-style="zoom-out"
+              data-spinner-color="#333333"
+              data-spinner-size="24"
+              title="Create account"
+              ng-click="create()"
+        >
+        <span class="ladda-label">
+          <i class="fi-plus"></i>
+        </span>
+      </button>
     </div>
   </div>
 
-  <div class="options small-8 columns" ng-show="account">
+  <div class="options small-8 columns">
     <div class="row">
       <div class="title small-5 large-7 columns">
         <h5>{{ account.name }}</h5>
       </div>
       <div class="actions small-7 large-5 columns">
-        <button class="tiny secondary" title="Refresh options" ng-click="account.refresh($s)"><i class="fi-refresh"></i></button>
-        <button class="tiny secondary" title="Discard changes" ng-click="account.discard($s)"><i class="fi-trash"></i></button>
-        <button class="tiny" title="Save changes" ng-click="account.save($s)"><i class="fi-save"></i></button>
+        <button class="refresh ladda-button tiny secondary"
+                data-style="zoom-out"
+                data-spinner-color="#333333"
+                data-spinner-size="24"
+                title="Refresh options"
+                ng-click="accountRefresh()"
+          >
+          <span class="ladda-label">
+            <i class="fi-refresh"></i>
+          </span>
+        </button>
+        <button class="discard ladda-button tiny secondary"
+                data-style="zoom-out"
+                data-spinner-color="#333333"
+                data-spinner-size="24"
+                title="Discard changes"
+                ng-click="accountDiscard()"
+          >
+          <span class="ladda-label">
+            <i class="fi-trash"></i>
+          </span>
+        </button>
+        <button class="save ladda-button tiny"
+                data-style="zoom-out"
+                data-spinner-color="#FFFFFF"
+                data-spinner-size="24"
+                title="Save changes"
+                ng-click="accountSave()"
+          >
+          <span class="ladda-label">
+            <i class="fi-save"></i>
+          </span>
+        </button>
       </div>
     </div>
 
@@ -64,7 +114,7 @@
       </tabset>
     </div>
 
-    <div class="group" ng-repeat="(key, group) in account.preferences">
+    <div class="group" ng-repeat="(key, group) in account.options.groups">
       <div class="row header">
         <div class="small-8 large-10 columns">
           <h5>{{ group.name }}</h5>

@@ -11,6 +11,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/foundation/css/foundation.css" />
     <link rel="stylesheet" href="bower_components/foundation-icon-fonts/foundation-icons.css" />
+    <link rel="stylesheet" href="bower_components/ladda-foundation-5/dist/ladda-themeless.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -84,13 +85,14 @@
     <script src="bower_components/angular-xml/angular-xml.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/Cerealizer.js/dist/cerealizer.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/ladda-foundation-5/dist/ladda.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
 
-    <script src="scripts/controllers/configuration/core/option.js"></script>
     <script src="scripts/controllers/configuration/accounts.js"></script>
     <script src="scripts/controllers/configuration/server.js"></script>
 
@@ -99,10 +101,13 @@
     <script src="scripts/controllers/home.js"></script>
     <script src="scripts/controllers/login.js"></script>
 
+    <script src="scripts/core/differ.js"></script>
+
     <script src="scripts/directives/option.js"></script>
 
     <script src="scripts/models/account.js"></script>
     <script src="scripts/models/connection.js"></script>
+    <script src="scripts/models/options.js"></script>
     <script src="scripts/models/server.js"></script>
 
     <script src="scripts/services/channel/system.js"></script>

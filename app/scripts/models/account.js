@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Account', function(Option) {
+  .factory('Account', function(Differ, Options) {
     function Account(data) {
       this.update(data);
     }
@@ -16,6 +16,8 @@ angular.module('configurationApp')
 
       this.plex = data.plex;
       this.trakt = data.trakt;
+
+      this.options = null;
 
       this.validate();
     };
@@ -45,15 +47,15 @@ angular.module('configurationApp')
     Account.prototype.validate = function() {
       // validate authorization
       this.plex.authorization.valid =
-      this.plex.authorization.basic.valid;
+        this.plex.authorization.basic.valid;
 
       this.trakt.authorization.valid =
-      this.trakt.authorization.basic.valid ||
-      this.trakt.authorization.oauth.valid;
+        this.trakt.authorization.basic.valid ||
+        this.trakt.authorization.oauth.valid;
 
       this.valid =
-      this.trakt.authorization.valid &&
-      this.plex.authorization.valid;
+        this.trakt.authorization.valid &&
+        this.plex.authorization.valid;
     };
 
     Account.prototype.changes = function() {
@@ -82,7 +84,7 @@ angular.module('configurationApp')
         }
       };
 
-      var result = diff(current, this.data);
+      var result = Differ.run(current, this.data);
 
       // set defaults
       result = $.extend(true, {
@@ -107,6 +109,15 @@ angular.module('configurationApp')
         result.trakt.authorization.oauth = this.trakt.authorization.oauth;
       }
 
+      // remove empty objects
+      if(Object.keys(result.plex.authorization).length === 0) {
+        delete result.plex;
+      }
+
+      if(Object.keys(result.trakt.authorization).length === 0) {
+        delete result.trakt;
+      }
+
       return result;
     };
 
@@ -117,18 +128,23 @@ angular.module('configurationApp')
       // TODO this.validate();
 
       // Retrieve account options
-      server.call('option.list', [], {account: self.id}).then(function(options) {
-        self.preferences = {};
-
-        Option.parse(self.preferences, options);
+      return server.call('option.list', [], {account: self.id}).then(function(options) {
+        self.options = new Options(options);
       });
     };
 
-    Account.prototype.discard = function(server) {
+    Account.prototype.discard = function() {
+      // TODO discard account authorization
 
+      // Discard account options
+      this.options.discard();
     };
 
     Account.prototype.save = function(server) {
+      console.log(this.changes());
+
+      // Save account options
+      this.options.save(server);
     };
 
     return Account;

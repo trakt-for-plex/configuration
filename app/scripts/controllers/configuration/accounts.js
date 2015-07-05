@@ -8,7 +8,15 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('AccountsController', function (Account, Option, $location, $rootScope, $routeParams, $scope) {
+  .controller('AccountsController', function (Account, $location, $rootScope, $routeParams, $scope) {
+    var $actions = $('.accounts .list .actions'),
+        $accountActions = $('.accounts .options .actions'),
+        bRefresh = Ladda.create($('.refresh', $actions)[0]),
+        bCreate = Ladda.create($('.create', $actions)[0]),
+        bAccountRefresh = Ladda.create($('.refresh', $accountActions)[0]),
+        bAccountDiscard = Ladda.create($('.discard', $accountActions)[0]),
+        bAccountSave = Ladda.create($('.save', $accountActions)[0]);
+
     $scope.accounts = {};
     $scope.account = null;
 
@@ -24,7 +32,7 @@ angular.module('configurationApp')
       $scope.account = $scope.accounts[id];
 
       // Initial account preferences refresh
-      $scope.account.refresh($rootScope.$s);
+      $scope.accountRefresh();
     }
 
     function select() {
@@ -37,7 +45,37 @@ angular.module('configurationApp')
       }
     }
 
+    $scope.accountRefresh = function() {
+      bAccountRefresh.start();
+
+      $scope.account.refresh($rootScope.$s).then(function() {
+        bAccountRefresh.stop();
+      }, function() {
+        bAccountRefresh.stop();
+      })
+    };
+
+    $scope.accountDiscard = function() {
+      bAccountDiscard.start();
+
+      $scope.account.discard();
+
+      bAccountDiscard.stop();
+    };
+
+    $scope.accountSave = function() {
+      bAccountSave.start();
+
+      $scope.account.save($rootScope.$s).then(function() {
+
+      }, function() {
+
+      });
+    };
+
     $scope.refresh = function() {
+      bRefresh.start();
+
       // Retrieve accounts from server
       $rootScope.$s.call('account.list', [], {full: true}).then(function (accounts) {
         // Parse accounts
@@ -51,6 +89,8 @@ angular.module('configurationApp')
 
         // Trigger initial account load
         select();
+
+        bRefresh.stop();
       });
     };
 

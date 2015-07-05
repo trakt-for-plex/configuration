@@ -4,13 +4,42 @@
       <h5>{{ $s.name }}</h5>
     </div>
     <div class="actions small-7 large-5 columns">
-      <button class="tiny secondary" title="Refresh options" ng-click="refresh()"><i class="fi-refresh"></i></button>
-      <button class="tiny secondary" title="Discard changes" ng-click="discard()"><i class="fi-trash"></i></button>
-      <button class="tiny" title="Save changes" ng-click="save()"><i class="fi-save"></i></button>
+      <button class="refresh ladda-button tiny secondary"
+              data-style="zoom-out"
+              data-spinner-color="#333333"
+              data-spinner-size="24"
+              title="Refresh options"
+              ng-click="refresh()"
+        >
+        <span class="ladda-label">
+          <i class="fi-refresh"></i>
+        </span>
+      </button>
+      <button class="discard ladda-button tiny secondary"
+              data-style="zoom-out"
+              data-spinner-color="#333333"
+              data-spinner-size="24"
+              title="Discard changes"
+              ng-click="discard()"
+        >
+        <span class="ladda-label">
+          <i class="fi-trash"></i>
+        </span>
+      </button>
+      <button class="save ladda-button tiny"
+              data-style="zoom-out"
+              data-spinner-color="#FFFFFF"
+              data-spinner-size="24"
+              title="Save changes"
+              ng-click="save()">
+        <span class="ladda-label">
+          <i class="fi-save"></i>
+        </span>
+      </button>
     </div>
   </div>
 
-  <div class="group" ng-repeat="(key, group) in preferences">
+  <div class="group" ng-repeat="(key, group) in options.groups">
     <div class="row header">
       <div class="small-8 large-10 columns">
         <h5>{{ group.name }}</h5>
