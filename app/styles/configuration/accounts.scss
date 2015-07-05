@@ -119,3 +119,11 @@
     }
   }
 }
+
+.accounts > .options {
+  margin-top: 0;
+}
+
+.accounts > .options .group:first-child .header {
+  margin-top: 0;
+}

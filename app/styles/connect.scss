@@ -1,0 +1,52 @@
+.panel.connect {
+  height: 300px;
+
+  margin-top: 5%;
+  padding: 0;
+
+  .servers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    overflow-y: scroll;
+
+    .server {
+      padding: 10px 15px;
+
+      .error {
+        font-size: 10px;
+      }
+    }
+
+    .server:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+    }
+  }
+
+  .status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 298px;
+
+    background-color: #f2f2f2;
+
+    .busy {
+      position: relative;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      .spinner {
+        margin: 0 auto;
+      }
+    }
+  }
+}
