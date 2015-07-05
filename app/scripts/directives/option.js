@@ -20,6 +20,14 @@ angular.module('configurationApp')
         $scope.getTemplateUrl = function() {
           return baseUrl + templateMap[$scope.option.type];
         };
+
+        $scope.parseKey = function(id) {
+          if(id === 'null') {
+            return null;
+          }
+
+          return parseInt(id, 10);
+        };
       }
     };
   });

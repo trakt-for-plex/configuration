@@ -66,7 +66,7 @@
         </div>
 
         <div class="switch small-4 large-2 columns" ng-show="group.enabled">
-          <input id="{{ group.enabled.key }}" type="checkbox">
+          <input id="{{ group.enabled.key }}" type="checkbox" ng-model="group.enabled.value">
           <label for="{{ group.enabled.key }}"></label>
         </div>
       </div>

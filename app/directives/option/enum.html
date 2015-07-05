@@ -1,8 +1,6 @@
 <div class="row">
   <div class="large-6 columns">
     <label for="{{ option.key }}">{{ option.label }}</label>
-    <select id="{{ option.key }}">
-      <option value="{{ key }}" ng-repeat="(key, label) in option.choices">{{ label }}</option>
-    </select>
+    <select id="{{ option.key }}" ng-model="option.value" ng-options="parseKey(key) as label for (key, label) in option.choices"></select>
   </div>
 </div>
