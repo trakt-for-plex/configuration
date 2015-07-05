@@ -20,33 +20,11 @@ angular.module('configurationApp')
         return;
       }
 
-      console.log('select(%s)', id);
-
       // Set current account
       $scope.account = $scope.accounts[id];
 
-      // Update account status
-      updateAccount($scope.account);
-
-      // Retrieve account options
-      $rootScope.$s.call('option.list', [], {account: id}).then(function(options) {
-        $scope.account.preferences = {};
-
-        Option.parse($scope.account.preferences, options);
-      });
-    }
-
-    function updateAccount(account) {
-      var trakt = account.trakt,
-          plex = account.plex;
-
-      // Update trakt authentication status
-      trakt.authorization.valid =
-        trakt.authorization.basic.valid ||
-        trakt.authorization.oauth.valid;
-
-      plex.authorization.valid =
-        plex.authorization.basic.valid;
+      // Initial account preferences refresh
+      $scope.account.refresh($rootScope.$s);
     }
 
     function select() {
@@ -59,20 +37,25 @@ angular.module('configurationApp')
       }
     }
 
-    // Retrieve accounts from server
-    $rootScope.$s.call('account.list', [], {full: true}).then(function(accounts) {
-      // Parse accounts
-      $scope.accounts = _.indexBy(_.map(_.filter(accounts, function(account) {
-        return account.id > 0;
-      }), function(account) {
-        return new Account(account);
-      }), function(account) {
-        return account.id;
-      });
+    $scope.refresh = function() {
+      // Retrieve accounts from server
+      $rootScope.$s.call('account.list', [], {full: true}).then(function (accounts) {
+        // Parse accounts
+        $scope.accounts = _.indexBy(_.map(_.filter(accounts, function (account) {
+          return account.id > 0;
+        }), function (account) {
+          return new Account(account);
+        }), function (account) {
+          return account.id;
+        });
 
-      // Trigger initial account load
-      select();
-    });
+        // Trigger initial account load
+        select();
+      });
+    };
+
+    // Initial account refresh
+    $scope.refresh();
 
     // Watch for selected account change
     $scope.$on("$routeUpdate", function() {

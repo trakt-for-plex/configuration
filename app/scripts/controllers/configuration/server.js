@@ -11,9 +11,14 @@ angular.module('configurationApp')
   .controller('ServerController', function (Option, $rootScope, $scope) {
     $scope.preferences = {};
 
-    $rootScope.$s.call('option.list', []).then(function(options) {
-      $scope.preferences = {};
+    $scope.refresh = function() {
+      $rootScope.$s.call('option.list', []).then(function(options) {
+        $scope.preferences = {};
 
-      Option.parse($scope.preferences, options);
-    });
+        Option.parse($scope.preferences, options);
+      });
+    };
+
+    // Initial preferences refresh
+    $scope.refresh();
   });

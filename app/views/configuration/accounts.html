@@ -5,6 +5,11 @@
         <a href="#/configuration/accounts?id={{ a.id }}">{{ a.name }}</a>
       </li>
     </ul>
+
+    <div class="actions">
+      <button class="tiny secondary" title="Refresh accounts" ng-click="refresh()"><i class="fi-refresh"></i></button>
+      <button class="tiny secondary" title="Create account" ng-click="create()"><i class="fi-plus"></i></button>
+    </div>
   </div>
 
   <div class="options small-8 columns" ng-show="account">
@@ -13,9 +18,9 @@
         <h5>{{ account.name }}</h5>
       </div>
       <div class="actions small-7 large-5 columns">
-        <button class="tiny secondary" title="Refresh options"><i class="fi-refresh"></i></button>
-        <button class="tiny secondary" title="Discard changes"><i class="fi-trash"></i></button>
-        <button class="tiny" title="Save changes"><i class="fi-save"></i></button>
+        <button class="tiny secondary" title="Refresh options" ng-click="account.refresh($s)"><i class="fi-refresh"></i></button>
+        <button class="tiny secondary" title="Discard changes" ng-click="account.discard($s)"><i class="fi-trash"></i></button>
+        <button class="tiny" title="Save changes" ng-click="account.save($s)"><i class="fi-save"></i></button>
       </div>
     </div>
 

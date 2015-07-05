@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Account', function() {
+  .factory('Account', function(Option) {
     function Account(data) {
       this.update(data);
     }
@@ -110,7 +110,25 @@ angular.module('configurationApp')
       return result;
     };
 
-    Account.prototype.save = function() {
+    Account.prototype.refresh = function(server) {
+      var self = this;
+
+      // TODO get account details
+      // TODO this.validate();
+
+      // Retrieve account options
+      server.call('option.list', [], {account: self.id}).then(function(options) {
+        self.preferences = {};
+
+        Option.parse(self.preferences, options);
+      });
+    };
+
+    Account.prototype.discard = function(server) {
+
+    };
+
+    Account.prototype.save = function(server) {
     };
 
     return Account;
