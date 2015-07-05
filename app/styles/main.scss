@@ -10,6 +10,10 @@
   padding: 0.2em 0;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 body {
   padding: 0;
 }
