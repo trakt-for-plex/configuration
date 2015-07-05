@@ -7,19 +7,19 @@
     </ul>
   </div>
 
-  <div class="options small-8 columns">
+  <div class="options small-8 columns" ng-show="account">
     <div class="row">
       <div class="title small-5 large-7 columns">
         <h5>{{ account.name }}</h5>
       </div>
-      <div class="actions small-7 large-5 columns" ng-show="account">
+      <div class="actions small-7 large-5 columns">
         <button class="tiny secondary" title="Refresh options"><i class="fi-refresh"></i></button>
         <button class="tiny secondary" title="Discard changes"><i class="fi-trash"></i></button>
         <button class="tiny" title="Save changes"><i class="fi-save"></i></button>
       </div>
     </div>
 
-    <div class="authentication group">
+    <div class="authentication group" ng-show="account">
       <div class="row header">
         <div class="small-8 large-10 columns">
           <h5>Authentication</h5>
