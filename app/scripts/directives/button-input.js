@@ -5,10 +5,10 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        callback: '=',
+        callback: '=coCallback',
 
-        placeholder: '@',
-        title: '@'
+        placeholder: '@coPlaceholder',
+        tooltip: '@coTooltip'
       },
       templateUrl: 'directives/button-input.html',
       transclude: true,
