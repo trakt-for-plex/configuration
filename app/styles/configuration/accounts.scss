@@ -32,12 +32,15 @@
         padding: 4px 12px;
 
         background-color: transparent;
-        color: #EEE;
+      }
+
+      dd > a:hover {
+        background-color: rgba(0, 0, 0, 0.05);
       }
 
       dd.active > a {
         color: inherit;
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0.075);
       }
 
       dd > a:before {
@@ -53,7 +56,7 @@
         text-decoration: inherit;
 
         // Alignment
-        margin-right: 6px;
+        margin-right: 8px;
 
         // fi-alert
         color: #BABA00;
@@ -68,22 +71,33 @@
     }
 
     .tabs-content {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.075);
 
       .content {
         padding: 5px;
+      }
+
+      label + input {
+        margin-top: 3px;
+      }
+
+      input + label {
+        margin-top: 9px;
+      }
+
+      input {
+        margin-bottom: 3px;
       }
 
       .accordion {
         dd > a {
           padding: 4px 7px;
 
-          background: rgba(0, 0, 0, 0.1);
-          color: #EEE;
+          background: rgba(0, 0, 0, 0.06);
         }
 
         dd > a:hover {
-          background: rgba(0, 0, 0, 0.2);
+          background: rgba(0, 0, 0, 0.09);
         }
 
         dd > a:before {
@@ -99,7 +113,7 @@
           text-decoration: inherit;
 
           // Alignment
-          margin-right: 6px;
+          margin-right: 8px;
 
           // fi-alert
           color: #BABA00;
@@ -113,7 +127,7 @@
         }
 
         .content {
-          padding: 5px 10px;
+          padding: 10px;
         }
       }
     }
