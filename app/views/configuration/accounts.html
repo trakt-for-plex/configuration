@@ -7,20 +7,24 @@
     </ul>
 
     <div class="actions">
-      <button class="refresh ladda-button tiny secondary"
-              data-style="zoom-out"
-              data-spinner-color="#333333"
-              data-spinner-size="24"
-              title="Refresh accounts"
-              ng-click="refresh()"
-        >
-        <span class="ladda-label">
-          <i class="fi-refresh"></i>
-        </span>
-      </button>
-      <co-button-input class="create" callback="create" placeholder="Name" title="Create account">
-        <i class="fi-plus"></i>
-      </co-button-input>
+      <div class="actions-left">
+        <button class="refresh ladda-button tiny secondary"
+                data-style="zoom-out"
+                data-spinner-color="#333333"
+                data-spinner-size="24"
+                title="Refresh accounts"
+                ng-click="refresh()"
+          >
+          <span class="ladda-label">
+            <i class="fi-refresh"></i>
+          </span>
+        </button>
+      </div>
+      <div class="actions-right">
+        <co-button-input class="create" callback="create" placeholder="Name" title="Create account">
+          <i class="fi-plus"></i>
+        </co-button-input>
+      </div>
     </div>
   </div>
 
