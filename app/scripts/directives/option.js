@@ -5,7 +5,7 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        option: '=option'
+        option: '='
       },
       template: '<ng-include src="getTemplateUrl()"/>',
       controller: function($scope) {

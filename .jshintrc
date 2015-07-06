@@ -12,6 +12,7 @@
   "unused": true,
   "globals": {
     "angular": false,
+    "Ladda": false,
     "$": false,
     "_": false
   }

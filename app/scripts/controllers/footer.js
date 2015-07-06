@@ -13,5 +13,5 @@ angular.module('configurationApp')
 
     $scope.toggle = function() {
       $scope.visible = !$scope.visible;
-    }
+    };
   });

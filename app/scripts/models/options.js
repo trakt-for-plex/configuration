@@ -21,7 +21,7 @@ angular.module('configurationApp')
         }
 
         if(option.group.length - depth === 1) {
-          if(option.key.endsWith('.enabled') && option.type =='boolean') {
+          if(option.key.endsWith('.enabled') && option.type === 'boolean') {
             group.enabled = option;
           } else {
             group.options.push(option);
@@ -60,7 +60,7 @@ angular.module('configurationApp')
         options[c.key] = {
           from: o.value,
           to: c.value
-        }
+        };
       }
 
       console.log(options);

@@ -6,12 +6,14 @@ angular.module('configurationApp')
       var r = {};
 
       _.each(a, function(v, k) {
-        if(b[k] === v) return;
+        if(b[k] === v) {
+          return;
+        }
 
         if(_.isObject(v)) {
           v = run(v, b[k]);
 
-          if(Object.keys(v).length == 0) {
+          if(Object.keys(v).length === 0) {
             return;
           }
         }
