@@ -1,5 +1,5 @@
 <div class="co-button-input" ng-class="{opened: opened}">
-  <input type="text" placeholder="{{ placeholder }}" ng-model="value" ng-keyup="$event.keyCode == 13 && click()"/>
+  <input type="text" placeholder="{{ placeholder }}" ng-model="value" ng-keyup="keyup($event)"/>
 
   <button class="ladda-button tiny secondary"
           data-style="zoom-out"

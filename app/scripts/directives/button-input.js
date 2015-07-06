@@ -19,27 +19,44 @@ angular.module('configurationApp')
 
         $scope.click = function() {
           if(!$scope.opened) {
-            $scope.opened = true;
-
-            $timeout(function() {
-              $scope.input.focus();
-            }, 100);
+            $scope.open();
             return;
           }
 
           $scope.button.start();
 
           $scope.callback($scope.value).then(function() {
-            $scope.error = null;
-            $scope.opened = false;
-            $scope.value = null;
-
+            $scope.close();
             $scope.button.stop();
           }, function(error) {
             $scope.error = error;
 
             $scope.button.stop();
           });
+        };
+
+        $scope.open = function() {
+          $scope.opened = true;
+
+          $timeout(function() {
+            $scope.input.focus();
+          }, 100);
+        };
+
+        $scope.close = function() {
+          $scope.error = null;
+          $scope.opened = false;
+          $scope.value = null;
+        };
+
+        $scope.keyup = function(event) {
+          if(event.keyCode === 13) {
+            // ENTER
+            $scope.click()
+          } else if(event.keyCode === 27) {
+            // ESC
+            $scope.close();
+          }
         };
       },
       link: function(scope, element) {
