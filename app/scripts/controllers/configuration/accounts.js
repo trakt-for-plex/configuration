@@ -8,11 +8,10 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('AccountsController', function (Account, $location, $rootScope, $routeParams, $scope) {
+  .controller('AccountsController', function (Account, $location, $q, $rootScope, $routeParams, $scope, $timeout) {
     var $actions = $('.accounts .list .actions'),
         $accountActions = $('.accounts .options .actions'),
         bRefresh = Ladda.create($('.refresh', $actions)[0]),
-        bCreate = Ladda.create($('.create', $actions)[0]),
         bAccountRefresh = Ladda.create($('.refresh', $accountActions)[0]),
         bAccountDiscard = Ladda.create($('.discard', $accountActions)[0]),
         bAccountSave = Ladda.create($('.save', $accountActions)[0]);
@@ -71,6 +70,22 @@ angular.module('configurationApp')
       }, function() {
 
       });
+    };
+
+    $scope.create = function(name) {
+      console.log('create', name);
+
+      var deferred = $q.defer();
+
+      // Dummy delay
+      $timeout(function() {
+        deferred.resolve();
+
+        // Refresh accounts
+        $scope.refresh();
+      }, 3000);
+
+      return deferred.promise;
     };
 
     $scope.refresh = function() {

@@ -1,0 +1,14 @@
+<div class="co-button-input" ng-class="{opened: opened}">
+  <input type="text" placeholder="{{ placeholder }}" ng-model="value"/>
+
+  <button class="ladda-button tiny secondary"
+          data-style="zoom-out"
+          data-spinner-color="#333333"
+          data-spinner-size="24"
+          title="{{ title }}"
+          ng-click="click()"
+    >
+    <span class="ladda-label" ng-transclude>
+    </span>
+  </button>
+</div>

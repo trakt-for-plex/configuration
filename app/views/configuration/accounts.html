@@ -18,17 +18,9 @@
           <i class="fi-refresh"></i>
         </span>
       </button>
-      <button class="create ladda-button tiny secondary"
-              data-style="zoom-out"
-              data-spinner-color="#333333"
-              data-spinner-size="24"
-              title="Create account"
-              ng-click="create()"
-        >
-        <span class="ladda-label">
-          <i class="fi-plus"></i>
-        </span>
-      </button>
+      <co-button-input class="create" callback="create" placeholder="Name" title="Create account">
+        <i class="fi-plus"></i>
+      </co-button-input>
     </div>
   </div>
 

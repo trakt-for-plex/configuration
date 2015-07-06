@@ -1,0 +1,23 @@
+.co-button-input {
+  input {
+    display: none;
+    width: 150px;
+    height: 32px;
+
+    margin: 0;
+  }
+
+  button {
+    display: inline-block;
+  }
+}
+
+.co-button-input.opened {
+  input {
+    display: inline-block;
+  }
+
+  button {
+    margin: 0 0 0 -5px;
+  }
+}
