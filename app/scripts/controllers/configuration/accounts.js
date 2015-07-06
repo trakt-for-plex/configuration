@@ -73,19 +73,20 @@ angular.module('configurationApp')
     };
 
     $scope.create = function(name) {
-      console.log('create', name);
+      if(name === null || name === '') {
+        return $q.reject('Name is required');
+      }
 
-      var deferred = $q.defer();
-
-      // Dummy delay
-      $timeout(function() {
-        deferred.resolve();
-
+      return $rootScope.$s.call('account.create', [], {name: name}).then(function() {
         // Refresh accounts
         $scope.refresh();
-      }, 3000);
+      }, function(error) {
+        if(error === null || typeof error.message !== 'string') {
+          return $q.reject('Unknown error');
+        }
 
-      return deferred.promise;
+        return $q.reject(error.message);
+      });
     };
 
     $scope.refresh = function() {
