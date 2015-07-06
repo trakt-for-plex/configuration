@@ -28,15 +28,18 @@ angular.module('configurationApp')
           }
 
           $scope.button.start();
-          $scope.opened = false;
 
           $scope.callback($scope.value).then(function() {
+            $scope.error = null;
+            $scope.opened = false;
+            $scope.value = null;
+
             $scope.button.stop();
-          }, function() {
+          }, function(error) {
+            $scope.error = error;
+
             $scope.button.stop();
           });
-
-          $scope.value = null;
         };
       },
       link: function(scope, element) {

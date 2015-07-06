@@ -10,6 +10,13 @@
   button {
     display: inline-block;
   }
+
+  .error {
+    position: absolute;
+    width: 202px;
+
+    font-size: 0.7rem;
+  }
 }
 
 .co-button-input.opened {
