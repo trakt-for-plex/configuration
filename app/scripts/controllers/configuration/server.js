@@ -8,34 +8,25 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('ServerController', function (Options, $rootScope, $scope) {
-    var $actions = $('.options .actions'),
-      bRefresh = Ladda.create($('.refresh', $actions)[0]),
-      bDiscard = Ladda.create($('.discard', $actions)[0]),
-      bSave = Ladda.create($('.save', $actions)[0]);
-
+  .controller('ServerController', function (Options, $q, $rootScope, $scope) {
     $scope.options = null;
 
     $scope.refresh = function() {
-      bRefresh.start();
-
       // Retrieve server options
-      $rootScope.$s.call('option.list', []).then(function(options) {
+      return $rootScope.$s.call('option.list', []).then(function(options) {
         // Parse options
         $scope.options = new Options(options);
-
-        bRefresh.stop();
       }, function() {
-        bRefresh.stop();
+        return $q.reject();
       });
     };
 
     $scope.discard = function() {
-      $scope.options.discard();
+      return $scope.options.discard();
     };
 
     $scope.save = function() {
-      $scope.options.save($rootScope.$s);
+      return $scope.options.save($rootScope.$s);
     };
 
     // Initial preferences refresh

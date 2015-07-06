@@ -137,14 +137,14 @@ angular.module('configurationApp')
       // TODO discard account authorization
 
       // Discard account options
-      this.options.discard();
+      return this.options.discard();
     };
 
     Account.prototype.save = function(server) {
       console.log(this.changes());
 
       // Save account options
-      this.options.save(server);
+      return this.options.save(server);
     };
 
     return Account;

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Options', function () {
+  .factory('Options', function ($q) {
     function parse(groups, options, depth) {
       depth = typeof depth !== 'undefined' ? depth : 0;
 
@@ -48,6 +48,8 @@ angular.module('configurationApp')
 
         c.value = o.value;
       }
+
+      return $q.resolve();
     };
 
     Options.prototype.save = function(server) {
@@ -64,6 +66,7 @@ angular.module('configurationApp')
       }
 
       console.log(options);
+      return $q.reject();
     };
 
     return Options;

@@ -9,13 +9,6 @@
  */
 angular.module('configurationApp')
   .controller('AccountsController', function (Account, $location, $q, $rootScope, $routeParams, $scope, $timeout) {
-    var $actions = $('.accounts .list .actions'),
-        $accountActions = $('.accounts .options .actions'),
-        bRefresh = Ladda.create($('.refresh', $actions)[0]),
-        bAccountRefresh = Ladda.create($('.refresh', $accountActions)[0]),
-        bAccountDiscard = Ladda.create($('.discard', $accountActions)[0]),
-        bAccountSave = Ladda.create($('.save', $accountActions)[0]);
-
     $scope.accounts = {};
     $scope.account = null;
 
@@ -24,52 +17,37 @@ angular.module('configurationApp')
 
       if(id === null || isNaN(id)) {
         $scope.account = null;
-        return;
+        return $q.reject();
       }
 
       // Set current account
       $scope.account = $scope.accounts[id];
 
       // Initial account preferences refresh
-      $scope.accountRefresh();
+      return $scope.accountRefresh();
     }
 
     function select() {
       if(typeof $routeParams.id !== 'undefined') {
         // Load account from parameter
-        selectAccount($routeParams.id);
+        return selectAccount($routeParams.id);
       } else {
         // Load first account
         $location.search('id', Object.keys($scope.accounts)[0]);
+        return $q.resolve();
       }
     }
 
     $scope.accountRefresh = function() {
-      bAccountRefresh.start();
-
-      $scope.account.refresh($rootScope.$s).then(function() {
-        bAccountRefresh.stop();
-      }, function() {
-        bAccountRefresh.stop();
-      })
+      return $scope.account.refresh($rootScope.$s);
     };
 
     $scope.accountDiscard = function() {
-      bAccountDiscard.start();
-
-      $scope.account.discard();
-
-      bAccountDiscard.stop();
+      return $scope.account.discard();
     };
 
     $scope.accountSave = function() {
-      bAccountSave.start();
-
-      $scope.account.save($rootScope.$s).then(function() {
-
-      }, function() {
-
-      });
+      return $scope.account.save($rootScope.$s);
     };
 
     $scope.create = function(name) {
@@ -90,10 +68,8 @@ angular.module('configurationApp')
     };
 
     $scope.refresh = function() {
-      bRefresh.start();
-
       // Retrieve accounts from server
-      $rootScope.$s.call('account.list', [], {full: true}).then(function (accounts) {
+      return $rootScope.$s.call('account.list', [], {full: true}).then(function (accounts) {
         // Parse accounts
         $scope.accounts = _.indexBy(_.map(_.filter(accounts, function (account) {
           return account.id > 0;
@@ -104,9 +80,9 @@ angular.module('configurationApp')
         });
 
         // Trigger initial account load
-        select();
-
-        bRefresh.stop();
+        return select();
+      }, function() {
+        return $q.reject();
       });
     };
 

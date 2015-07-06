@@ -8,18 +8,11 @@
 
     <div class="actions">
       <div class="actions-left">
-        <button class="refresh ladda-button tiny secondary"
-                data-style="zoom-out"
-                data-spinner-color="#333333"
-                data-spinner-size="24"
-                title="Refresh accounts"
-                ng-click="refresh()"
-          >
-          <span class="ladda-label">
-            <i class="fi-refresh"></i>
-          </span>
-        </button>
+        <co-button co-class="secondary" co-tooltip="Refresh accounts" co-callback="refresh">
+          <i class="fi-refresh"></i>
+        </co-button>
       </div>
+
       <div class="actions-right">
         <co-button-input class="create" callback="create" placeholder="Name" title="Create account">
           <i class="fi-plus"></i>
@@ -34,39 +27,17 @@
         <h5>{{ account.name }}</h5>
       </div>
       <div class="actions small-7 large-5 columns">
-        <button class="refresh ladda-button tiny secondary"
-                data-style="zoom-out"
-                data-spinner-color="#333333"
-                data-spinner-size="24"
-                title="Refresh options"
-                ng-click="accountRefresh()"
-          >
-          <span class="ladda-label">
-            <i class="fi-refresh"></i>
-          </span>
-        </button>
-        <button class="discard ladda-button tiny secondary"
-                data-style="zoom-out"
-                data-spinner-color="#333333"
-                data-spinner-size="24"
-                title="Discard changes"
-                ng-click="accountDiscard()"
-          >
-          <span class="ladda-label">
-            <i class="fi-trash"></i>
-          </span>
-        </button>
-        <button class="save ladda-button tiny"
-                data-style="zoom-out"
-                data-spinner-color="#FFFFFF"
-                data-spinner-size="24"
-                title="Save changes"
-                ng-click="accountSave()"
-          >
-          <span class="ladda-label">
-            <i class="fi-save"></i>
-          </span>
-        </button>
+        <co-button co-class="secondary" co-tooltip="Refresh options" co-callback="accountRefresh">
+          <i class="fi-refresh"></i>
+        </co-button>
+
+        <co-button co-class="secondary" co-tooltip="Discard changes" co-callback="accountDiscard">
+          <i class="fi-trash"></i>
+        </co-button>
+
+        <co-button co-tooltip="Save changes" co-callback="accountSave">
+          <i class="fi-save"></i>
+        </co-button>
       </div>
     </div>
 
