@@ -17,6 +17,8 @@
     "angular-xml": "~2.1.0",
     "underscore": "~1.8.3",
     "foundation-icon-fonts": "*",
+
+    "cerealizer.js": "git@github.com:fuzeman/Cerealizer.js.git",
     "ladda-foundation-5": "git@github.com:fuzeman/ladda-foundation-5.git"
   },
   "devDependencies": {
