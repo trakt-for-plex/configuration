@@ -32,10 +32,13 @@ angular.module('configurationApp')
       }
     }
 
-    function Options(options) {
+    function Options(options, account) {
       this.current = options;
+      this.account = typeof account !== 'undefined' ? account : null;
+
       this.original = angular.copy(options);
 
+      // Parse options
       this.groups = {};
 
       parse(this.groups, options);
@@ -53,20 +56,44 @@ angular.module('configurationApp')
     };
 
     Options.prototype.save = function(server) {
-      var options = {};
+      var self = this,
+          changes = {};
 
       for(var i = 0; i < this.current.length; ++i) {
         var c = this.current[i],
             o = this.original[i];
 
-        options[c.key] = {
+        changes[c.key] = {
           from: o.value,
           to: c.value
         };
       }
 
-      console.log(options);
-      return $q.reject();
+      return server.call('option.update', [], {
+        changes: changes,
+        account: this.account !== null ? this.account.id : null
+      }).then(function(result) {
+        // Build object of updated options
+        var updated = _.object(
+          _.map(
+            result.updated,
+            function(key) {
+              return [key, true];
+            }
+          )
+        );
+
+        // Update `original` option values to match the update
+        _.each(self.original, function(option, index) {
+          if(typeof updated[option.key] === 'undefined') {
+            return;
+          }
+
+          option.value = self.current[index].value;
+        });
+      }, function(error) {
+        return $q.reject(error);
+      });
     };
 
     return Options;

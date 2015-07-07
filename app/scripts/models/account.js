@@ -129,7 +129,7 @@ angular.module('configurationApp')
 
       // Retrieve account options
       return server.call('option.list', [], {account: self.id}).then(function(options) {
-        self.options = new Options(options);
+        self.options = new Options(options, self);
       });
     };
 
