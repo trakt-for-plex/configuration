@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .directive('coButton', function($timeout) {
+  .directive('coButton', function() {
     return {
       restrict: 'E',
       scope: {

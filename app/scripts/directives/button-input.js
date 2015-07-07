@@ -52,7 +52,7 @@ angular.module('configurationApp')
         $scope.keyup = function(event) {
           if(event.keyCode === 13) {
             // ENTER
-            $scope.click()
+            $scope.click();
           } else if(event.keyCode === 27) {
             // ESC
             $scope.close();
