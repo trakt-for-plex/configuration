@@ -1,22 +1,11 @@
 <div class="options small-12 small-centered large-6 large-centered columns">
-  <div class="row">
-    <div class="title small-5 large-7 columns">
-      <h5>{{ $s.name }}</h5>
-    </div>
-    <div class="actions small-7 large-5 columns">
-      <co-button co-class="secondary" co-tooltip="Refresh options" co-callback="refresh">
-        <i class="fi-refresh"></i>
-      </co-button>
-
-      <co-button co-class="secondary" co-tooltip="Discard changes" co-callback="discard">
-        <i class="fi-trash"></i>
-      </co-button>
-
-      <co-button co-tooltip="Save changes" co-callback="save">
-        <i class="fi-save"></i>
-      </co-button>
-    </div>
-  </div>
+  <co-configuration-header
+    class="row"
+    co-title="$s.name"
+    co-refresh="refresh"
+    co-discard="discard"
+    co-save="save">
+  </co-configuration-header>
 
   <co-configuration-group co-groups="options.groups"></co-configuration-group>
 </div>

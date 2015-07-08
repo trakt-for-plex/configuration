@@ -22,24 +22,13 @@
   </div>
 
   <div class="options small-8 columns">
-    <div class="row">
-      <div class="title small-5 large-7 columns">
-        <h5>{{ account.name }}</h5>
-      </div>
-      <div class="actions small-7 large-5 columns">
-        <co-button co-class="secondary" co-tooltip="Refresh options" co-callback="accountRefresh">
-          <i class="fi-refresh"></i>
-        </co-button>
-
-        <co-button co-class="secondary" co-tooltip="Discard changes" co-callback="accountDiscard">
-          <i class="fi-trash"></i>
-        </co-button>
-
-        <co-button co-tooltip="Save changes" co-callback="accountSave">
-          <i class="fi-save"></i>
-        </co-button>
-      </div>
-    </div>
+    <co-configuration-header
+      class="row"
+      co-title="account.name"
+      co-refresh="accountRefresh"
+      co-discard="accountDiscard"
+      co-save="accountSave">
+    </co-configuration-header>
 
     <div class="authentication group" ng-show="account">
       <div class="row header">
