@@ -93,8 +93,8 @@ angular.module('configurationApp')
             self.update(account);
           }, function() {
             return $q.reject();
-          })
-        }, function(error) {
+          });
+        }, function() {
           return $q.reject();
         }),
 
