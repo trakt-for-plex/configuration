@@ -1,125 +1,63 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Account', function(Differ, Options, $q) {
+  .factory('Account', function(AccountAuthentication, Differ, Options, $q) {
+    var defaults = {
+      plex: {
+        authorization: {
+          basic: { valid: false }
+        }
+      },
+      trakt: {
+        authorization: {
+          basic: { valid: false },
+          oauth: { valid: false }
+        }
+      }
+    };
+
     function Account(data) {
+      this.authentication = new AccountAuthentication();
       this.options = null;
 
+      // Update with initial data
       this.update(data);
     }
 
+    Account.prototype.current = function() {
+      var self = this,
+          promises = [
+            this.authentication.plex.current(),
+            this.authentication.trakt.current()
+          ];
+
+      return $q.all(promises).then(function(results) {
+        var current = {
+          name: self.name
+        };
+
+        _.each(results, function(result) {
+          $.extend(true, current, result);
+        });
+
+        return current;
+      }, function(error) {
+        return $q.reject(error);
+      });
+    };
+
     Account.prototype.update = function(data) {
-      data = this.defaults(data);
+      // Set defaults
+      data = $.extend(true, angular.copy(defaults), data);
 
-      this.data = $.extend(true, {}, data);
+      // Copy original values for the differ
+      this.data = angular.copy(data);
 
+      // Update attributes
       this.id = data.id;
       this.name = data.name;
 
-      this.plex = data.plex;
-      this.trakt = data.trakt;
-
-      // validate authentication options
-      this.validate();
-    };
-
-    Account.prototype.defaults = function(data) {
-      return $.extend(true, {
-        plex: {
-          authorization: {
-            basic: {
-              valid: false
-            }
-          }
-        },
-        trakt: {
-          authorization: {
-            basic: {
-              valid: false
-            },
-            oauth: {
-              valid: false
-            }
-          }
-        }
-      }, data);
-    };
-
-    Account.prototype.validate = function() {
-      // validate authorization
-      this.plex.authorization.valid =
-        this.plex.authorization.basic.valid;
-
-      this.trakt.authorization.valid =
-        this.trakt.authorization.basic.valid ||
-        this.trakt.authorization.oauth.valid;
-
-      this.valid =
-        this.trakt.authorization.valid &&
-        this.plex.authorization.valid;
-    };
-
-    Account.prototype.changes = function() {
-      var current = {
-        id: this.id,
-        name: this.name,
-
-        plex: {
-          authorization: {
-            basic: {
-              username: this.plex.authorization.basic.username,
-              password: this.plex.authorization.basic.password
-            }
-          }
-        },
-        trakt: {
-          authorization: {
-            basic: {
-              username: this.trakt.authorization.basic.username,
-              password: this.trakt.authorization.basic.password
-            },
-            oauth: {
-              code: this.trakt.authorization.oauth.code
-            }
-          }
-        }
-      };
-
-      var result = Differ.run(current, this.data);
-
-      // set defaults
-      result = $.extend(true, {
-        plex: {
-          authorization: {}
-        },
-        trakt: {
-          authorization: {}
-        }
-      }, result);
-
-      // group authorization methods together in changes
-      if(result.plex.authorization.basic !== undefined) {
-        result.plex.authorization.basic = this.plex.authorization.basic;
-      }
-
-      if(result.trakt.authorization.basic !== undefined) {
-        result.trakt.authorization.basic = this.trakt.authorization.basic;
-      }
-
-      if(result.trakt.authorization.oauth !== undefined) {
-        result.trakt.authorization.oauth = this.trakt.authorization.oauth;
-      }
-
-      // remove empty objects
-      if(Object.keys(result.plex.authorization).length === 0) {
-        delete result.plex;
-      }
-
-      if(Object.keys(result.trakt.authorization).length === 0) {
-        delete result.trakt;
-      }
-
-      return result;
+      this.authentication.update(data);
     };
 
     Account.prototype.refresh = function(server) {
@@ -137,17 +75,33 @@ angular.module('configurationApp')
     };
 
     Account.prototype.discard = function() {
-      // TODO discard account authorization
+      // Discard account authentication/details
+      this.update(this.data);
 
       // Discard account options
       return this.options.discard();
     };
 
     Account.prototype.save = function(server) {
-      console.log(this.changes());
+      var self = this;
 
-      // Save account options
-      return this.options.save(server);
+      // Save account changes
+      return $q.all([
+        // account
+        this.current().then(function(data) {
+          return server.call('account.update', [], {id: self.id, data: data}).then(function(account) {
+            console.log('Sent account changes', account);
+            self.update(account);
+          }, function() {
+            return $q.reject();
+          })
+        }, function(error) {
+          return $q.reject();
+        }),
+
+        // options
+        this.options.save(server)
+      ]);
     };
 
     return Account;
