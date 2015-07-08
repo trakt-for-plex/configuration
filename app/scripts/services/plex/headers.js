@@ -26,7 +26,7 @@ angular.module('configurationApp')
 
     return {
       get: function() {
-        return headers;
+        return angular.copy(headers);
       }
     };
   });
