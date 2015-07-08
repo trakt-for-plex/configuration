@@ -1,0 +1,30 @@
+<div class="group" ng-repeat="(key, group) in groups">
+  <div class="row header">
+    <div class="small-8 large-10 columns">
+      <h5>{{ group.name }}</h5>
+    </div>
+
+    <div class="switch small-4 large-2 columns" ng-show="group.enabled">
+      <input id="{{ group.enabled.key }}" type="checkbox" ng-model="group.enabled.value">
+      <label for="{{ group.enabled.key }}"></label>
+    </div>
+  </div>
+
+  <div class="row group-options">
+    <co-option class="columns" ng-repeat="option in group.options" option="option" ></co-option>
+  </div>
+
+  <div class="sub-group row">
+    <div class="columns" ng-repeat="(key, group) in group.groups">
+      <div class="row header">
+        <div class="small-12 columns">
+          <h6>{{ group.name }}</h6>
+        </div>
+      </div>
+
+      <div class="row group-options">
+        <co-option class="columns" ng-repeat="option in group.options" option="option" ></co-option>
+      </div>
+    </div>
+  </div>
+</div>
