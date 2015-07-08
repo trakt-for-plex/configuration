@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Account', function(Differ, Options) {
+  .factory('Account', function(Differ, Options, $q) {
     function Account(data) {
+      this.options = null;
+
       this.update(data);
     }
 
@@ -17,8 +19,7 @@ angular.module('configurationApp')
       this.plex = data.plex;
       this.trakt = data.trakt;
 
-      this.options = null;
-
+      // validate authentication options
       this.validate();
     };
 
@@ -124,13 +125,15 @@ angular.module('configurationApp')
     Account.prototype.refresh = function(server) {
       var self = this;
 
-      // TODO get account details
-      // TODO this.validate();
-
       // Retrieve account options
-      return server.call('option.list', [], {account: self.id}).then(function(options) {
-        self.options = new Options(options, self);
-      });
+      return $q.all([
+        server.call('account.get', [], {full: true, id: self.id}).then(function(data) {
+          self.update(data);
+        }),
+        server.call('option.list', [], {account: self.id}).then(function(options) {
+          self.options = new Options(options, self);
+        })
+      ]);
     };
 
     Account.prototype.discard = function() {
