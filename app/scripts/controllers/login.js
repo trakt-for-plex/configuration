@@ -8,14 +8,14 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('LoginController', function(PAuthentication, $location, $scope) {
+  .controller('LoginController', function(Authentication, $location, $scope) {
     $scope.credentials = {
       username: null,
       password: null
     };
 
     $scope.submit = function() {
-      PAuthentication.login($scope.credentials).then(function() {
+      Authentication.login($scope.credentials).then(function() {
         $scope.$r.redirect();
       }, function() {
         console.log('login error');

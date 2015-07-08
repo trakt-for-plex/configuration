@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('PAPI', function(PAuthentication, PHeaders, $http) {
+  .factory('PAPI', function(Authentication, PHeaders, $http) {
     var baseUrl = 'https://plex.tv/';
 
     return {
@@ -13,7 +13,7 @@ angular.module('configurationApp')
             includeHttps: includeHttps ? 1 : 0
           },
           headers: $.extend(PHeaders.get(), {
-            'X-Plex-Token': PAuthentication.token()
+            'X-Plex-Token': Authentication.token()
           })
         });
       }

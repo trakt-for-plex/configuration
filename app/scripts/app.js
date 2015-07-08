@@ -58,7 +58,7 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function(PAuthentication, $location, $rootScope) {
+  .run(function(Authentication, $location, $rootScope) {
     $rootScope.$a = {
       authenticated: false,
       user: null
@@ -92,14 +92,14 @@ angular
         return;
       }
 
-      if(!PAuthentication.authenticated()) {
+      if(!Authentication.authenticated()) {
         $rootScope.$a.authenticated = false;
 
         next.resolve = angular.extend(next.resolve || {}, {
           __authenticate__: function() {
-            PAuthentication.get().then(function() {
+            Authentication.get().then(function() {
               $rootScope.$a.authenticated = true;
-              $rootScope.$a.user = PAuthentication.user();
+              $rootScope.$a.user = Authentication.user();
 
               console.log('authenticated');
             }, function() {
