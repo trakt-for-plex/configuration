@@ -38,31 +38,11 @@
       </div>
 
       <tabset>
-        <tab heading="Trakt" data-valid="{{ account.trakt.authorization.valid }}">
-          <accordion close-others="true">
-            <accordion-group heading="OAuth" data-valid="{{ account.trakt.authorization.oauth.valid }}" is-open="true">
-              <label for="trakt.oauth.code">Authentication PIN</label>
-              <input id="trakt.oauth.code" type="password" ng-model="account.trakt.authorization.oauth.code" />
-            </accordion-group>
-            <accordion-group heading="Basic" data-valid="{{ account.trakt.authorization.basic.valid }}">
-              <label for="trakt.basic.username">Username</label>
-              <input id="trakt.basic.username" type="text" ng-model="account.trakt.authorization.basic.username" />
-
-              <label for="trakt.basic.password">Password</label>
-              <input id="trakt.basic.password" type="password" ng-model="account.trakt.authorization.basic.password" />
-            </accordion-group>
-          </accordion>
+        <tab heading="Trakt" data-valid="{{ account.authentication.trakt.valid }}">
+          <co-authentication-trakt co-authorization="account.authentication.trakt.authorization"></co-authentication-trakt>
         </tab>
-        <tab heading="Plex" data-valid="{{ account.plex.authorization.valid }}">
-          <accordion close-others="true">
-            <accordion-group heading="Basic" data-valid="{{ account.plex.authorization.basic.valid }}" is-open="true">
-              <label for="plex.basic.username">Username</label>
-              <input id="plex.basic.username" type="text" ng-model="account.plex.authorization.basic.username" />
-
-              <label for="plex.basic.password">Password</label>
-              <input id="plex.basic.password" type="password" ng-model="account.plex.authorization.basic.password" />
-            </accordion-group>
-          </accordion>
+        <tab heading="Plex" data-valid="{{ account.authentication.plex.valid }}">
+          <co-authentication-plex co-authorization="account.authentication.plex.authorization"></co-authentication-plex>
         </tab>
       </tabset>
     </div>
