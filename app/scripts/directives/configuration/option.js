@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .directive('coOption', function() {
+  .directive('coConfigurationOption', function() {
     return {
       restrict: 'E',
       scope: {
@@ -9,7 +9,7 @@ angular.module('configurationApp')
       },
       template: '<ng-include src="getTemplateUrl()"/>',
       controller: function($scope) {
-        var baseUrl = 'directives/option/',
+        var baseUrl = 'directives/configuration/option/',
           templateMap = {
             boolean:  'boolean.html',
             enum:     'enum.html',
