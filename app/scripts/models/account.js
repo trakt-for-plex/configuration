@@ -90,7 +90,6 @@ angular.module('configurationApp')
         // account
         this.current().then(function(data) {
           return server.call('account.update', [], {id: self.id, data: data}).then(function(account) {
-            console.log('Sent account changes', account);
             self.update(account);
           }, function() {
             return $q.reject();
