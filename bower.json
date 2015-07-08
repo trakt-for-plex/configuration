@@ -19,7 +19,8 @@
     "foundation-icon-fonts": "*",
 
     "cerealizer.js": "git@github.com:fuzeman/Cerealizer.js.git",
-    "ladda-foundation-5": "git@github.com:fuzeman/ladda-foundation-5.git"
+    "ladda-foundation-5": "git@github.com:fuzeman/ladda-foundation-5.git",
+    "trakt.js": "git@github.com:fuzeman/trakt.js.git"
   },
   "devDependencies": {
     "angular-mocks": "^1.3.0"

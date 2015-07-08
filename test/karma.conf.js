@@ -45,6 +45,7 @@ module.exports = function(config) {
       'bower_components/cerealizer.js/dist/cerealizer.js',
       'bower_components/spin.js/spin.js',
       'bower_components/ladda-foundation-5/dist/ladda.js',
+      'bower_components/trakt.js/dist/trakt.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
