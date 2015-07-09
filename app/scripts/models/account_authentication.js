@@ -100,7 +100,7 @@ angular.module('configurationApp')
 
     TraktAuthentication.prototype.basicChanged = function() {
       var current = this.authorization.basic,
-        original = this.data.authorization.basic;
+          original = this.data.authorization.basic;
 
       if(current.username !== original.username) {
         return true;
@@ -115,7 +115,7 @@ angular.module('configurationApp')
 
     TraktAuthentication.prototype.oauthChanged = function() {
       var current = this.authorization.oauth,
-        original = this.data.authorization.oauth;
+          original = this.data.authorization.oauth;
 
       if(current.code !== original.code) {
         return true;
@@ -129,21 +129,24 @@ angular.module('configurationApp')
 
       if(this.basicChanged()) {
         // Basic authorization
-        var credentials = this.authorization.basic;
-
-        promises.push(
-          $q.when({
-            trakt: {
-              username: credentials.username,
-
-              authorization: {
-                basic: {
-                  password: credentials.password
-                }
+        var current = this.authorization.basic,
+            original = this.data.authorization.basic,
+            data = {
+              trakt: {
+                username: current.username
               }
+            };
+
+        if(current.password !== original.password) {
+          // Only send "password" if it has changed
+          data.trakt.authorization = {
+            basic: {
+              password: current.password
             }
-          })
-        );
+          };
+        }
+
+        promises.push($q.when(data));
       }
 
       if(this.oauthChanged()) {
