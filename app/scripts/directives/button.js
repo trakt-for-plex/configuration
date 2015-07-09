@@ -30,6 +30,10 @@ angular.module('configurationApp')
         $button.addClass(scope.class)
                .addClass('ladda-button');
 
+        if(scope.class === 'secondary') {
+          $button.attr('data-spinner-color', '#333333');
+        }
+
         scope.button = Ladda.create($button[0]);
       }
     };
