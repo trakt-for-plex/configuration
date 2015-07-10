@@ -13,6 +13,7 @@
   "globals": {
     "angular": false,
     "Ladda": false,
+    "trakt": false,
     "$": false,
     "_": false
   }
