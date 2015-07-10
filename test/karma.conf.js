@@ -46,6 +46,9 @@ module.exports = function(config) {
       'bower_components/spin.js/spin.js',
       'bower_components/ladda-foundation-5/dist/ladda.js',
       'bower_components/trakt.js/dist/trakt.js',
+      'bower_components/sifter/sifter.js',
+      'bower_components/microplugin/src/microplugin.js',
+      'bower_components/selectize/dist/js/selectize.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
