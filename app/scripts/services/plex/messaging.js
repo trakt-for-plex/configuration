@@ -78,8 +78,18 @@ angular.module('configurationApp')
         var self = this;
 
         return server.get(path, config).then(function(response) {
-          var data = JSON.parse(unpack(response.data));
+          var data = unpack(response.data);
 
+          // Ensure a string is returned
+          if(typeof data !== 'string') {
+            console.warn('[%s] Invalid response format returned', server.identifier);
+            return $q.reject(null);
+          }
+
+          // Parse JSON string
+          data = JSON.parse(unpack(response.data));
+
+          // Return response
           console.debug('[%s] Response', server.identifier, data);
 
           if(data.result !== undefined) {

@@ -8,7 +8,7 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('AccountsController', function (Account, $location, $q, $rootScope, $routeParams, $scope, $timeout) {
+  .controller('AccountsController', function (Account, $location, $q, $rootScope, $routeParams, $scope) {
     $scope.accounts = {};
     $scope.account = null;
 

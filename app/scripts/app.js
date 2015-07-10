@@ -30,29 +30,28 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/home.html',
-        controller: 'HomeController',
-        controllerAs: 'home'
+        controller: 'HomeController'
       })
       .when('/configuration/server', {
         templateUrl: 'views/configuration/server.html',
-        controller: 'ServerController',
-        controllerAs: 'server'
+        controller: 'ServerController'
       })
       .when('/configuration/accounts', {
         templateUrl: 'views/configuration/accounts.html',
         controller: 'AccountsController',
-        controllerAs: 'accounts',
         reloadOnSearch: false
+      })
+      .when('/configuration/rules', {
+        templateUrl: 'views/configuration/rules.html',
+        controller: 'RulesController'
       })
       .when('/connect', {
         templateUrl: 'views/connect.html',
-        controller: 'ConnectController',
-        controllerAs: 'home'
+        controller: 'ConnectController'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
-        controller: 'LoginController',
-        controllerAs: 'login'
+        controller: 'LoginController'
       })
       .otherwise({
         redirectTo: '/'
