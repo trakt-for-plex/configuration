@@ -1,127 +1,135 @@
-<div class="large-8 large-centered columns">
-  <div class="rule-content form-content row">
-    <div class="rule-container large-12 columns">
-      <h3>Client</h3>
+<div class="rules large-6 large-centered columns">
+  <div class="rule-content form-content large-12">
+    <co-configuration-header
+      class="row"
+      co-title="'Client Rules'"
+      co-refresh="clientRefresh"
+      co-discard="clientDiscard"
+      co-save="clientSave">
+    </co-configuration-header>
 
-      <table class="rule-table" cellspacing="0" data-collection="client">
-        <thead>
-        <tr>
-          <th class="actions"></th>
-          <th style="width: 200px;">Machine Identifier</th>
-          <th style="width: 200px;">Name</th>
-          <th>Address</th>
-          <th class="account">Account</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="rule in rules.client" ng-class="{edit: rule.state == 'edit'}">
-          <td class="actions" ng-switch on="rule.state">
-            <div ng-switch-when="edit">
-              <a title="Lookup" ng-click="rule.lookup()"><i class="fi-magnifying-glass"></i></a>
-              <a title="Save" ng-click="rule.save()"><i class="fi-save"></i></a>
-            </div>
-            <div ng-switch-default>
-              <a title="Move" class="move"><i class="fa fa-arrows-v"></i></a>
-              <a title="Delete" ng-click="delete('client', rule)"><i class="fi-x"></i></a>
-              <a title="Edit" ng-click="rule.edit()"><i class="fi-wrench"></i></a>
-            </div>
-          </td>
-          <td ng-switch on="rule.state">
-            <div ng-switch-when="edit">
-              <input type="text" placeholder="Any" ng-model="rule.machine_identifier"/>
-            </div>
-            <div ng-switch-default>
-              {{ rule.machine_identifier || "Any" }}
-            </div>
-          </td>
-          <td ng-switch on="rule.state">
-            <div ng-switch-when="edit">
-              <input type="text" placeholder="Any" ng-model="rule.name"/>
-            </div>
-            <div ng-switch-default>
-              {{ rule.name || "Any" }}
-            </div>
-          </td>
-          <td ng-switch on="rule.state">
-            <div ng-switch-when="edit">
-              <input type="text" placeholder="Any" ng-model="rule.address"/>
-            </div>
-            <div ng-switch-default>
-              {{ rule.address || "Any" }}
-            </div>
-          </td>
-          <td class="account" ng-switch on="rule.state">
-            <div ng-switch-when="edit">
-              <select ng-model="rule.account" ng-options="account.name for account in accounts track by account.id"></select>
-            </div>
-            <div ng-switch-default>
-              {{ rule.account.name }}
-            </div>
-          </td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr class="new">
-          <td class="actions">
-            <a title="New" ng-click="new('client')"><i class="fi-plus"></i></a>
-          </td>
-        </tr>
-        </tfoot>
-      </table>
-    </div>
+    <table class="rule-table" cellspacing="0" data-collection="client">
+      <thead>
+      <tr>
+        <th class="actions"></th>
+        <th style="width: 200px;">Machine Identifier</th>
+        <th style="width: 200px;">Name</th>
+        <th>Address</th>
+        <th class="account">Account</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="rule in rules.client" ng-class="{edit: rule.state == 'edit'}">
+        <td class="actions" ng-switch on="rule.state">
+          <div ng-switch-when="edit">
+            <a title="Lookup" ng-click="rule.lookup()"><i class="fi-magnifying-glass"></i></a>
+            <a title="Save" ng-click="rule.save()"><i class="fi-save"></i></a>
+          </div>
+          <div ng-switch-default>
+            <a title="Move" class="move"><i class="fa fa-arrows-v"></i></a>
+            <a title="Delete" ng-click="delete('client', rule)"><i class="fi-x"></i></a>
+            <a title="Edit" ng-click="rule.edit()"><i class="fi-wrench"></i></a>
+          </div>
+        </td>
+        <td ng-switch on="rule.state">
+          <div ng-switch-when="edit">
+            <input type="text" placeholder="Any" ng-model="rule.machine_identifier"/>
+          </div>
+          <div ng-switch-default>
+            {{ rule.machine_identifier || "Any" }}
+          </div>
+        </td>
+        <td ng-switch on="rule.state">
+          <div ng-switch-when="edit">
+            <input type="text" placeholder="Any" ng-model="rule.name"/>
+          </div>
+          <div ng-switch-default>
+            {{ rule.name || "Any" }}
+          </div>
+        </td>
+        <td ng-switch on="rule.state">
+          <div ng-switch-when="edit">
+            <input type="text" placeholder="Any" ng-model="rule.address"/>
+          </div>
+          <div ng-switch-default>
+            {{ rule.address || "Any" }}
+          </div>
+        </td>
+        <td class="account" ng-switch on="rule.state">
+          <div ng-switch-when="edit">
+            <select ng-model="rule.account" ng-options="account.name for account in accounts track by account.id"></select>
+          </div>
+          <div ng-switch-default>
+            {{ rule.account.name }}
+          </div>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr class="new">
+        <td class="actions">
+          <a title="New" ng-click="new('client')"><i class="fi-plus"></i></a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
   </div>
 
-  <div class="rule-content form-content row">
-    <div class="rule-container large-12 columns">
-      <h3>User</h3>
+  <div class="rule-content form-content large-12">
+    <co-configuration-header
+      class="row"
+      co-title="'User Rules'"
+      co-refresh="userRefresh"
+      co-discard="userDiscard"
+      co-save="userSave">
+    </co-configuration-header>
 
-      <table class="rule-table" cellspacing="0" data-collection="user">
-        <thead>
-        <tr>
-          <th class="actions"></th>
-          <th>Name</th>
-          <th class="account">Account</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="rule in rules.user" ng-class="{edit: rule.state == 'edit'}">
-          <td class="actions" ng-switch on="rule.state">
-            <div ng-switch-when="edit">
-              <a title="Lookup" ng-click="rule.lookup()"><i class="fi-magnifying-glass"></i></a>
-              <a title="Save" ng-click="rule.save()"><i class="fi-save"></i></a>
-            </div>
-            <div ng-switch-default>
-              <a title="Move" class="move"><i class="fa fa-arrows-v"></i></a>
-              <a title="Delete" ng-click="delete('user', rule)"><i class="fi-x"></i></a>
-              <a title="Edit" ng-click="rule.edit()"><i class="fi-wrench"></i></a>
-            </div>
-          </td>
-          <td ng-switch on="rule.state">
-            <div ng-switch-when="edit">
-              <input type="text" placeholder="Any" ng-model="rule.name"/>
-            </div>
-            <div ng-switch-default>
-              {{ rule.name || "Any" }}
-            </div>
-          </td>
-          <td class="account" ng-switch on="rule.state">
-            <div ng-switch-when="edit">
-              <select ng-model="rule.account" ng-options="account.name for account in accounts track by account.id"></select>
-            </div>
-            <div ng-switch-default>
-              {{ rule.account.name }}
-            </div>
-          </td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr class="new">
-          <td class="actions">
-            <a title="New" ng-click="new('user')"><i class="fi-plus"></i></a>
-          </td>
-        </tr>
-        </tfoot>
-      </table>
-    </div>
+    <table class="rule-table" cellspacing="0" data-collection="user">
+      <thead>
+      <tr>
+        <th class="actions"></th>
+        <th>Name</th>
+        <th class="account">Account</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="rule in rules.user" ng-class="{edit: rule.state == 'edit'}">
+        <td class="actions" ng-switch on="rule.state">
+          <div ng-switch-when="edit">
+            <a title="Lookup" ng-click="rule.lookup()"><i class="fi-magnifying-glass"></i></a>
+            <a title="Save" ng-click="rule.save()"><i class="fi-save"></i></a>
+          </div>
+          <div ng-switch-default>
+            <a title="Move" class="move"><i class="fa fa-arrows-v"></i></a>
+            <a title="Delete" ng-click="delete('user', rule)"><i class="fi-x"></i></a>
+            <a title="Edit" ng-click="rule.edit()"><i class="fi-wrench"></i></a>
+          </div>
+        </td>
+        <td ng-switch on="rule.state">
+          <div ng-switch-when="edit">
+            <input type="text" placeholder="Any" ng-model="rule.name"/>
+          </div>
+          <div ng-switch-default>
+            {{ rule.name || "Any" }}
+          </div>
+        </td>
+        <td class="account" ng-switch on="rule.state">
+          <div ng-switch-when="edit">
+            <select ng-model="rule.account" ng-options="account.name for account in accounts track by account.id"></select>
+          </div>
+          <div ng-switch-default>
+            {{ rule.account.name }}
+          </div>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr class="new">
+        <td class="actions">
+          <a title="New" ng-click="new('user')"><i class="fi-plus"></i></a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
   </div>
 </div>
