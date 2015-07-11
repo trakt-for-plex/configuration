@@ -10,5 +10,132 @@
 
   table {
     width: 100%;
+
+    tr {
+      height: 44px;
+    }
+
+    th.actions {
+      width: 64px;
+    }
+
+    th.account {
+      width: 170px;
+    }
+
+    td {
+      padding: 0 10px;
+
+      input, select {
+        margin: 0;
+      }
+
+      select, .selectize-control {
+        height: 30px;
+      }
+
+      .selectize-control {
+        margin-bottom: 6px;
+
+        .selectize-dropdown,
+        .selectize-input,
+        .selectize-input input {
+          font-size: 14px;
+        }
+
+        .selectize-dropdown .optgroup-header {
+          font-weight: bold;
+        }
+
+        input {
+          height: 18px;
+        }
+      }
+
+      .plain {
+        padding: 10px 9px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    td.actions {
+      padding: 5px;
+
+      font-size: 17px;
+      text-align: right;
+
+      // disable text selection on action buttons
+         -moz-user-select: none;
+          -ms-user-select: none;
+      -webkit-user-select: none;
+              user-select: none;
+
+      a {
+        color: #333;
+
+        margin-left: 3px;
+      }
+
+      a:hover {
+        color: #777;
+      }
+
+      a.move {
+        display: block;
+        float: left;
+        position: absolute;
+
+        width: 20px;
+        margin-left: -6px;
+
+        text-align: center;
+
+        color: #BBB;
+      }
+
+      a.move:hover {
+        color: #777;
+        cursor: -webkit-grab;
+      }
+    }
+  }
+
+  .clients {
+    table {
+      th.name {
+        width: 190px;
+      }
+
+      th.machine-identifier {
+        width: 280px;
+      }
+
+      td.machine-identifier {
+        width: 260px;
+
+        .plain {
+          width: 260px;
+        }
+
+        .selectize-input div {
+          width: 220px;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .selectize-dropdown-content {
+          .option {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
   }
 }
