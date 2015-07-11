@@ -20,6 +20,7 @@ angular
     'ngTouch',
 
     'mm.foundation',
+    'selectize',
     'xml'
   ])
   .config(function ($httpProvider, $routeProvider) {
