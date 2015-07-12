@@ -5,6 +5,7 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
+        self: '=coSelf',
         callback: '=coCallback',
 
         class: '@coClass',
@@ -14,10 +15,18 @@ angular.module('configurationApp')
       transclude: true,
 
       controller: function($scope) {
+        $scope.call = function() {
+          if(typeof $scope.self === 'undefined' || $scope.self === null) {
+            return $scope.callback();
+          }
+
+          return $.proxy($scope.callback, $scope.self)();
+        };
+
         $scope.click = function() {
           $scope.button.start();
 
-          $scope.callback().then(function() {
+          $scope.call().then(function() {
             $scope.button.stop();
           }, function() {
             $scope.button.stop();

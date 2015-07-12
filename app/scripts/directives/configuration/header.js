@@ -7,6 +7,7 @@ angular.module('configurationApp')
       scope: {
         title: '=coTitle',
 
+        self: '=coSelf',
         refresh: '=coRefresh',
         discard: '=coDiscard',
         save: '=coSave'
