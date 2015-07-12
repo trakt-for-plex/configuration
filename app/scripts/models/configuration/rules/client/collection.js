@@ -57,7 +57,7 @@ angular.module('configurationApp')
       return $q.all([
         // Retrieve seen clients
         $rootScope.$s.call('session.client.list').then(
-          $.proxy(self.updateClients, this),
+          $.proxy(self.updateClients, self),
           function() {
             return $q.reject('Unable to retrieve clients');
           }
@@ -65,7 +65,7 @@ angular.module('configurationApp')
 
         // Retrieve client rules
         $rootScope.$s.call('rule.list', [], {type: 'client', full: true}).then(
-          $.proxy(self.updateRules, this),
+          $.proxy(self.updateRules, self),
           function() {
             return $q.reject('Unable to retrieve client rules');
           }

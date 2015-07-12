@@ -53,7 +53,7 @@ angular.module('configurationApp')
       return $q.all([
         // Retrieve seen users
         $rootScope.$s.call('session.user.list').then(
-          $.proxy(self.updateUsers, this),
+          $.proxy(self.updateUsers, self),
           function() {
             return $q.reject('Unable to retrieve users');
           }
@@ -61,7 +61,7 @@ angular.module('configurationApp')
 
         // Retrieve user rules
         $rootScope.$s.call('rule.list', [], {type: 'user', full: true}).then(
-          $.proxy(self.updateRules, this),
+          $.proxy(self.updateRules, self),
           function() {
             return $q.reject('Unable to retrieve user rules');
           }
