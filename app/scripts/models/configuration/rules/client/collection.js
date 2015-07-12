@@ -29,6 +29,7 @@ angular.module('configurationApp')
 
     ClientRuleCollection.prototype.create = function() {
       this.rules.push(new ClientRule(
+        this,
         {
           key: '*',
           name: '*',
@@ -38,6 +39,16 @@ angular.module('configurationApp')
         },
         'edit'
       ));
+    };
+
+    ClientRuleCollection.prototype.delete = function(rule) {
+      var index = this.rules.indexOf(rule);
+
+      if(index === -1) {
+        return;
+      }
+
+      this.rules.splice(index, 1);
     };
 
     ClientRuleCollection.prototype.refresh = function() {
@@ -104,9 +115,11 @@ angular.module('configurationApp')
     };
 
     ClientRuleCollection.prototype.updateRules = function(rules) {
+      var self = this;
+
       // Parse rules
       this.rules = _.map(rules, function(rule) {
-        return new ClientRule(rule);
+        return new ClientRule(self, rule);
       });
 
       console.log('client - rules', this.rules);

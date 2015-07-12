@@ -2,7 +2,9 @@
 
 angular.module('configurationApp')
   .factory('UserRule', function() {
-    function UserRule(data, state) {
+    function UserRule(collection, data, state) {
+      this.collection = collection;
+
       this.id = null;
 
       this.name = null;
@@ -14,6 +16,10 @@ angular.module('configurationApp')
 
       this.update(data);
     }
+
+    UserRule.prototype.delete = function() {
+      this.collection.delete(this);
+    };
 
     UserRule.prototype.edit = function() {
       this.state = 'edit';

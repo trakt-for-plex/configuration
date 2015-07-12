@@ -27,6 +27,7 @@ angular.module('configurationApp')
 
     UserRuleCollection.prototype.create = function() {
       this.rules.push(new UserRule(
+        this,
         {
           name: '*',
 
@@ -34,6 +35,16 @@ angular.module('configurationApp')
         },
         'edit'
       ));
+    };
+
+    UserRuleCollection.prototype.delete = function(rule) {
+      var index = this.rules.indexOf(rule);
+
+      if(index === -1) {
+        return;
+      }
+
+      this.rules.splice(index, 1);
     };
 
     UserRuleCollection.prototype.refresh = function() {
@@ -73,9 +84,11 @@ angular.module('configurationApp')
     };
 
     UserRuleCollection.prototype.updateRules = function(rules) {
+      var self = this;
+
       // Parse rules
       this.rules = _.map(rules, function(rule) {
-        return new UserRule(rule);
+        return new UserRule(self, rule);
       });
 
       console.log('user - rules', this.rules);

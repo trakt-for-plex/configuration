@@ -19,14 +19,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="rule in client.rules" ng-class="{edit: rule.state == 'edit'}">
+        <tr ng-repeat="rule in client.rules track by $index" ng-class="{edit: rule.state == 'edit'}">
           <td class="actions" ng-switch on="rule.state">
             <div ng-switch-when="edit">
+              <a title="Delete" ng-click="rule.delete()"><i class="fi-x"></i></a>
               <a title="Save" ng-click="rule.save()"><i class="fi-save"></i></a>
             </div>
             <div ng-switch-default>
               <a title="Move" class="move"><i class="fa fa-arrows-v"></i></a>
-              <a title="Delete" ng-click="delete('client', rule)"><i class="fi-x"></i></a>
+              <a title="Delete" ng-click="rule.delete()"><i class="fi-x"></i></a>
               <a title="Edit" ng-click="rule.edit()"><i class="fi-wrench"></i></a>
             </div>
           </td>
@@ -140,14 +141,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="rule in user.rules" ng-class="{edit: rule.state == 'edit'}">
+        <tr ng-repeat="rule in user.rules track by $index" ng-class="{edit: rule.state == 'edit'}">
           <td class="actions" ng-switch on="rule.state">
             <div ng-switch-when="edit">
+              <a title="Delete" ng-click="rule.delete()"><i class="fi-x"></i></a>
               <a title="Save" ng-click="rule.save()"><i class="fi-save"></i></a>
             </div>
             <div ng-switch-default>
               <a title="Move" class="move"><i class="fa fa-arrows-v"></i></a>
-              <a title="Delete" ng-click="delete('user', rule)"><i class="fi-x"></i></a>
+              <a title="Delete" ng-click="rule.delete()"><i class="fi-x"></i></a>
               <a title="Edit" ng-click="rule.edit()"><i class="fi-wrench"></i></a>
             </div>
           </td>

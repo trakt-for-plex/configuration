@@ -2,7 +2,9 @@
 
 angular.module('configurationApp')
   .factory('ClientRule', function() {
-    function ClientRule(data, state) {
+    function ClientRule(collection, data, state) {
+      this.collection = collection;
+
       this.id = null;
 
       this.key = null;
@@ -16,6 +18,10 @@ angular.module('configurationApp')
 
       this.update(data);
     }
+
+    ClientRule.prototype.delete = function() {
+      this.collection.delete(this);
+    };
 
     ClientRule.prototype.edit = function() {
       this.state = 'edit';
