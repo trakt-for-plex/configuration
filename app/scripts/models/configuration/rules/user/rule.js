@@ -2,7 +2,7 @@
 
 angular.module('configurationApp')
   .factory('UserRule', function() {
-    function UserRule(data) {
+    function UserRule(data, state) {
       this.id = null;
 
       this.name = null;
@@ -10,7 +10,7 @@ angular.module('configurationApp')
       this.account = null;
       this.priority = null;
 
-      this.state = 'view';
+      this.state = typeof state !== 'undefined' ? state: 'view';
 
       this.update(data);
     }

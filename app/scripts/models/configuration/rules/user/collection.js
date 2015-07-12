@@ -25,6 +25,17 @@ angular.module('configurationApp')
       this.rules = null;
     }
 
+    UserRuleCollection.prototype.create = function() {
+      this.rules.push(new UserRule(
+        {
+          name: '*',
+
+          priority: this.rules.length + 1
+        },
+        'edit'
+      ));
+    };
+
     UserRuleCollection.prototype.refresh = function() {
       var self = this;
 

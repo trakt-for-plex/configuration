@@ -2,7 +2,7 @@
 
 angular.module('configurationApp')
   .factory('ClientRule', function() {
-    function ClientRule(data) {
+    function ClientRule(data, state) {
       this.id = null;
 
       this.key = null;
@@ -12,7 +12,7 @@ angular.module('configurationApp')
       this.account = null;
       this.priority = null;
 
-      this.state = 'view';
+      this.state = typeof state !== 'undefined' ? state: 'view';
 
       this.update(data);
     }

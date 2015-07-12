@@ -27,6 +27,19 @@ angular.module('configurationApp')
       this.rules = null;
     }
 
+    ClientRuleCollection.prototype.create = function() {
+      this.rules.push(new ClientRule(
+        {
+          key: '*',
+          name: '*',
+          address: '*',
+
+          priority: this.rules.length + 1
+        },
+        'edit'
+      ));
+    };
+
     ClientRuleCollection.prototype.refresh = function() {
       var self = this;
 
