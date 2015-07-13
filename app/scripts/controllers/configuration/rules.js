@@ -21,6 +21,38 @@ angular.module('configurationApp')
     $scope.client = new ClientRuleCollection();
     $scope.user = new UserRuleCollection();
 
+    // Setup sortable rule tables
+    $('.rules table').sortable({
+      handle: 'a.move',
+
+      containerSelector: 'table',
+      itemPath: '> tbody',
+      itemSelector: 'tr',
+      placeholder: '<tr class="placeholder"/>',
+
+      onDragStart: function($item, container, _super) {
+        var node = $item[0],
+          tbody = node.parentNode,
+          index = Array.prototype.indexOf.call(tbody.children, $item[0]);
+
+        $item.addClass(container.group.options.draggedClass);
+        $("body").addClass(container.group.options.bodyClass);
+
+        $item.data('drag-from', index);
+      },
+      onDrop: function($item, container, _super) {
+        var node = $item[0],
+          tbody = node.parentNode,
+          from = $item.data('drag-from'),
+          to = Array.prototype.indexOf.call(tbody.children, $item[0]);
+
+        $item.removeClass(container.group.options.draggedClass).removeAttr("style");
+        $("body").removeClass(container.group.options.bodyClass);
+
+        console.log('onDrop', from, to);
+      }
+    });
+
     $scope.refresh = function() {
       var promises = [
         // Retrieve accounts

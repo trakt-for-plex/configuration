@@ -1,3 +1,7 @@
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
 .rules {
   margin-top: 25px;
 
@@ -100,6 +104,33 @@
         color: #777;
         cursor: -webkit-grab;
       }
+    }
+
+    .dragged {
+      position: absolute;
+      opacity: 0.5;
+      z-index: 2000;
+    }
+
+    tr.placeholder {
+      position: relative;
+
+      height: 0;
+    }
+
+    tr.placeholder:before {
+      position: absolute;
+      width: 0;
+      height: 0;
+
+      margin-top: -5px;
+      left: 5px;
+
+      content: "";
+
+      border: 5px solid transparent;
+      border-left-color: #333;
+      border-right: none;
     }
   }
 
