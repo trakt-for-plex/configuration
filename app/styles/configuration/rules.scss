@@ -78,9 +78,12 @@ body.dragging, body.dragging * {
               user-select: none;
 
       a {
-        color: #333;
+        display: inline-block;
+        width: 14px;
 
         margin-left: 3px;
+
+        color: #333;
       }
 
       a:hover {
