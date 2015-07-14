@@ -2,7 +2,10 @@
 
 angular.module('configurationApp')
   .factory('ClientRuleCollection', function(ClientRule, $q, $rootScope) {
-    var attributeFunctions = [
+    var accountFunctions = [
+          { $order: 1, value: '-', text: 'None' }
+        ],
+        attributeFunctions = [
           { $order: 1, value: '*', text: 'Any' }
         ];
 
@@ -25,6 +28,10 @@ angular.module('configurationApp')
           name: '*',
           address: '*',
 
+          account: {
+            id: '-',
+            name: 'None'
+          },
           priority: this.rules.length + 1
         },
         'edit'
@@ -93,7 +100,7 @@ angular.module('configurationApp')
     };
 
     ClientRuleCollection.prototype.updateAccounts = function(accounts) {
-      this.accounts = accounts;
+      this.accounts = [].concat(accountFunctions, accounts);
     };
 
     ClientRuleCollection.prototype.updateClients = function(clients) {

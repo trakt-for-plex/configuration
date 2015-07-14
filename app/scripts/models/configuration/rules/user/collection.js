@@ -3,7 +3,8 @@
 angular.module('configurationApp')
   .factory('UserRuleCollection', function(UserRule, $q, $rootScope) {
     var accountFunctions = [
-          { $order: 1, value: '@', text: 'Map' }
+          { $order: 1, value: '-', text: 'None' },
+          { $order: 2, value: '@', text: 'Map' }
         ],
         attributeFunctions = [
           { $order: 1, value: '*', text: 'Any' },
@@ -24,6 +25,10 @@ angular.module('configurationApp')
         {
           name: '*',
 
+          account: {
+            id: '-',
+            name: 'None'
+          },
           priority: this.rules.length + 1
         },
         'edit'
