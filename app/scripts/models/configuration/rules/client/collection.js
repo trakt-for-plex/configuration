@@ -48,7 +48,11 @@ angular.module('configurationApp')
         return;
       }
 
+      // Delete rule from collection
       this.rules.splice(index, 1);
+
+      // Update rule priorities
+      this.updatePriorities();
     };
 
     ClientRuleCollection.prototype.refresh = function() {
@@ -64,7 +68,7 @@ angular.module('configurationApp')
         ),
 
         // Retrieve client rules
-        $rootScope.$s.call('rule.list', [], {type: 'client', full: true}).then(
+        $rootScope.$s.call('session.client.rule.list', [], {full: true}).then(
           $.proxy(self.updateRules, self),
           function() {
             return $q.reject('Unable to retrieve client rules');
@@ -74,11 +78,28 @@ angular.module('configurationApp')
     };
 
     ClientRuleCollection.prototype.discard = function() {
+      // Discard rule changes
       _.each(this.rules.slice(), function(rule) {
         rule.discard();
       });
 
+      // Update rule priorities
+      this.updatePriorities();
+
       return $q.resolve();
+    };
+
+    ClientRuleCollection.prototype.save = function() {
+      var current = _.map(this.rules, function(rule) {
+        return rule.current();
+      });
+
+      return $rootScope.$s.call('session.client.rule.update', [], {current: current, full: true}).then(
+        $.proxy(self.updateRules, self),
+        function() {
+          return $q.reject('Unable to update client rules');
+        }
+      );
     };
 
     ClientRuleCollection.prototype.updateClients = function(clients) {
@@ -93,8 +114,6 @@ angular.module('configurationApp')
         };
       }));
 
-      console.log('client - keys', this.available.keys);
-
       // Build collection of client names
       this.available.names = [].concat(operations, _.map(clients, function (client) {
         return {
@@ -106,8 +125,6 @@ angular.module('configurationApp')
         };
       }));
 
-      console.log('client - names', this.available.names);
-
       // Build collection of client addresses
       this.available.addresses = [].concat(operations, _.map(clients, function (client) {
         return {
@@ -118,8 +135,13 @@ angular.module('configurationApp')
           text: client.address
         };
       }));
+    };
 
-      console.log('client - addresses', this.available.addresses);
+    ClientRuleCollection.prototype.updatePriorities = function() {
+      // Update rule priorities
+      for(var i = 0; i < this.rules.length; ++i) {
+        this.rules[i].priority = i + 1;
+      }
     };
 
     ClientRuleCollection.prototype.updateRules = function(rules) {
@@ -129,8 +151,6 @@ angular.module('configurationApp')
       this.rules = _.map(rules, function(rule) {
         return new ClientRule(self, rule);
       });
-
-      console.log('client - rules', this.rules);
     };
 
     return ClientRuleCollection;

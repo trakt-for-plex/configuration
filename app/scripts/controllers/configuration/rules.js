@@ -58,16 +58,16 @@ angular.module('configurationApp')
             collection = null;
 
         if(collectionName === 'client') {
-          collection = $scope.client.rules;
+          collection = $scope.client;
         } else if(collectionName === 'user') {
-          collection = $scope.user.rules;
+          collection = $scope.user;
         } else {
           console.warn('Unable to find collection with the name "%s"', collectionName);
           return;
         }
 
         // Retrieve rule from `collection`
-        var item = collection[from];
+        var item = collection.rules[from];
 
         if(typeof item === 'undefined') {
           console.warn('Unable to retrieve item with index %s', from);
@@ -75,13 +75,11 @@ angular.module('configurationApp')
         }
 
         // Move rule inside `collection`
-        collection.splice(from, 1);
-        collection.splice(to, 0, item);
+        collection.rules.splice(from, 1);
+        collection.rules.splice(to, 0, item);
 
         // Update rule priorities
-        for(var i = 0; i < collection.length; ++i) {
-          collection[i].priority = i + 1;
-        }
+        collection.updatePriorities();
 
         $scope.$apply();
       }
@@ -114,9 +112,7 @@ angular.module('configurationApp')
         $scope.user.refresh()
       ];
 
-      return $q.all(promises).then(function() {
-        console.log('refreshed');
-      });
+      return $q.all(promises);
     };
 
     $scope.attributeLabel = function(value) {

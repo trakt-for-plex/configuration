@@ -57,6 +57,17 @@ angular.module('configurationApp')
       return value;
     }
 
+    UserRule.prototype.current = function() {
+      return {
+        id:       this.id,
+
+        name:     this.name,
+
+        account:  this.account.id,
+        priority: this.priority
+      };
+    };
+
     UserRule.prototype.update = function(data) {
       this.original = angular.copy(data);
 

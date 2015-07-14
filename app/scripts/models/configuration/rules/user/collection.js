@@ -44,7 +44,11 @@ angular.module('configurationApp')
         return;
       }
 
+      // Delete rule from collection
       this.rules.splice(index, 1);
+
+      // Update rule priorities
+      this.updatePriorities();
     };
 
     UserRuleCollection.prototype.refresh = function() {
@@ -60,7 +64,7 @@ angular.module('configurationApp')
         ),
 
         // Retrieve user rules
-        $rootScope.$s.call('rule.list', [], {type: 'user', full: true}).then(
+        $rootScope.$s.call('session.user.rule.list', [], {full: true}).then(
           $.proxy(self.updateRules, self),
           function() {
             return $q.reject('Unable to retrieve user rules');
@@ -70,11 +74,44 @@ angular.module('configurationApp')
     };
 
     UserRuleCollection.prototype.discard = function() {
+      // Discard rule changes
       _.each(this.rules.slice(), function(rule) {
         rule.discard();
       });
 
+      // Update rule priorities
+      this.updatePriorities();
+
       return $q.resolve();
+    };
+
+    UserRuleCollection.prototype.save = function() {
+      var current = _.map(this.rules, function(rule) {
+        return rule.current();
+      });
+
+      return $rootScope.$s.call('session.user.rule.update', [], {current: current, full: true}).then(
+        $.proxy(self.updateRules, self),
+        function() {
+          return $q.reject('Unable to update user rules');
+        }
+      );
+    };
+
+    UserRuleCollection.prototype.updatePriorities = function() {
+      // Update rule priorities
+      for(var i = 0; i < this.rules.length; ++i) {
+        this.rules[i].priority = i + 1;
+      }
+    };
+
+    UserRuleCollection.prototype.updateRules = function(rules) {
+      var self = this;
+
+      // Parse rules
+      this.rules = _.map(rules, function(rule) {
+        return new UserRule(self, rule);
+      });
     };
 
     UserRuleCollection.prototype.updateUsers = function(users) {
@@ -87,19 +124,6 @@ angular.module('configurationApp')
           text: user.name
         };
       }));
-
-      console.log('user - names', this.available.names);
-    };
-
-    UserRuleCollection.prototype.updateRules = function(rules) {
-      var self = this;
-
-      // Parse rules
-      this.rules = _.map(rules, function(rule) {
-        return new UserRule(self, rule);
-      });
-
-      console.log('user - rules', this.rules);
     };
 
     return UserRuleCollection;
