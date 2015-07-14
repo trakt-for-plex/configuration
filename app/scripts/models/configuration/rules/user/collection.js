@@ -2,20 +2,13 @@
 
 angular.module('configurationApp')
   .factory('UserRuleCollection', function(UserRule, $q, $rootScope) {
-    var operations = [
-      {
-        $order: 1,
-
-        value: '*',
-        text: 'Any'
-      },
-      {
-        $order: 2,
-
-        value: '@',
-        text: 'Map'
-      }
-    ];
+    var accountFunctions = [
+          { $order: 1, value: '@', text: 'Map' }
+        ],
+        attributeFunctions = [
+          { $order: 1, value: '*', text: 'Any' },
+          { $order: 2, value: '@', text: 'Map' }
+        ];
 
     function UserRuleCollection() {
       this.available = {
@@ -98,6 +91,10 @@ angular.module('configurationApp')
       );
     };
 
+    UserRuleCollection.prototype.updateAccounts = function(accounts) {
+      this.accounts = [].concat(accountFunctions, accounts);
+    };
+
     UserRuleCollection.prototype.updatePriorities = function() {
       // Update rule priorities
       for(var i = 0; i < this.rules.length; ++i) {
@@ -115,7 +112,7 @@ angular.module('configurationApp')
     };
 
     UserRuleCollection.prototype.updateUsers = function(users) {
-      this.available.names = [].concat(operations, _.map(users, function (user) {
+      this.available.names = [].concat(attributeFunctions, _.map(users, function (user) {
         return {
           $order: 10,
           type: 'name',

@@ -2,20 +2,9 @@
 
 angular.module('configurationApp')
   .factory('ClientRuleCollection', function(ClientRule, $q, $rootScope) {
-    var operations = [
-      {
-        $order: 1,
-
-        value: '*',
-        text: 'Any'
-      },
-      {
-        $order: 2,
-
-        value: '@',
-        text: 'Map'
-      }
-    ];
+    var attributeFunctions = [
+          { $order: 1, value: '*', text: 'Any' }
+        ];
 
     function ClientRuleCollection() {
       this.available = {
@@ -24,6 +13,7 @@ angular.module('configurationApp')
         addresses: null
       };
 
+      this.accounts = null;
       this.rules = null;
     }
 
@@ -102,9 +92,13 @@ angular.module('configurationApp')
       );
     };
 
+    ClientRuleCollection.prototype.updateAccounts = function(accounts) {
+      this.accounts = accounts;
+    };
+
     ClientRuleCollection.prototype.updateClients = function(clients) {
       // Build collection of client keys
-      this.available.keys = [].concat(operations, _.map(clients, function (client) {
+      this.available.keys = [].concat(attributeFunctions, _.map(clients, function (client) {
         return {
           $order: 10,
           type: 'key',
@@ -115,7 +109,7 @@ angular.module('configurationApp')
       }));
 
       // Build collection of client names
-      this.available.names = [].concat(operations, _.map(clients, function (client) {
+      this.available.names = [].concat(attributeFunctions, _.map(clients, function (client) {
         return {
           $order: 10,
           type: 'name',
@@ -126,7 +120,7 @@ angular.module('configurationApp')
       }));
 
       // Build collection of client addresses
-      this.available.addresses = [].concat(operations, _.map(clients, function (client) {
+      this.available.addresses = [].concat(attributeFunctions, _.map(clients, function (client) {
         return {
           $order: 10,
           type: 'address',

@@ -9,15 +9,6 @@
  */
 angular.module('configurationApp')
   .controller('RulesController', function (ClientRuleCollection, UserRuleCollection, $q, $rootScope, $scope) {
-    var operations = [
-      {
-        $order: 1,
-
-        value: '@',
-        text: 'Map'
-      }
-    ];
-
     $scope.client = new ClientRuleCollection();
     $scope.user = new UserRuleCollection();
 
@@ -89,10 +80,13 @@ angular.module('configurationApp')
       var promises = [
         // Retrieve accounts
         $rootScope.$s.call('account.list').then(function(accounts) {
-          // Only return actual accounts
-          $scope.accounts = [].concat(operations, _.map(_.filter(accounts, function (account) {
+          // Filter accounts (remove "server" account)
+          accounts = _.filter(accounts, function (account) {
             return account.id > 0;
-          }), function(account) {
+          });
+
+          // Map accounts
+          accounts = _.map(accounts, function(account) {
             return {
               $order: 10,
               type: 'name',
@@ -100,9 +94,11 @@ angular.module('configurationApp')
               value: account.id,
               text: account.name
             }
-          }));
+          });
 
-          console.log('accounts', $scope.accounts);
+          // Update collections
+          $scope.client.updateAccounts(accounts);
+          $scope.user.updateAccounts(accounts);
         }, function() {
           return $q.reject('Unable to retrieve accounts');
         }),

@@ -36,14 +36,9 @@
             <div ng-switch-when="edit">
               <selectize
                 config="{
-                  optgroupField: 'type',
-                  optgroupValueField: 'type',
-                  maxItems: 1,
-                  optgroups: [
-                    {type: 'name', label: 'Accounts'}
-                  ]
+                  maxItems: 1
                 }"
-                options="accounts"
+                options="client.accounts"
                 ng-model="rule.account.id">
               </selectize>
             </div>
@@ -166,7 +161,7 @@
                     {type: 'name', label: 'Accounts'}
                   ]
                 }"
-                options="accounts"
+                options="user.accounts"
                 ng-model="rule.account.id">
               </selectize>
             </div>
