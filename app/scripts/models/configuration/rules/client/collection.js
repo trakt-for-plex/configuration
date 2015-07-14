@@ -73,6 +73,14 @@ angular.module('configurationApp')
       ]);
     };
 
+    ClientRuleCollection.prototype.discard = function() {
+      _.each(this.rules.slice(), function(rule) {
+        rule.discard();
+      });
+
+      return $q.resolve();
+    };
+
     ClientRuleCollection.prototype.updateClients = function(clients) {
       // Build collection of client keys
       this.available.keys = [].concat(operations, _.map(clients, function (client) {

@@ -21,6 +21,14 @@ angular.module('configurationApp')
       this.collection.delete(this);
     };
 
+    UserRule.prototype.discard = function() {
+      if(this.id === null) {
+        this.delete();
+      } else {
+        this.update(this.original);
+      }
+    };
+
     UserRule.prototype.edit = function() {
       this.state = 'edit';
     };
@@ -52,7 +60,7 @@ angular.module('configurationApp')
     UserRule.prototype.update = function(data) {
       this.original = angular.copy(data);
 
-      this.id = data.id;
+      this.id = typeof data.id !== 'undefined' ? data.id : null;
 
       this.name = attributeValue(data.name);
 

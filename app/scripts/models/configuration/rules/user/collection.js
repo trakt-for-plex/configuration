@@ -69,6 +69,14 @@ angular.module('configurationApp')
       ]);
     };
 
+    UserRuleCollection.prototype.discard = function() {
+      _.each(this.rules.slice(), function(rule) {
+        rule.discard();
+      });
+
+      return $q.resolve();
+    };
+
     UserRuleCollection.prototype.updateUsers = function(users) {
       this.available.names = [].concat(operations, _.map(users, function (user) {
         return {
