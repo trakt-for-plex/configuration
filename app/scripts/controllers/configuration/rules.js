@@ -82,6 +82,8 @@ angular.module('configurationApp')
         for(var i = 0; i < collection.length; ++i) {
           collection[i].priority = i + 1;
         }
+
+        $scope.$apply();
       }
     });
 
