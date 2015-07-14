@@ -15,6 +15,27 @@ body.dragging, body.dragging * {
   table {
     width: 100%;
 
+    background: transparent;
+    border: none;
+
+    thead {
+      background: rgba(0, 0, 0, 0.14);
+    }
+
+    tbody {
+      tr {
+        background: rgba(0, 0, 0, 0.035);
+      }
+
+      tr:nth-of-type(even) {
+        background: rgba(0, 0, 0, 0.055);
+      }
+    }
+
+    tfoot {
+      background: transparent;
+    }
+
     tr {
       height: 44px;
     }
@@ -106,6 +127,16 @@ body.dragging, body.dragging * {
       a.move:hover {
         color: #777;
         cursor: -webkit-grab;
+      }
+    }
+
+    tfoot td.actions {
+      a {
+        color: #999;
+      }
+
+      a:hover {
+        color: #777;
       }
     }
 
