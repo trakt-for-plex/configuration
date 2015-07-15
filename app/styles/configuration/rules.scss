@@ -58,7 +58,9 @@ body.dragging, body.dragging * {
     }
 
     td {
-      padding: 0 10px;
+      position: relative;
+
+      padding: 0;
 
       input, select {
         margin: 0;
@@ -92,6 +94,17 @@ body.dragging, body.dragging * {
         input {
           height: 18px;
         }
+      }
+
+      .selectize-input .item {
+        display: block;
+        float: left;
+
+        max-width: 88%;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .plain {
@@ -189,6 +202,11 @@ body.dragging, body.dragging * {
     table {
       th.machine-identifier {
         min-width: 100px;
+        width: 24%;
+      }
+
+      th.name {
+        min-width: 100px;
       }
 
       th.address {
@@ -196,21 +214,6 @@ body.dragging, body.dragging * {
       }
 
       td.machine-identifier {
-        .selectize-control {
-          max-width: 260px;
-        }
-
-        .selectize-input .item {
-          display: block;
-          float: left;
-
-          max-width: 90%;
-
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
         .selectize-dropdown {
           .option div {
             overflow: hidden;

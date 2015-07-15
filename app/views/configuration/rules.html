@@ -33,7 +33,7 @@
             </div>
           </td>
           <td class="account" ng-switch on="rule.state">
-            <div ng-switch-when="edit">
+            <div class="wrapper edit" ng-switch-when="edit">
               <selectize
                 config="{
                   optgroupField: 'type',
@@ -47,12 +47,12 @@
                 ng-model="rule.account.id">
               </selectize>
             </div>
-            <div class="plain" ng-switch-default>
+            <div class="wrapper plain" ng-switch-default>
               {{ rule.account.name }}
             </div>
           </td>
           <td class="machine-identifier" ng-switch on="rule.state">
-            <div ng-switch-when="edit">
+            <div class="wrapper edit" ng-switch-when="edit">
               <selectize
                 config="{
                   create: true,
@@ -70,12 +70,12 @@
                 ng-model="rule.key">
               </selectize>
             </div>
-            <div class="plain" ng-switch-default>
+            <div class="wrapper plain" ng-switch-default>
               {{ attributeLabel(rule.key) }}
             </div>
           </td>
           <td ng-switch on="rule.state">
-            <div ng-switch-when="edit">
+            <div class="wrapper edit" ng-switch-when="edit">
               <selectize
                 config="{
                   create: true,
@@ -90,12 +90,12 @@
                 ng-model="rule.name">
               </selectize>
             </div>
-            <div class="plain" ng-switch-default>
+            <div class="wrapper plain" ng-switch-default>
               {{ attributeLabel(rule.name) }}
             </div>
           </td>
           <td ng-switch on="rule.state">
-            <div ng-switch-when="edit">
+            <div class="wrapper edit" ng-switch-when="edit">
               <selectize
                 config="{
                   create: true,
@@ -110,7 +110,7 @@
                 ng-model="rule.address">
               </selectize>
             </div>
-            <div class="plain" ng-switch-default>
+            <div class="wrapper plain" ng-switch-default>
               {{ attributeLabel(rule.address) }}
             </div>
           </td>
@@ -159,7 +159,7 @@
             </div>
           </td>
           <td class="account" ng-switch on="rule.state">
-            <div ng-switch-when="edit">
+            <div class="wrapper edit" ng-switch-when="edit">
               <selectize
                 config="{
                   optgroupField: 'type',
@@ -173,12 +173,12 @@
                 ng-model="rule.account.id">
               </selectize>
             </div>
-            <div class="plain" ng-switch-default>
+            <div class="wrapper plain" ng-switch-default>
               {{ rule.account.name }}
             </div>
           </td>
           <td ng-switch on="rule.state">
-            <div ng-switch-when="edit">
+            <div class="wrapper edit" ng-switch-when="edit">
               <selectize
                 config="{
                   create: true,
@@ -193,7 +193,7 @@
                 ng-model="rule.name">
               </selectize>
             </div>
-            <div class="plain" ng-switch-default>
+            <div class="wrapper plain" ng-switch-default>
               {{ attributeLabel(rule.name) }}
             </div>
           </td>
