@@ -183,26 +183,25 @@ body.dragging, body.dragging * {
       }
 
       td.machine-identifier {
-        width: 260px;
-
-        .plain {
-          width: 260px;
+        .selectize-control {
+          max-width: 260px;
         }
 
-        .selectize-input div {
-          width: 220px;
+        .selectize-input .item {
+          display: block;
+          float: left;
+
+          max-width: 90%;
 
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
 
-        .selectize-dropdown-content {
-          .option {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
+        .selectize-dropdown .option {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }
