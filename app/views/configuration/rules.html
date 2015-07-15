@@ -61,7 +61,10 @@
                   maxItems: 1,
                   optgroups: [
                     {type: 'key', label: 'Clients'}
-                  ]
+                  ],
+                  render: {
+                    option: client.renderClient
+                  }
                 }"
                 options="client.available.keys"
                 ng-model="rule.key">

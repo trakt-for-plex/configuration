@@ -101,6 +101,19 @@ angular.module('configurationApp')
       );
     };
 
+    ClientRuleCollection.prototype.renderClient = function(item, escape) {
+      if(item.type !== 'key') {
+        return '<div class="option">' + escape(item.text) + '</div>';
+      }
+
+      return (
+        '<div class="option client">' +
+          '<div class="name">' + escape(item.name) + '</div>' +
+          '<small class="extra">' + escape(item.product) + ' / ' + escape(item.text) + '</small>' +
+        '</div>'
+      );
+    };
+
     ClientRuleCollection.prototype.updateAccounts = function(accounts) {
       this.accounts = [].concat(accountFunctions, accounts);
 
@@ -111,11 +124,16 @@ angular.module('configurationApp')
       // Build collection of client keys
       this.available.keys = [].concat(attributeFunctions, _.map(clients, function (client) {
         return {
-          $order: 10,
-          type: 'key',
+          $order:   10,
+          type:     'key',
 
-          value: client.key,
-          text: client.key
+          value:    client.key,
+          text:     client.key,
+
+          // Extra metadata
+          name:     client.name,
+          platform: client.platform,
+          product:  client.product
         };
       }));
 

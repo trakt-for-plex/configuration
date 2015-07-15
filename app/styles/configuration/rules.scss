@@ -198,10 +198,17 @@ body.dragging, body.dragging * {
           white-space: nowrap;
         }
 
-        .selectize-dropdown .option {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+        .selectize-dropdown {
+          .option {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .option small {
+            font-size: 10px;
+            color: rgba(0, 0, 0, 0.65);
+          }
         }
       }
     }
