@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="rule in client.rules track by $index" ng-class="{edit: rule.state == 'edit'}">
+        <tr class="rule p-{{ rule.priority }}" ng-repeat="rule in client.rules track by $index" ng-class="{edit: rule.state == 'edit'}">
           <td class="actions" ng-switch on="rule.state">
             <div ng-switch-when="edit">
               <a title="Delete" ng-click="rule.delete()"><i class="fi-x"></i></a>
@@ -146,7 +146,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="rule in user.rules track by $index" ng-class="{edit: rule.state == 'edit'}">
+        <tr class="rule p-{{ rule.priority }}" ng-repeat="rule in user.rules track by $index" ng-class="{edit: rule.state == 'edit'}">
           <td class="actions" ng-switch on="rule.state">
             <div ng-switch-when="edit">
               <a title="Delete" ng-click="rule.delete()"><i class="fi-x"></i></a>

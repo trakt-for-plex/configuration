@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('UserRuleCollection', function(UserRule, $q, $rootScope) {
+  .factory('UserRuleCollection', function(UserRule, $q, $rootScope, $timeout) {
     var accountFunctions = [
           { $order: 1, value: '-', text: 'None' },
           { $order: 2, value: '@', text: 'Map' }
@@ -23,7 +23,11 @@ angular.module('configurationApp')
     }
 
     UserRuleCollection.prototype.create = function() {
-      this.rules.push(new UserRule(
+      // Reset rule states to "view"
+      this.reset();
+
+      // Create new rule
+      var rule = new UserRule(
         this,
         {
           name: '*',
@@ -35,7 +39,14 @@ angular.module('configurationApp')
           priority: this.rules.length + 1
         },
         'edit'
-      ));
+      );
+
+      this.rules.push(rule);
+
+      // Focus new rule
+      $timeout(function() {
+        rule.focus();
+      })
     };
 
     UserRuleCollection.prototype.delete = function(rule) {
@@ -50,6 +61,16 @@ angular.module('configurationApp')
 
       // Update rule priorities
       this.updatePriorities();
+    };
+
+    UserRuleCollection.prototype.discard = function() {
+      // Discard rule changes
+      this.updateRules(this.original);
+
+      // Update rule priorities
+      this.updatePriorities();
+
+      return $q.resolve();
     };
 
     UserRuleCollection.prototype.refresh = function() {
@@ -74,20 +95,18 @@ angular.module('configurationApp')
       ]);
     };
 
-    UserRuleCollection.prototype.discard = function() {
-      // Discard rule changes
-      this.updateRules(this.original);
-
-      // Update rule priorities
-      this.updatePriorities();
-
-      return $q.resolve();
+    UserRuleCollection.prototype.reset = function() {
+      // Reset rules back to view mode
+      _.each(this.rules, function(rule) {
+        rule.state = 'view;'
+      });
     };
 
     UserRuleCollection.prototype.save = function() {
-      var current = _.map(this.rules, function(rule) {
-        return rule.current();
-      });
+      var self = this,
+          current = _.map(this.rules, function(rule) {
+            return rule.current();
+          });
 
       return $rootScope.$s.call('session.user.rule.update', [], {current: current, full: true}).then(
         $.proxy(self.updateRules, self),

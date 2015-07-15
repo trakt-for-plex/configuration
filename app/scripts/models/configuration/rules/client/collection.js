@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('ClientRuleCollection', function(ClientRule, $q, $rootScope) {
+  .factory('ClientRuleCollection', function(ClientRule, $q, $rootScope, $timeout) {
     var accountFunctions = [
           { $order: 1, value: '-', text: 'None' }
         ],
@@ -24,7 +24,11 @@ angular.module('configurationApp')
     }
 
     ClientRuleCollection.prototype.create = function() {
-      this.rules.push(new ClientRule(
+      // Reset rule states to "view"
+      this.reset();
+
+      // Create new rule
+      var rule = new ClientRule(
         this,
         {
           key: '*',
@@ -38,7 +42,14 @@ angular.module('configurationApp')
           priority: this.rules.length + 1
         },
         'edit'
-      ));
+      );
+
+      this.rules.push(rule);
+
+      // Focus new rule
+      $timeout(function() {
+        rule.focus();
+      })
     };
 
     ClientRuleCollection.prototype.delete = function(rule) {
@@ -53,6 +64,16 @@ angular.module('configurationApp')
 
       // Update rule priorities
       this.updatePriorities();
+    };
+
+    ClientRuleCollection.prototype.discard = function() {
+      // Discard rule changes
+      this.updateRules(this.original);
+
+      // Update rule priorities
+      this.updatePriorities();
+
+      return $q.resolve();
     };
 
     ClientRuleCollection.prototype.refresh = function() {
@@ -77,20 +98,18 @@ angular.module('configurationApp')
       ]);
     };
 
-    ClientRuleCollection.prototype.discard = function() {
-      // Discard rule changes
-      this.updateRules(this.original);
-
-      // Update rule priorities
-      this.updatePriorities();
-
-      return $q.resolve();
+    ClientRuleCollection.prototype.reset = function() {
+      // Reset rules back to view mode
+      _.each(this.rules, function(rule) {
+        rule.state = 'view;'
+      });
     };
 
     ClientRuleCollection.prototype.save = function() {
-      var current = _.map(this.rules, function(rule) {
-        return rule.current();
-      });
+      var self = this,
+          current = _.map(this.rules, function(rule) {
+            return rule.current();
+          });
 
       return $rootScope.$s.call('session.client.rule.update', [], {current: current, full: true}).then(
         $.proxy(self.updateRules, self),

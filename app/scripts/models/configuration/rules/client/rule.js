@@ -24,7 +24,26 @@ angular.module('configurationApp')
     };
 
     ClientRule.prototype.edit = function() {
+      this.collection.reset();
+
       this.state = 'edit';
+    };
+
+    ClientRule.prototype.focus = function() {
+      if(typeof this.priority === 'undefined' || this.priority === null) {
+        return;
+      }
+
+      var $tr = $('.rules .clients .rule.p-' + this.priority);
+
+      if($tr === null || $tr.length === 0) {
+        console.warn('Unable to find TR element for rule', this);
+        return;
+      }
+
+      console.log($tr);
+
+      $('td.account input', $tr).focus();
     };
 
     ClientRule.prototype.save = function() {
