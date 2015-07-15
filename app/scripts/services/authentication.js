@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Authentication', function(PUsers, $http, $q) {
-    var user = null;
+  .factory('Authentication', function(PUsers, RavenTags, $http, $q) {
+    var identifierSalt = 'MLawOtoMiFf5Ni9nbu0bTes2+UkrVLMZ8LSPwA+qTtA=',
+        user = null;
 
     return {
       authenticated: function() {
@@ -10,7 +11,16 @@ angular.module('configurationApp')
       },
       user: function(value) {
         if(value !== undefined) {
+          // Update user details
           user = value;
+
+          // Update raven context
+          RavenTags.update({
+            user_identifier: typeof user.username !== 'undefined' ?
+              md5(user.username + identifierSalt) :
+              null
+          });
+
           return value;
         }
 

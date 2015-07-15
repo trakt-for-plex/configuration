@@ -66,6 +66,12 @@
     </div>
 
     <script src="bower_components/raven-js/dist/raven.js"></script>
+    <script>
+      Raven.config('http://2e2991c4808f43e0b186f690b9971230@sentry.skipthe.net/2', {
+           })
+           .install();
+    </script>
+
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
@@ -138,6 +144,7 @@
     <script src="scripts/services/plex/users.js"></script>
     <script src="scripts/services/plex/headers.js"></script>
     <script src="scripts/services/plex/messaging.js"></script>
+    <script src="scripts/services/raven/tags.js"></script>
     <script src="scripts/services/server/connection.js"></script>
     <script src="scripts/services/authentication.js"></script>
     <!-- endbuild -->

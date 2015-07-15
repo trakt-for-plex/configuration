@@ -14,6 +14,7 @@ angular
     'ngAria',
     'ngCookies',
     'ngMessages',
+    'ngRaven',
     'ngResource',
     'ngRoute',
     'ngSanitize',
@@ -23,7 +24,10 @@ angular
     'selectize',
     'xml'
   ])
-  .config(function ($httpProvider, $routeProvider) {
+  .config(function ($httpProvider, $ravenProvider, $routeProvider) {
+    // Setup angular-raven
+    // $ravenProvider.development(true);
+
     // Setup angular-xml
     $httpProvider.interceptors.push('xmlHttpInterceptor');
 
