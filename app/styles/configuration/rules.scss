@@ -20,6 +20,10 @@ body.dragging, body.dragging * {
 
     thead {
       background: rgba(0, 0, 0, 0.14);
+
+      th {
+        padding-left: 19px;
+      }
     }
 
     tbody {
