@@ -17,6 +17,8 @@ angular.module('configurationApp')
       };
 
       this.accounts = null;
+      this.accountsById = null;
+
       this.rules = null;
     }
 
@@ -101,6 +103,8 @@ angular.module('configurationApp')
 
     ClientRuleCollection.prototype.updateAccounts = function(accounts) {
       this.accounts = [].concat(accountFunctions, accounts);
+
+      this.accountsById = _.indexBy(this.accounts, 'value');
     };
 
     ClientRuleCollection.prototype.updateClients = function(clients) {

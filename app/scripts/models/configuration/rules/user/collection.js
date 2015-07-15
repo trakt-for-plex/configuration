@@ -15,6 +15,9 @@ angular.module('configurationApp')
         names: null
       };
 
+      this.accounts = null;
+      this.accountsById = null;
+
       this.rules = null;
     }
 
@@ -97,6 +100,8 @@ angular.module('configurationApp')
 
     UserRuleCollection.prototype.updateAccounts = function(accounts) {
       this.accounts = [].concat(accountFunctions, accounts);
+
+      this.accountsById = _.indexBy(this.accounts, 'value');
     };
 
     UserRuleCollection.prototype.updatePriorities = function() {

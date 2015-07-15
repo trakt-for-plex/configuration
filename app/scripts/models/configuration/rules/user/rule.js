@@ -35,6 +35,15 @@ angular.module('configurationApp')
 
     UserRule.prototype.save = function() {
       this.state = 'view';
+
+      // Update account name
+      var account = this.collection.accountsById[this.account.id];
+
+      if(typeof account === 'undefined') {
+        this.account.name = 'None';
+      } else {
+        this.account.name = account.text;
+      }
     };
 
     function parseAccount(data) {
