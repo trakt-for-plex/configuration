@@ -23,14 +23,6 @@ angular.module('configurationApp')
       this.collection.delete(this);
     };
 
-    ClientRule.prototype.discard = function() {
-      if(this.id === null) {
-        this.delete();
-      } else {
-        this.update(this.original);
-      }
-    };
-
     ClientRule.prototype.edit = function() {
       this.state = 'edit';
     };

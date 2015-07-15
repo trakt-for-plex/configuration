@@ -21,14 +21,6 @@ angular.module('configurationApp')
       this.collection.delete(this);
     };
 
-    UserRule.prototype.discard = function() {
-      if(this.id === null) {
-        this.delete();
-      } else {
-        this.update(this.original);
-      }
-    };
-
     UserRule.prototype.edit = function() {
       this.state = 'edit';
     };

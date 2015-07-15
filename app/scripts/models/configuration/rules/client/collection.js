@@ -19,6 +19,7 @@ angular.module('configurationApp')
       this.accounts = null;
       this.accountsById = null;
 
+      this.original = null;
       this.rules = null;
     }
 
@@ -78,9 +79,7 @@ angular.module('configurationApp')
 
     ClientRuleCollection.prototype.discard = function() {
       // Discard rule changes
-      _.each(this.rules.slice(), function(rule) {
-        rule.discard();
-      });
+      this.updateRules(this.original);
 
       // Update rule priorities
       this.updatePriorities();
@@ -169,6 +168,8 @@ angular.module('configurationApp')
 
     ClientRuleCollection.prototype.updateRules = function(rules) {
       var self = this;
+
+      this.original = angular.copy(rules);
 
       // Parse rules
       this.rules = _.map(rules, function(rule) {
