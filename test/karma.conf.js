@@ -52,6 +52,7 @@ module.exports = function(config) {
       'bower_components/angular-selectize2/dist/selectize.js',
       'bower_components/jquery-sortable/source/js/jquery-sortable.js',
       'bower_components/raven-js/dist/raven.js',
+      'bower_components/angular-raven/angular-raven.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
