@@ -49,7 +49,12 @@ body.dragging, body.dragging * {
     }
 
     th.account {
-      width: 170px;
+      min-width: 145px;
+      width: 18%;
+    }
+
+    th.name {
+      min-width: 100px;
     }
 
     td {
@@ -72,8 +77,16 @@ body.dragging, body.dragging * {
           font-size: 14px;
         }
 
-        .selectize-dropdown .optgroup-header {
-          font-weight: bold;
+        .selectize-dropdown {
+          .option {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .optgroup-header {
+            font-weight: bold;
+          }
         }
 
         input {
@@ -174,12 +187,12 @@ body.dragging, body.dragging * {
 
   .clients {
     table {
-      th.name {
-        width: 190px;
+      th.machine-identifier {
+        min-width: 100px;
       }
 
-      th.machine-identifier {
-        width: 280px;
+      th.address {
+        min-width: 100px;
       }
 
       td.machine-identifier {
@@ -199,7 +212,7 @@ body.dragging, body.dragging * {
         }
 
         .selectize-dropdown {
-          .option {
+          .option div {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
