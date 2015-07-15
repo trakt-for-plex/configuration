@@ -58,15 +58,15 @@ angular
         templateUrl: 'views/login.html',
         controller: 'LoginController'
       })
+      .when('/logout', {
+        templateUrl: 'views/logout.html',
+        controller: 'LogoutController'
+      })
       .otherwise({
         redirectTo: '/'
       });
   })
   .run(function(Authentication, $location, $rootScope) {
-    $rootScope.$a = {
-      authenticated: false,
-      user: null
-    };
 
     $rootScope.$r = {
       path: null,
@@ -97,14 +97,9 @@ angular
       }
 
       if(!Authentication.authenticated()) {
-        $rootScope.$a.authenticated = false;
-
         next.resolve = angular.extend(next.resolve || {}, {
           __authenticate__: function() {
             Authentication.get().then(function() {
-              $rootScope.$a.authenticated = true;
-              $rootScope.$a.user = Authentication.user();
-
               console.log('authenticated');
             }, function() {
               $rootScope.$r.path = $location.path();
@@ -115,8 +110,6 @@ angular
             });
           }
         });
-      } else {
-        $rootScope.$a.authenticated = true;
       }
 
       if(controller === 'ConnectController') {
