@@ -60,16 +60,29 @@ angular.module('configurationApp')
     }
 
     ClientRule.prototype.current = function() {
-      return {
+      var data = {
         id:       this.id,
 
         key:      this.key,
         name:     this.name,
         address:  this.address,
 
-        account:  this.account.id,
+        account: null,
+        account_function: null,
+
         priority: this.priority
       };
+
+      // Parse account field
+      if(this.account.id === '-') {
+        data['account'] = null;
+      } else if(this.account.id === '@') {
+        data['account_function'] = '@';
+      } else {
+        data['account'] = this.account.id;
+      }
+
+      return data;
     };
 
     ClientRule.prototype.update = function(data) {

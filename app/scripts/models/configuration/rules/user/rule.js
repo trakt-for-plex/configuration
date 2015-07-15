@@ -58,14 +58,27 @@ angular.module('configurationApp')
     }
 
     UserRule.prototype.current = function() {
-      return {
+      var data = {
         id:       this.id,
 
         name:     this.name,
 
-        account:  this.account.id,
+        account: null,
+        account_function: null,
+
         priority: this.priority
       };
+
+      // Parse account field
+      if(this.account.id === '-') {
+        data['account'] = null;
+      } else if(this.account.id === '@') {
+        data['account_function'] = '@';
+      } else {
+        data['account'] = this.account.id;
+      }
+
+      return data;
     };
 
     UserRule.prototype.update = function(data) {

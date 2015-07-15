@@ -7,8 +7,7 @@ angular.module('configurationApp')
           { $order: 2, value: '@', text: 'Map' }
         ],
         attributeFunctions = [
-          { $order: 1, value: '*', text: 'Any' },
-          { $order: 2, value: '@', text: 'Map' }
+          { $order: 1, value: '*', text: 'Any' }
         ];
 
     function UserRuleCollection() {
