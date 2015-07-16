@@ -111,11 +111,17 @@ body.dragging, body.dragging * {
         position: absolute;
         left: 10px;
         right: 10px;
-        top: 4px;
+        top: 0;
         bottom: 0;
       }
 
+      .wrapper.edit {
+        top: 4px;
+      }
+
       .wrapper.plain {
+        top: 3px;
+
         padding: 10px 9px;
 
         overflow: hidden;
