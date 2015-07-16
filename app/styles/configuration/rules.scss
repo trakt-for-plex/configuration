@@ -107,7 +107,15 @@ body.dragging, body.dragging * {
         white-space: nowrap;
       }
 
-      .plain {
+      .wrapper {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        top: 4px;
+        bottom: 0;
+      }
+
+      .wrapper.plain {
         padding: 10px 9px;
 
         overflow: hidden;
