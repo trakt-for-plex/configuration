@@ -60,14 +60,21 @@ angular.module('configurationApp')
     };
 
     function parseAccount(data) {
-      if(typeof data.account === 'undefined' || data.account === null) {
+      if(data.account_function === '@') {
         return {
-          id: null,
-          name: null
-        };
+          id: '@',
+          name: 'Map'
+        }
       }
 
-      return data.account;
+      if(typeof data.account !== 'undefined' && data.account !== null) {
+        return data.account;
+      }
+
+      return {
+        id: '-',
+        name: 'None'
+      };
     }
 
     function attributeValue(value) {
