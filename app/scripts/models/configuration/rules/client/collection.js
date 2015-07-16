@@ -101,7 +101,7 @@ angular.module('configurationApp')
     ClientRuleCollection.prototype.reset = function() {
       // Reset rules back to view mode
       _.each(this.rules, function(rule) {
-        rule.state = 'view;'
+        rule.save();
       });
     };
 

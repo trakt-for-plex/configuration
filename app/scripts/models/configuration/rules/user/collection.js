@@ -98,7 +98,7 @@ angular.module('configurationApp')
     UserRuleCollection.prototype.reset = function() {
       // Reset rules back to view mode
       _.each(this.rules, function(rule) {
-        rule.state = 'view;'
+        rule.save();
       });
     };
 
