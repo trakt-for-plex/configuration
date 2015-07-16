@@ -20,6 +20,11 @@ angular.module('configurationApp')
       this.authentication = new AccountAuthentication();
       this.options = null;
 
+      this.id = null;
+      this.name = null;
+
+      this.thumb_url = null;
+
       // Update with initial data
       this.update(data);
     }
@@ -56,6 +61,8 @@ angular.module('configurationApp')
       // Update attributes
       this.id = data.id;
       this.name = data.name;
+
+      this.thumb_url = data.thumb_url;
 
       this.authentication.update(data);
     };

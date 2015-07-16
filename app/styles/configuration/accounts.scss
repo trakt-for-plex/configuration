@@ -4,6 +4,15 @@
   .list {
     margin-top: 67px;
 
+    .avatar {
+      height: 32px;
+
+      border-radius: 50%;
+
+      margin-left: -6px;
+      margin-right: 10px;
+    }
+
     .actions {
       display: table;
       width: 100%;
@@ -45,8 +54,13 @@
   }
 
   .side-nav {
+    li a:hover,
+    li a:focus {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
     li.active a {
-      background: rgba(0, 0, 0, 0.05);
+      background: rgba(0, 0, 0, 0.08);
     }
 
     li.active > a:first-child:not(.button),

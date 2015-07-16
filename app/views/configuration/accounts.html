@@ -2,7 +2,9 @@
   <div class="list small-4 columns">
     <ul class="panel side-nav">
       <li ng-repeat="a in accounts" ng-class="{active: account.id == a.id}">
-        <a href="#/configuration/accounts?id={{ a.id }}">{{ a.name }}</a>
+        <a href="#/configuration/accounts?id={{ a.id }}">
+          <img class="avatar" ng-src="{{ a.thumb_url }}"/>{{ a.name }}
+        </a>
       </li>
     </ul>
 
