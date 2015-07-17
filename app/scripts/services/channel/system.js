@@ -21,6 +21,9 @@ angular.module('configurationApp')
         }, function(error) {
           return $q.reject(error);
         });
+      },
+      ping: function(server) {
+        return server.call('system.ping');
       }
     };
   });

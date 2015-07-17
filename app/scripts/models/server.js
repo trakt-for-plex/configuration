@@ -3,7 +3,8 @@
 angular.module('configurationApp')
   .factory('Server', function(Connection, CSystem, PMessaging, SConnection, $q) {
     var identifier = 'com.plexapp.plugins.trakttv',
-      target = 'MessageKit:Api';
+        pluginVersionRequired = '>=0.9.9',
+        target = 'MessageKit:Api';
 
     function Server() {
       this.name = null;
@@ -51,13 +52,65 @@ angular.module('configurationApp')
 
       // Test connections
       return SConnection.test(this).then(function(connection) {
-        return connection;
+        // Check server
+        return self.check().then(function() {
+          return connection;
+        }, function(error) {
+          // Server didn't pass validation
+          self.error = error;
+
+          return $q.reject(error);
+        });
+
       }, function(reason) {
+        // Unable to connect to server
         self.error = {
           message: reason
         };
 
-        return $q.reject();
+        return $q.reject(self.error);
+      });
+    };
+
+    function parseVersion(version) {
+      if(typeof version === 'undefined' || version === null) {
+        return null;
+      }
+
+      // Strip branch
+      var branchIndex = version.indexOf('-');
+
+      if(branchIndex !== -1) {
+        version = version.substr(0, branchIndex);
+      }
+
+      // Strip version into fragments
+      var fragments = version.split('.');
+
+      // Remove hotfix fragment
+      fragments = fragments.splice(0, 3);
+
+      // Rebuild version string
+      return fragments.join('.');
+    }
+
+    Server.prototype.check = function() {
+      return CSystem.ping(this).then(function(pong) {
+        // Ensure plugin version meets requirements
+        var version = parseVersion(pong.version);
+
+        if(semver.satisfies(version, pluginVersionRequired)) {
+          // Plugin version is supported
+          return true;
+        }
+
+        // Plugin update required
+        return $q.reject({
+          message: 'Plugin update required'
+        });
+      }, function(error) {
+        // Unable to ping server
+        return $q.reject(error);
       });
     };
 
@@ -149,6 +202,10 @@ angular.module('configurationApp')
 
       s.identifier = e._clientIdentifier;
       s.token_plex = e._accessToken;
+
+      if(typeof e.Connection.length === 'undefined') {
+        e.Connection = [e.Connection];
+      }
 
       s.connections = _.map(e.Connection, function(e) {
         return Connection.fromElement(e);

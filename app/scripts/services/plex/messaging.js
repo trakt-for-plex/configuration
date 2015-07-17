@@ -80,14 +80,12 @@ angular.module('configurationApp')
         return server.get(path, config).then(function(response) {
           var data = unpack(response.data);
 
-          // Ensure a string is returned
-          if(typeof data !== 'string') {
-            console.warn('[%s] Invalid response format returned', server.identifier);
-            return $q.reject(null);
+          // Parse response
+          if(typeof data === 'string') {
+            data = JSON.parse(data);
+          } else if(typeof data === 'object') {
+            console.warn('Legacy response format returned');
           }
-
-          // Parse JSON string
-          data = JSON.parse(unpack(response.data));
 
           // Return response
           console.debug('[%s] Response', server.identifier, data);
@@ -101,8 +99,10 @@ angular.module('configurationApp')
           }
 
           return null;
-        }, function() {
-          return $q.reject(null);
+        }, function(response) {
+          return $q.reject({
+            message: response.status + ' - ' + response.statusText
+          });
         })
       }
     };

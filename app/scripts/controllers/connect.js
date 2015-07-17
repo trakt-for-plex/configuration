@@ -39,12 +39,12 @@ angular.module('configurationApp')
 
           $scope.$r.redirect();
         }, function() {
-          console.log('Authentication failed', server);
+          console.warn('Authentication failed');
 
           $scope.state = '';
         });
       }, function() {
-        console.log('Unable to find valid connection', server);
+        console.warn('Unable to find valid connection');
 
         $scope.state = '';
       });
