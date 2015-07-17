@@ -12,7 +12,7 @@ angular.module('configurationApp')
     $scope.connectionVisible = false;
     $scope.versionVisible = false;
 
-    $scope.toggleConnection = function(parameter) {
+    $scope.toggleConnection = function() {
       $scope.connectionVisible = !$scope.connectionVisible;
     };
 

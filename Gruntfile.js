@@ -449,7 +449,7 @@ module.exports = function (grunt) {
 
     function write(metadata) {
       grunt.file.write('./app/scripts/metadata.js',
-        'if(typeof window.tfpc == "undefined") {\n' +
+        'if(typeof window.tfpc === "undefined") {\n' +
         '\twindow.tfpc = {};\n' +
         '}\n' +
         'window.tfpc.metadata = ' + JSON.stringify(metadata) + ';\n'
@@ -463,7 +463,7 @@ module.exports = function (grunt) {
           label: rev.toString(),
           hash: rev.object
         }
-      })
+      });
     });
 
     grunt.task.run('git-describe');
