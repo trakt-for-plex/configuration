@@ -66,9 +66,19 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function(Authentication, $location, $rootScope) {
+  .run(function(Authentication, RavenTags, $location, $rootScope) {
+    // Store metadata in root scope
     $rootScope.$m = window.tfpc.metadata;
 
+    // Send version/revision with error reports
+    var $m = window.tfpc.metadata;
+
+    RavenTags.update({
+      application_version: $m.version,
+      application_revision: $m.revision.label
+    });
+
+    // Redirect handler
     $rootScope.$r = {
       path: null,
       search: null,

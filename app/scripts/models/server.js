@@ -10,6 +10,7 @@ angular.module('configurationApp')
       this.name = null;
 
       this.identifier = null;
+      this.plugin_version = null;
 
       this.token_channel = null;
       this.token_channel_expire = null;
@@ -95,7 +96,12 @@ angular.module('configurationApp')
     }
 
     Server.prototype.check = function() {
+      var self = this;
+
       return CSystem.ping(this).then(function(pong) {
+        // Store server version
+        self.plugin_version = pong.version;
+
         // Ensure plugin version meets requirements
         var version = parseVersion(pong.version);
 

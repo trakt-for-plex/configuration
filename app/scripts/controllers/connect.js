@@ -8,7 +8,7 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('ConnectController', function(Server, CSystem, PAPI, SConnection, $location, $rootScope, $scope) {
+  .controller('ConnectController', function(Server, RavenTags, CSystem, PAPI, SConnection, $location, $rootScope, $scope) {
     $scope.state = '';
     $scope.selected = null;
 
@@ -35,8 +35,15 @@ angular.module('configurationApp')
         server.authenticate().then(function() {
           console.log('Authentication successful');
 
+          // Update current server
           $rootScope.$s = server;
 
+          // Update raven tags
+          RavenTags.update({
+            plugin_version: server.plugin_version
+          });
+
+          // Redirect to original view
           $scope.$r.redirect();
         }, function() {
           console.warn('Authentication failed');
