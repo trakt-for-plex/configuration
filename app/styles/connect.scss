@@ -1,12 +1,24 @@
 .panel.connect {
   height: 300px;
 
-  margin-top: 5%;
+  margin-top: 10%;
   padding: 0;
+
+  .header {
+    position: relative;
+
+    padding: 10px 14px;
+
+    background: rgba(0, 0, 0, 0.08);
+
+    h5 {
+      margin: 0;
+    }
+  }
 
   .servers {
     position: absolute;
-    top: 0;
+    top: 38px;
     left: 0;
     right: 0;
     bottom: 0;
