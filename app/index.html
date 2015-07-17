@@ -41,12 +41,27 @@
           <li><a href="#/configuration/rules">Rules</a></li>
         </ul>
 
-        <ul class="right" ng-show="$a.authenticated">
+        <ul class="right">
           <li ng-show="$s"><a href="#/connect">{{ $s.name }}</a></li>
-          <li has-dropdown>
+          <li has-dropdown ng-show="$a.authenticated">
             <a>{{ $a.user.username }}</a>
             <ul top-bar-dropdown>
               <li><a href="#/logout">Logout</a></li>
+            </ul>
+          </li>
+
+          <li has-dropdown>
+            <a>Support</a>
+            <ul top-bar-dropdown>
+              <li style="display: none;">
+                <a href="https://github.com/trakt-for-plex/configuration/wiki" target="_blank">Wiki</a>
+              </li>
+              <li>
+                <a href="https://github.com/trakt-for-plex/configuration/issues" target="_blank">Issues</a>
+              </li>
+              <li>
+                <a href="https://github.com/trakt-for-plex/configuration/issues/new" target="_blank">Report an issue</a>
+              </li>
             </ul>
           </li>
         </ul>
