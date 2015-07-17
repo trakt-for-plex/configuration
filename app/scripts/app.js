@@ -67,6 +67,7 @@ angular
       });
   })
   .run(function(Authentication, $location, $rootScope) {
+    $rootScope.$m = window.tfpc.metadata;
 
     $rootScope.$r = {
       path: null,

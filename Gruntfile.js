@@ -14,9 +14,10 @@ module.exports = function (grunt) {
 
   // Automatically load required Grunt tasks
   require('jit-grunt')(grunt, {
-    useminPrepare: 'grunt-usemin',
-    ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn'
+    cdnify:         'grunt-google-cdn',
+    "git-describe": 'grunt-git-describe',
+    ngtemplates:    'grunt-angular-templates',
+    useminPrepare:  'grunt-usemin'
   });
 
   // Configurable paths for the application
@@ -30,6 +31,13 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    "git-describe": {
+      options: {
+        template: '{%=object%}{%=dirty%}'
+      },
+      defaults: {}
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -436,6 +444,31 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.registerTask("updateMetadata", function() {
+    var pkg = grunt.file.readJSON('./bower.json');
+
+    function write(metadata) {
+      grunt.file.write('./app/scripts/metadata.js',
+        'if(typeof window.tfpc == "undefined") {\n' +
+        '\twindow.tfpc = {};\n' +
+        '}\n' +
+        'window.tfpc.metadata = ' + JSON.stringify(metadata) + ';\n'
+      );
+    }
+
+    grunt.event.once('git-describe', function (rev) {
+      write({
+        version: pkg.version,
+        revision: {
+          label: rev.toString(),
+          hash: rev.object
+        }
+      })
+    });
+
+    grunt.task.run('git-describe');
+  });
+
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -444,6 +477,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'updateMetadata',
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
@@ -459,6 +493,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'updateMetadata',
     'wiredep',
     'concurrent:test',
     'autoprefixer',
@@ -468,6 +503,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'updateMetadata',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',

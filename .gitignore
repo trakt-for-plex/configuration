@@ -1,5 +1,7 @@
-/node_modules
+/app/scripts/metadata.js
+/bower_components
 /dist
+/node_modules
 /.tmp
 /.sass-cache
-/bower_components
+
