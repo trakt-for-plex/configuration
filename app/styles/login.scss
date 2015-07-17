@@ -1,15 +1,45 @@
-.panel.login {
+.login.panel {
   width: 320px;
 
   margin-left: auto;
   margin-right: auto;
   margin-top: 10%;
 
-  input[type="submit"] {
-    margin: 0;
+  padding: 0;
+
+  .header {
+    position: relative;
+
+    padding: 10px 14px;
+
+    background: rgba(0, 0, 0, 0.08);
+
+    h5 {
+      margin: 0;
+    }
+
+    .help {
+      position: absolute;
+      top: 0;
+      right: 14px;
+      bottom: 0;
+
+      a.details {
+        display: block;
+        margin-top: 2px;
+
+        font-size: 22px;
+
+        color: #AAA;
+      }
+    }
   }
 
-  h5 {
-    margin-bottom: 20px;
+  form {
+    padding: 14px;
+
+    input[type="submit"] {
+      margin: 0;
+    }
   }
 }
