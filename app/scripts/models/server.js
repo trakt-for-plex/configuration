@@ -3,7 +3,7 @@
 angular.module('configurationApp')
   .factory('Server', function(Connection, CSystem, PMessaging, SConnection, $q) {
     var identifier = 'com.plexapp.plugins.trakttv',
-        pluginVersionRequired = '>=0.9.9',
+        pluginVersionRequired = '>=0.9.10',
         target = 'MessageKit:Api';
 
     function Server() {
