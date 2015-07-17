@@ -53,12 +53,14 @@ button:hover {
   left: 0;
   right: 0;
 
-  padding: 0 5px;
+  padding: 5px;
 
   font-size: 10px;
 
   i {
     font-size: 14px;
+
+    vertical-align: middle;
 
     color: #CCC;
   }
@@ -67,7 +69,15 @@ button:hover {
     color: #888;
   }
 
-  .connection-info {
+  .extra + .extra {
+    margin-top: 3px;
+  }
+
+  .extra.connection .extended {
+    margin-left: 1px;
+  }
+
+  .extended {
     display: inline-block;
   }
 }

@@ -9,9 +9,14 @@
  */
 angular.module('configurationApp')
   .controller('FooterController', function($scope) {
-    $scope.visible = false;
+    $scope.connectionVisible = false;
+    $scope.versionVisible = false;
 
-    $scope.toggle = function() {
-      $scope.visible = !$scope.visible;
+    $scope.toggleConnection = function(parameter) {
+      $scope.connectionVisible = !$scope.connectionVisible;
+    };
+
+    $scope.toggleVersion = function() {
+      $scope.versionVisible = !$scope.versionVisible;
     };
   });

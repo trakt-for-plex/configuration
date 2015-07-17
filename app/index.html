@@ -71,11 +71,28 @@
     <section role="main" class="scroll-container" ng-view=""></section>
 
     <div class="footer" ng-controller="FooterController" ng-cloak>
-      <a href ng-class="{active: visible}" ng-click="toggle()"><i class="fi-info"></i></a>
+      <div class="extra version">
+        <a href ng-class="{active: versionVisible}" ng-click="toggleVersion()" title="Version">
+          <i class="fa fa-code"></i>
+        </a>
 
-      <div class="connection-info" ng-show="visible">
-        <div ng-show="$s.name">
-          Currently connected to {{ $s.name }} via {{ $s.current.uri }}
+        <div class="extended" ng-show="versionVisible">
+          Version: {{ $m.version }}, Revision: <a href="https://github.com/trakt-for-plex/configuration/commit/{{ $m.revision.hash }}" target="_blank">{{ $m.revision.label }}</a>
+        </div>
+      </div>
+
+      <div class="extra connection">
+        <a href ng-class="{active: connectionVisible}" ng-click="toggleConnection()" title="Connection">
+          <i class="fa fa-server"></i>
+        </a>
+
+        <div class="extended" ng-show="connectionVisible">
+          <div ng-show="$s.name">
+            Connected to {{ $s.name }} via {{ $s.current.uri }}
+          </div>
+          <div ng-show="!$s.name">
+            Not connected
+          </div>
         </div>
       </div>
     </div>
