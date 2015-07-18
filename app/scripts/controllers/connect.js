@@ -14,19 +14,16 @@ angular.module('configurationApp')
 
     $scope.servers = [];
 
-    PAPI.resources(true)
-      .success(function(data) {
-        // Retrieve servers from response
-        var servers = _.filter(data.MediaContainer.Device, function(device) {
-          return device._provides === 'server';
-        });
-
-        $scope.servers = _.map(servers, function(server) {
-          return Server.fromElement(server);
-        });
-
-        console.log($scope.servers);
+    PAPI.resources(true).then(function(data) {
+      // Retrieve servers from response
+      var servers = _.filter(data.MediaContainer.Device, function(device) {
+        return device._provides === 'server';
       });
+
+      $scope.servers = _.map(servers, function(server) {
+        return Server.fromElement(server);
+      });
+    });
 
     $scope.select = function(server) {
       server.connect().then(function() {
