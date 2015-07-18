@@ -20,6 +20,9 @@ angular
     'ngSanitize',
     'ngTouch',
 
+    'angulartics',
+    'angulartics.google.analytics',
+
     'mm.foundation',
     'selectize',
     'xml'
