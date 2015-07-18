@@ -1,6 +1,6 @@
 {
   "name": "configuration",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "dependencies": {
     "angular": "^1.4.1",
     "angular-animate": "^1.4.1",
