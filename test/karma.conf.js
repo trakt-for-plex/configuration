@@ -57,10 +57,12 @@ module.exports = function(config) {
       'bower_components/semver/semver.browser.js',
       'bower_components/waypoints/lib/noframework.waypoints.min.js',
       'bower_components/SHA-1/sha1.js',
-      'bower_components/angulartics/src/angulartics.js',
-      'bower_components/angulartics/src/angulartics-ga.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
+
+      'bower_components/angulartics/src/angulartics.js',
+      'bower_components/angulartics/src/angulartics-ga.js',
+
       "app/scripts/**/*.js",
       "test/mock/**/*.js",
       "test/spec/**/*.js"
