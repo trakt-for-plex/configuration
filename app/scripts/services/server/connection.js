@@ -6,21 +6,26 @@ angular.module('configurationApp')
       test: function(server) {
         console.debug('[%s] Testing %s connections', server.identifier, server.connections.length);
 
-        var deferred = $q.defer(),
+        var self = this,
             connections = angular.copy(server.connections),
-            self = this;
+            deferred = $q.defer(),
+            error = 'Unable to find valid connection';
 
         function testOne() {
           var connection = connections.shift();
 
           if(connection == null) {
-            deferred.reject('Unable to find valid connection');
+            deferred.reject(error);
             return;
           }
 
           self.testConnection(connection, server).then(function(connection) {
             deferred.resolve(connection);
-          }, function() {
+          }, function(connectionError) {
+            if(typeof connectionError !== 'undefined' && connectionError !== null) {
+              error = connectionError;
+            }
+
             testOne();
           });
         }
@@ -32,6 +37,12 @@ angular.module('configurationApp')
       testConnection: function(connection, server) {
         console.debug('[%s] Testing connection: %s', server.identifier, connection.uri);
 
+        // Ensure we don't attempt an http:// connection while https:// is being used
+        if(window.location.protocol === 'https:' && connection.uri.startsWith('http:')) {
+          return $q.reject("Only secure servers are supported when browsing over https://");
+        }
+
+        // Test connection
         var deferred = $q.defer(),
             request = $http({
               method: 'GET',

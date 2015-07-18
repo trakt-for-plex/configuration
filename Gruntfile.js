@@ -206,11 +206,19 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
+        exclude: [
+          'bower_components/angulartics'
+        ],
+
         ignorePath:  /\.\.\//
       },
       test: {
         devDependencies: true,
         src: '<%= karma.unit.configFile %>',
+        exclude: [
+          'bower_components/angulartics'
+        ],
+        
         ignorePath:  /\.\.\//,
         fileTypes:{
           js: {

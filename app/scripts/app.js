@@ -20,6 +20,9 @@ angular
     'ngSanitize',
     'ngTouch',
 
+    'angulartics',
+    'angulartics.google.analytics',
+
     'mm.foundation',
     'selectize',
     'xml'
@@ -85,16 +88,20 @@ angular
 
       redirect: function() {
         // Update path
-        if(this.path !== null) {
+        if(typeof this.path !== 'undefined' && this.path !== null) {
+          // Original
           $location.path(this.path);
         } else {
+          // Home
           $location.path('/');
         }
 
         // Update path
-        if(this.search !== null) {
+        if(typeof this.search !== 'undefined' && this.search !== null) {
+          // Original
           $location.search(this.search);
         } else {
+          // Home
           $location.search('');
         }
       }
