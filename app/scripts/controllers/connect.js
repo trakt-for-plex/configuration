@@ -15,11 +15,19 @@ angular.module('configurationApp')
     $scope.servers = [];
 
     PAPI.resources(true).then(function(data) {
-      // Retrieve servers from response
-      var servers = _.filter(data.MediaContainer.Device, function(device) {
+      // Retrieve devices
+      var devices = data.MediaContainer.Device;
+
+      if(typeof devices.length === 'undefined') {
+        devices = [devices];
+      }
+
+      // Filter devices to servers only
+      var servers = _.filter(devices, function(device) {
         return device._provides === 'server';
       });
 
+      // Build `Server` objects
       $scope.servers = _.map(servers, function(server) {
         return Server.fromElement(server);
       });
