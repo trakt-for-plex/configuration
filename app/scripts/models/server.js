@@ -213,6 +213,7 @@ angular.module('configurationApp')
         e.Connection = [e.Connection];
       }
 
+      // Build `Connection` objects
       s.connections = _.map(e.Connection, function(e) {
         return Connection.fromElement(e);
       });
