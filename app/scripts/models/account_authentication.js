@@ -2,10 +2,60 @@
 
 angular.module('configurationApp')
   .factory('AccountAuthentication', function(PUsers, $q) {
-    var tr = new trakt.Client(
-      'c9ccd3684988a7862a8542ae0000535e0fbd2d1c0ca35583af7ea4e784650a61',
-      'bf00575b1ad252b514f14b2c6171fe650d474091daad5eb6fa890ef24d581f65'
-    );
+    var stateIds = {
+          'valid':    0,
+          'warning':  1,
+          'error':    2,
+          'empty':    3
+        },
+        stateKeys = {
+          0: 'valid',
+          1: 'warning',
+          2: 'error',
+          3: 'empty'
+        },
+        tr = new trakt.Client(
+          'c9ccd3684988a7862a8542ae0000535e0fbd2d1c0ca35583af7ea4e784650a61',
+          'bf00575b1ad252b514f14b2c6171fe650d474091daad5eb6fa890ef24d581f65'
+        );
+
+    function selectPriorityState(states, type) {
+      type = typeof type !== 'undefined' ? type : 'top';
+
+      if(states.length === 0) {
+        return null;
+      }
+
+      // Ensure states are unique
+      states = _.uniq(states);
+
+      if(states.length === 1) {
+        return states[0];
+      }
+
+      // Map states to sort indices
+      var ids =_.map(states, function(key) {
+        return stateIds[key];
+      });
+
+      // Sort state indices
+      ids = _.sortBy(ids, function(id) { return id; });
+
+      // Retrieve highest priority state
+      var id;
+
+      if(type === 'top') {
+        id = ids[0];
+      } else if(type === 'bottom') {
+        id = ids[ids.length - 1];
+      } else {
+        console.warn('Unknown "type" provided for selectPriorityState()');
+        return null;
+      }
+
+      // Map id to state key
+      return stateKeys[id];
+    }
 
     //
     // PlexAuthentication
@@ -18,7 +68,7 @@ angular.module('configurationApp')
       this.username = null;
 
       this.authorization = null;
-      this.valid = false;
+      this.state = '';
     }
 
     PlexAuthentication.prototype.basicChanged = function() {
@@ -76,12 +126,12 @@ angular.module('configurationApp')
       this.username = data.username;
 
       this.authorization = data.authorization;
-      this.valid = false;
+      this.state = '';
     };
 
-    PlexAuthentication.prototype.validate = function() {
-      this.valid =
-        this.authorization.basic.valid;
+    PlexAuthentication.prototype.check = function() {
+      this.state =
+        this.authorization.basic.state;
     };
 
     //
@@ -95,7 +145,7 @@ angular.module('configurationApp')
       this.username = null;
 
       this.authorization = null;
-      this.valid = false;
+      this.state = '';
     }
 
     TraktAuthentication.prototype.basicChanged = function() {
@@ -190,13 +240,14 @@ angular.module('configurationApp')
       this.username = data.username;
 
       this.authorization = data.authorization;
-      this.valid = false;
+      this.state = '';
     };
 
-    TraktAuthentication.prototype.validate = function() {
-      this.valid =
-        this.authorization.basic.valid ||
-        this.authorization.oauth.valid;
+    TraktAuthentication.prototype.check = function() {
+      this.state = selectPriorityState([
+        this.authorization.basic.state,
+        this.authorization.oauth.state
+      ]);
     };
 
     //
@@ -207,7 +258,7 @@ angular.module('configurationApp')
       this.plex = new PlexAuthentication();
       this.trakt = new TraktAuthentication();
 
-      this.valid = false;
+      this.state = '';
     }
 
     AccountAuthentication.prototype.update = function(data) {
@@ -215,15 +266,18 @@ angular.module('configurationApp')
       this.plex.update(data.plex);
       this.trakt.update(data.trakt);
 
-      // Validate current authentication
-      this.validate();
+      // Check current authentication
+      this.check();
     };
 
-    AccountAuthentication.prototype.validate = function() {
-      this.plex.validate();
-      this.trakt.validate();
+    AccountAuthentication.prototype.check = function() {
+      this.plex.check();
+      this.trakt.check();
 
-      this.valid = this.plex.valid && this.trakt.valid;
+      this.state = selectPriorityState([
+        this.plex.state,
+        this.trakt.state
+      ], 'bottom');
     };
 
     return AccountAuthentication;

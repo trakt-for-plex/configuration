@@ -86,32 +86,6 @@
         color: inherit;
         background-color: rgba(0, 0, 0, 0.075);
       }
-
-      dd > a:before {
-        // Foundation icons initialization
-        font-family: "foundation-icons";
-        font-style: normal;
-        font-weight: normal;
-        font-variant: normal;
-        text-transform: none;
-        line-height: 1;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        text-decoration: inherit;
-
-        // Alignment
-        margin-right: 8px;
-
-        // fi-alert
-        color: #BABA00;
-        content: "\f101";
-      }
-
-      dd[data-valid="true"] > a:before {
-        // fi-check
-        color: #00BA00;
-        content: "\f126";
-      }
     }
 
     .tabs-content {
@@ -144,35 +118,48 @@
           background: rgba(0, 0, 0, 0.09);
         }
 
-        dd > a:before {
-          // Foundation icons initialization
-          font-family: "foundation-icons";
-          font-style: normal;
-          font-weight: normal;
-          font-variant: normal;
-          text-transform: none;
-          line-height: 1;
-          -webkit-font-smoothing: antialiased;
-          display: inline-block;
-          text-decoration: inherit;
-
-          // Alignment
-          margin-right: 8px;
-
-          // fi-alert
-          color: #BABA00;
-          content: "\f101";
-        }
-
-        dd[data-valid="true"] > a:before {
-          // fi-check
-          color: #00BA00;
-          content: "\f126";
-        }
-
         .content {
           padding: 10px;
         }
+      }
+    }
+
+    .tabs,
+    .tabs-content .accordion {
+      dd > a:before {
+        // Font Awesome
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        transform: translate(0, 0);
+
+        // Alignment
+        margin-right: 8px;
+
+        // Empty
+        color: #757575;
+        content: "\f056";
+      }
+
+      dd[data-state="error"] > a:before {
+        // fi-check
+        color: #B10018;
+        content: "\f06a";
+      }
+
+      dd[data-state="warning"] > a:before {
+        // fi-check
+        color: #BABA00;
+        content: "\f06a";
+      }
+
+      dd[data-state="valid"] > a:before {
+        // fi-check
+        color: #55A800;
+        content: "\f058";
       }
     }
   }
