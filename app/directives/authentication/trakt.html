@@ -2,7 +2,7 @@
 
 <accordion close-others="true">
   <accordion-group heading="OAuth" data-state="{{ trakt.authorization.oauth.state }}" is-open="true">
-    <label for="trakt.oauth.code">Authentication PIN</label>
+    <label for="trakt.oauth.code">Authentication PIN <a href="https://trakt.tv/pin/478">Get PIN</a></label>
     <input id="trakt.oauth.code" type="password" ng-model="trakt.authorization.oauth.code" />
   </accordion-group>
 

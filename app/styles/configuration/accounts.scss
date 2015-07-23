@@ -111,6 +111,10 @@
         margin-bottom: 3px;
       }
 
+      label[for="trakt.oauth.code"] a {
+        float: right;
+      }
+
       .accordion {
         dd > a {
           padding: 4px 7px;
