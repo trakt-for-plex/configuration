@@ -3,7 +3,7 @@
     <ul class="panel side-nav">
       <li ng-repeat="a in accounts" ng-class="{active: account.id == a.id}">
         <a href="#/configuration/accounts?id={{ a.id }}">
-          <img class="avatar" ng-src="{{ a.thumb_url }}"/>{{ a.name }}
+          <img class="avatar" ng-src="{{ a.thumb_url }}"/>{{ a.name }}<i class="state" data-state="{{ a.authentication.state }}"></i>
         </a>
       </li>
     </ul>

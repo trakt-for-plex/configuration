@@ -13,6 +13,14 @@
       margin-right: 10px;
     }
 
+    .state {
+      float: right;
+
+      font-size: 16px;
+
+      margin-top: 4px;
+    }
+
     .actions {
       display: table;
       width: 100%;
@@ -131,42 +139,49 @@
         }
       }
     }
+  }
 
-    .tabs,
-    .tabs-content .accordion {
-      dd > a:before {
-        // Font Awesome
-        display: inline-block;
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        transform: translate(0, 0);
+  //
+  // Authentication state icon
+  //
 
-        // Alignment
-        margin-right: 8px;
+  .authentication dd > a:before,
+  .list .state:before {
+    // Font Awesome
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
 
-        // Icon
-        color: #757575;
-        content: "\f056";
-      }
+    // Icon
+    color: #757575;
+    content: "\f056";
+  }
 
-      dd[data-state="error"] > a:before {
-        color: #f04124;
-        content: "\f06a";
-      }
+  .authentication dd[data-state="error"] > a:before,
+  .list .state[data-state="error"]:before {
+    color: #f04124;
+    content: "\f06a";
+  }
 
-      dd[data-state="warning"] > a:before {
-        color: #BABA00;
-        content: "\f06a";
-      }
+  .authentication dd[data-state="warning"] > a:before,
+  .list .state[data-state="warning"]:before  {
+    color: #BABA00;
+    content: "\f06a";
+  }
 
-      dd[data-state="valid"] > a:before {
-        color: #55A800;
-        content: "\f058";
-      }
-    }
+  .authentication dd[data-state="valid"] > a:before,
+  .list .state[data-state="valid"]:before  {
+    color: #55A800;
+    content: "\f058";
+  }
+
+  .authentication dd > a:before {
+    // Alignment
+    margin-right: 8px;
   }
 }
 
