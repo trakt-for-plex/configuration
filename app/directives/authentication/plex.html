@@ -1,4 +1,5 @@
 <small class="error" ng-repeat="error in plex.errors track by $index">{{ error }}</small>
+<small class="warning" ng-repeat="warning in plex.warnings track by $index">{{ warning }}</small>
 
 <accordion close-others="true">
   <accordion-group heading="Basic" data-state="{{ plex.authorization.basic.state }}" is-open="true">

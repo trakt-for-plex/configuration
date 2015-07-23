@@ -1,4 +1,5 @@
 <small class="error" ng-repeat="error in trakt.errors track by $index">{{ error }}</small>
+<small class="warning" ng-repeat="warning in trakt.warnings track by $index">{{ warning }}</small>
 
 <accordion close-others="true">
   <accordion-group heading="OAuth" data-state="{{ trakt.authorization.oauth.state }}" is-open="true">

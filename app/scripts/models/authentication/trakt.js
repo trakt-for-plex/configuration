@@ -16,6 +16,8 @@ angular.module('configurationApp')
       this.authorization = null;
 
       this.errors = [];
+      this.warnings = [];
+
       this.state = '';
     }
 
@@ -51,6 +53,7 @@ angular.module('configurationApp')
 
       // Reset errors
       this.errors = [];
+      this.warnings = [];
 
       if(this.basicChanged()) {
         // Basic authorization
@@ -80,6 +83,9 @@ angular.module('configurationApp')
 
         promises.push(
           tr.oauth.token(code).then(function(data) {
+            // Check authentication state
+            self.check();
+
             return {
               trakt: {
                 authorization: {
@@ -118,8 +124,8 @@ angular.module('configurationApp')
 
         return data;
       }, function() {
-        // Update state
-        self.state = 'error';
+        // Check authentication state
+        self.check();
 
         return $q.reject();
       });
@@ -134,6 +140,8 @@ angular.module('configurationApp')
       this.authorization = data.authorization;
 
       this.errors = [];
+      this.warnings = [];
+
       this.state = '';
     };
 

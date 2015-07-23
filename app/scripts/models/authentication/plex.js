@@ -11,12 +11,14 @@ angular.module('configurationApp')
       this.authorization = null;
 
       this.errors = [];
+      this.warnings = [];
+
       this.state = '';
     }
 
     PlexAuthentication.prototype.basicChanged = function() {
       var current = this.authorization.basic,
-        original = this.data.authorization.basic;
+          original = this.data.authorization.basic;
 
       if(current.username !== original.username) {
         return true;
@@ -40,6 +42,7 @@ angular.module('configurationApp')
 
       // Reset errors
       this.errors = [];
+      this.warnings = [];
 
       // Send request
       PUsers.sign_in({
@@ -47,6 +50,9 @@ angular.module('configurationApp')
         password: current.password
       }).success(function(data) {
         var user = data.user;
+
+        // Check authentication state
+        self.check();
 
         deferred.resolve({
           plex: {
@@ -62,17 +68,21 @@ angular.module('configurationApp')
       }).error(function(data, status) {
         // Update errors
         if(typeof data !== 'undefined' && data !== null) {
+          // Display API errors
           self.errors = self.errors.concat(
             typeof data.errors.error === 'object' ?
               data.errors.error : [data.errors.error]
           );
         } else {
+          // Display HTTP error
           self.errors.push('HTTP Error: ' + status);
         }
 
         // Update state
         self.authorization.basic.state = 'error';
-        self.state = 'error';
+
+        // Check authentication state
+        self.check();
 
         deferred.reject();
       });
@@ -89,10 +99,13 @@ angular.module('configurationApp')
       this.authorization = data.authorization;
 
       this.errors = [];
+      this.warnings = [];
+
       this.state = '';
     };
 
     PlexAuthentication.prototype.check = function() {
+      // Update state
       this.state =
         this.authorization.basic.state;
     };
