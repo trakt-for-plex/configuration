@@ -5,7 +5,7 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        authorization: '=coAuthorization'
+        plex: '=coPlex'
       },
       templateUrl: 'directives/authentication/plex.html'
     };

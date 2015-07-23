@@ -95,6 +95,10 @@
         padding: 5px;
       }
 
+      .error {
+        margin-bottom: 5px;
+      }
+
       label + input {
         margin-top: 3px;
       }
@@ -139,25 +143,22 @@
         // Alignment
         margin-right: 8px;
 
-        // Empty
+        // Icon
         color: #757575;
         content: "\f056";
       }
 
       dd[data-state="error"] > a:before {
-        // fi-check
-        color: #B10018;
+        color: #f04124;
         content: "\f06a";
       }
 
       dd[data-state="warning"] > a:before {
-        // fi-check
         color: #BABA00;
         content: "\f06a";
       }
 
       dd[data-state="valid"] > a:before {
-        // fi-check
         color: #55A800;
         content: "\f058";
       }

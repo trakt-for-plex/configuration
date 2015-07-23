@@ -68,6 +68,8 @@ angular.module('configurationApp')
       this.username = null;
 
       this.authorization = null;
+
+      this.errors = [];
       this.state = '';
     }
 
@@ -92,7 +94,11 @@ angular.module('configurationApp')
       }
 
       var current = this.authorization.basic,
-          deferred = $q.defer();
+          deferred = $q.defer(),
+          self = this;
+
+      // Reset message
+      this.errors = [];
 
       // Send request
       PUsers.sign_in({
@@ -112,7 +118,17 @@ angular.module('configurationApp')
             }
           }
         });
-      }).error(function() {
+      }).error(function(data, status) {
+        // Update errors
+        if(typeof data !== 'undefined' && data !== null) {
+          self.errors = typeof data.errors.error === 'object' ? data.errors.error : [data.errors.error];
+        } else {
+          self.errors = ['HTTP Error: ' + status];
+        }
+
+        // Update state
+        self.state = 'error';
+
         deferred.reject();
       });
 
