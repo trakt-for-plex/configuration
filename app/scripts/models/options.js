@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Options', function ($q) {
+  .factory('Options', function (StringUtil, $q) {
     function parse(groups, options, depth) {
       depth = typeof depth !== 'undefined' ? depth : 0;
 
@@ -21,7 +21,7 @@ angular.module('configurationApp')
         }
 
         if(option.group.length - depth === 1) {
-          if(option.key.endsWith('.enabled') && option.type === 'boolean') {
+          if(StringUtil.endsWith(option.key, '.enabled') && option.type === 'boolean') {
             group.enabled = option;
           } else {
             group.options.push(option);
