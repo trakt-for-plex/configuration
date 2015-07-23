@@ -1,14 +1,16 @@
+<small class="error" ng-repeat="error in trakt.errors track by $index">{{ error }}</small>
+
 <accordion close-others="true">
-  <accordion-group heading="OAuth" data-state="{{ authorization.oauth.state }}" is-open="true">
+  <accordion-group heading="OAuth" data-state="{{ trakt.authorization.oauth.state }}" is-open="true">
     <label for="trakt.oauth.code">Authentication PIN</label>
-    <input id="trakt.oauth.code" type="password" ng-model="authorization.oauth.code" />
+    <input id="trakt.oauth.code" type="password" ng-model="trakt.authorization.oauth.code" />
   </accordion-group>
 
-  <accordion-group heading="Basic" data-state="{{ authorization.basic.state }}">
+  <accordion-group heading="Basic" data-state="{{ trakt.authorization.basic.state }}">
     <label for="trakt.basic.username">Username</label>
-    <input id="trakt.basic.username" type="text" ng-model="authorization.basic.username" />
+    <input id="trakt.basic.username" type="text" ng-model="trakt.authorization.basic.username" />
 
     <label for="trakt.basic.password">Password</label>
-    <input id="trakt.basic.password" type="password" ng-model="authorization.basic.password" />
+    <input id="trakt.basic.password" type="password" ng-model="trakt.authorization.basic.password" />
   </accordion-group>
 </accordion>

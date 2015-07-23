@@ -5,7 +5,7 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        authorization: '=coAuthorization'
+        trakt: '=coTrakt'
       },
       templateUrl: 'directives/authentication/trakt.html'
     };
