@@ -105,6 +105,17 @@ angular.module('configurationApp')
     };
 
     PlexAuthentication.prototype.check = function() {
+      if((typeof this.username === 'undefined' ||
+         this.username === null ||
+         this.username.length === 0) &&
+         this.authorization.basic.state === 'valid') {
+        // Update warnings
+        this.warnings.push('Missing username');
+
+        // Update state
+        this.authorization.basic.state = 'warning';
+      }
+
       // Update state
       this.state =
         this.authorization.basic.state;
