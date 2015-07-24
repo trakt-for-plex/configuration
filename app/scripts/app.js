@@ -87,23 +87,37 @@ angular
       search: null,
 
       redirect: function() {
-        // Update path
+        var path, search;
+
+        // Get path
         if(typeof this.path !== 'undefined' && this.path !== null) {
           // Original
-          $location.path(this.path);
+          path = this.path;
         } else {
           // Home
-          $location.path('/');
+          path = '/';
         }
 
-        // Update path
+        // Get search query
         if(typeof this.search !== 'undefined' && this.search !== null) {
           // Original
-          $location.search(this.search);
+          search = this.search;
         } else {
           // Home
-          $location.search('');
+          search = '';
         }
+
+        // Ensure destination is valid
+        if(this.path === $location.path()) {
+          path = '/';
+          search = '';
+        }
+
+        // Redirect
+        console.log('redirecting to %s (%s)', path, search);
+
+        $location.path(path);
+        $location.search(search);
       }
     };
 
