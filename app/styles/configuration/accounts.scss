@@ -13,6 +13,14 @@
       margin-right: 10px;
     }
 
+    .state {
+      float: right;
+
+      font-size: 16px;
+
+      margin-top: 4px;
+    }
+
     .actions {
       display: table;
       width: 100%;
@@ -86,32 +94,6 @@
         color: inherit;
         background-color: rgba(0, 0, 0, 0.075);
       }
-
-      dd > a:before {
-        // Foundation icons initialization
-        font-family: "foundation-icons";
-        font-style: normal;
-        font-weight: normal;
-        font-variant: normal;
-        text-transform: none;
-        line-height: 1;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        text-decoration: inherit;
-
-        // Alignment
-        margin-right: 8px;
-
-        // fi-alert
-        color: #BABA00;
-        content: "\f101";
-      }
-
-      dd[data-valid="true"] > a:before {
-        // fi-check
-        color: #00BA00;
-        content: "\f126";
-      }
     }
 
     .tabs-content {
@@ -119,6 +101,28 @@
 
       .content {
         padding: 5px;
+      }
+
+      small.warning {
+        display: block;
+
+        margin-top: -1px;
+        padding: 0.375rem 0.5625rem 0.5625rem;
+
+        font-size: 0.75rem;
+        font-style: italic;
+        font-weight: normal;
+
+        background: #BDB820;
+        color: #FFFFFF;
+      }
+
+      small.error {
+        background: #BD2820;
+      }
+
+      small.error, small.warning {
+        margin-bottom: 5px;
       }
 
       label + input {
@@ -133,6 +137,10 @@
         margin-bottom: 3px;
       }
 
+      label[for="trakt.oauth.code"] a {
+        float: right;
+      }
+
       .accordion {
         dd > a {
           padding: 4px 7px;
@@ -144,37 +152,54 @@
           background: rgba(0, 0, 0, 0.09);
         }
 
-        dd > a:before {
-          // Foundation icons initialization
-          font-family: "foundation-icons";
-          font-style: normal;
-          font-weight: normal;
-          font-variant: normal;
-          text-transform: none;
-          line-height: 1;
-          -webkit-font-smoothing: antialiased;
-          display: inline-block;
-          text-decoration: inherit;
-
-          // Alignment
-          margin-right: 8px;
-
-          // fi-alert
-          color: #BABA00;
-          content: "\f101";
-        }
-
-        dd[data-valid="true"] > a:before {
-          // fi-check
-          color: #00BA00;
-          content: "\f126";
-        }
-
         .content {
           padding: 10px;
         }
       }
     }
+  }
+
+  //
+  // Authentication state icon
+  //
+
+  .authentication dd > a:before,
+  .list .state:before {
+    // Font Awesome
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+
+    // Icon
+    color: #757575;
+    content: "\f056";
+  }
+
+  .authentication dd[data-state="error"] > a:before,
+  .list .state[data-state="error"]:before {
+    color: #BD2820;
+    content: "\f06a";
+  }
+
+  .authentication dd[data-state="warning"] > a:before,
+  .list .state[data-state="warning"]:before  {
+    color: #BDB820;
+    content: "\f06a";
+  }
+
+  .authentication dd[data-state="valid"] > a:before,
+  .list .state[data-state="valid"]:before  {
+    color: #4FA51C;
+    content: "\f058";
+  }
+
+  .authentication dd > a:before {
+    // Alignment
+    margin-right: 8px;
   }
 }
 

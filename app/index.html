@@ -149,7 +149,6 @@
     <script src="bower_components/jquery-sortable/source/js/jquery-sortable.js"></script>
     <script src="bower_components/angular-raven/angular-raven.js"></script>
     <script src="bower_components/JavaScript-MD5/js/md5.js"></script>
-    <script src="bower_components/semver/semver.browser.js"></script>
     <script src="bower_components/waypoints/lib/noframework.waypoints.min.js"></script>
     <script src="bower_components/SHA-1/sha1.js"></script>
     <!-- endbower -->
@@ -181,12 +180,15 @@
     <script src="scripts/directives/button.js"></script>
     <script src="scripts/directives/button-input.js"></script>
 
+    <script src="scripts/models/authentication/base.js"></script>
+    <script src="scripts/models/authentication/main.js"></script>
+    <script src="scripts/models/authentication/plex.js"></script>
+    <script src="scripts/models/authentication/trakt.js"></script>
     <script src="scripts/models/configuration/rules/client/collection.js"></script>
     <script src="scripts/models/configuration/rules/client/rule.js"></script>
     <script src="scripts/models/configuration/rules/user/collection.js"></script>
     <script src="scripts/models/configuration/rules/user/rule.js"></script>
     <script src="scripts/models/account.js"></script>
-    <script src="scripts/models/account_authentication.js"></script>
     <script src="scripts/models/connection.js"></script>
     <script src="scripts/models/options.js"></script>
     <script src="scripts/models/server.js"></script>
@@ -199,6 +201,9 @@
     <script src="scripts/services/raven/tags.js"></script>
     <script src="scripts/services/server/connection.js"></script>
     <script src="scripts/services/authentication.js"></script>
+
+    <script src="scripts/utils/string.js"></script>
+    <script src="scripts/utils/version.js"></script>
     <!-- endbuild -->
   </body>
 </html>

@@ -39,6 +39,11 @@ angular.module('configurationApp')
     }
 
     $scope.accountRefresh = function() {
+      if(typeof $scope.account === 'undefined' || $scope.account === null) {
+        // Currently selected account has been removed
+        return $q.reject();
+      }
+
       return $scope.account.refresh($rootScope.$s);
     };
 

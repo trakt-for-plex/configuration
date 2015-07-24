@@ -3,7 +3,7 @@
     <ul class="panel side-nav">
       <li ng-repeat="a in accounts" ng-class="{active: account.id == a.id}">
         <a href="#/configuration/accounts?id={{ a.id }}">
-          <img class="avatar" ng-src="{{ a.thumb_url }}"/>{{ a.name }}
+          <img class="avatar" ng-src="{{ a.thumb_url }}"/>{{ a.name }}<i class="state" data-state="{{ a.authentication.state }}"></i>
         </a>
       </li>
     </ul>
@@ -40,11 +40,11 @@
       </div>
 
       <tabset>
-        <tab heading="Trakt" data-valid="{{ account.authentication.trakt.valid }}">
-          <co-authentication-trakt co-authorization="account.authentication.trakt.authorization"></co-authentication-trakt>
+        <tab heading="Trakt" data-state="{{ account.authentication.trakt.state }}">
+          <co-authentication-trakt co-trakt="account.authentication.trakt"></co-authentication-trakt>
         </tab>
-        <tab heading="Plex" data-valid="{{ account.authentication.plex.valid }}">
-          <co-authentication-plex co-authorization="account.authentication.plex.authorization"></co-authentication-plex>
+        <tab heading="Plex" data-state="{{ account.authentication.plex.state }}">
+          <co-authentication-plex co-plex="account.authentication.plex"></co-authentication-plex>
         </tab>
       </tabset>
     </div>
