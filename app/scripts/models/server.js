@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Server', function(Connection, CSystem, PMessaging, SConnection, $q) {
+  .factory('Server', function(Connection, CSystem, PMessaging, SConnection, VersionUtil, $q) {
     var identifier = 'com.plexapp.plugins.trakttv',
-        pluginVersionRequired = '>=0.9.10',
+        pluginVersionMinimum = '0.9.10',
         target = 'MessageKit:Api';
 
     function Server() {
@@ -73,28 +73,6 @@ angular.module('configurationApp')
       });
     };
 
-    function parseVersion(version) {
-      if(typeof version === 'undefined' || version === null) {
-        return null;
-      }
-
-      // Strip branch
-      var branchIndex = version.indexOf('-');
-
-      if(branchIndex !== -1) {
-        version = version.substr(0, branchIndex);
-      }
-
-      // Strip version into fragments
-      var fragments = version.split('.');
-
-      // Remove hotfix fragment
-      fragments = fragments.splice(0, 3);
-
-      // Rebuild version string
-      return fragments.join('.');
-    }
-
     Server.prototype.check = function() {
       var self = this;
 
@@ -102,11 +80,8 @@ angular.module('configurationApp')
         // Store server version
         self.plugin_version = pong.version;
 
-        // Ensure plugin version meets requirements
-        var version = parseVersion(pong.version);
-
-        if(semver.satisfies(version, pluginVersionRequired)) {
-          // Plugin version is supported
+        // Check plugin meets version requirement
+        if(VersionUtil.compare(self.plugin_version, pluginVersionMinimum) >= 0) {
           return true;
         }
 

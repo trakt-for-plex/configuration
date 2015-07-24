@@ -54,7 +54,6 @@ module.exports = function(config) {
       'bower_components/raven-js/dist/raven.js',
       'bower_components/angular-raven/angular-raven.js',
       'bower_components/JavaScript-MD5/js/md5.js',
-      'bower_components/semver/semver.browser.js',
       'bower_components/waypoints/lib/noframework.waypoints.min.js',
       'bower_components/SHA-1/sha1.js',
       'bower_components/angular-mocks/angular-mocks.js',
