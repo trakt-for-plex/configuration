@@ -13,12 +13,27 @@ angular.module('configurationApp')
       username: null,
       password: null
     };
+    $scope.errors = [];
 
     $scope.submit = function() {
+      // Reset errors
+      $scope.errors = [];
+
       Authentication.login($scope.credentials).then(function() {
+        // Login successful
         $scope.$r.redirect();
-      }, function() {
-        console.log('login error');
+      }, function(data, status) {
+        // Login failed
+        if(typeof data !== 'undefined' && data !== null) {
+          // Display API errors
+          $scope.errors = $scope.errors.concat(
+            typeof data.errors.error === 'object' ?
+              data.errors.error : [data.errors.error]
+          );
+        } else {
+          // Display HTTP error
+          $scope.errors.push('HTTP Error: ' + status);
+        }
       });
     };
 

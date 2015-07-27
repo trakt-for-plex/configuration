@@ -10,6 +10,8 @@
   </div>
 
   <form>
+    <small class="error" ng-repeat="error in errors track by $index">{{ error }}</small>
+
     <div class="row">
       <label>Username
         <input type="text" ng-model="credentials.username"/>

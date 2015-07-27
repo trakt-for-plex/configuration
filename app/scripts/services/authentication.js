@@ -78,10 +78,10 @@ angular.module('configurationApp')
 
             deferred.resolve(data.user);
           })
-          .error(function() {
+          .error(function(data, status) {
             updateAuthentication();
 
-            deferred.reject();
+            deferred.reject(data, status);
           });
 
         return deferred.promise;
