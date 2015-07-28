@@ -144,7 +144,7 @@ angular
         });
       }
 
-      if(controller === 'ConnectController') {
+      if(controller === 'ConnectController' || controller === 'LogoutController') {
         return;
       }
 
