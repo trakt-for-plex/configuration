@@ -26,7 +26,15 @@ angular.module('configurationApp')
             return null;
           }
 
-          return parseInt(id, 10);
+          // Try parse integer from string
+          var number = parseInt(id, 10);
+
+          if(!isNaN(number) && number.toString() === id) {
+            return number;
+          }
+
+          // Return original string
+          return id;
         };
       }
     };
