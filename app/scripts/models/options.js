@@ -16,10 +16,20 @@ angular.module('configurationApp')
             groups: {},
 
             enabled: null,
-            options: []
+            options: [],
+
+            order: null
           };
         }
 
+        // Update group order
+        if(group.order === null) {
+          group.order = option.order;
+        } else if(option.order < group.order) {
+          group.order = option.order;
+        }
+
+        // Update group options
         if(option.group.length - depth === 1) {
           if(StringUtil.endsWith(option.key, '.enabled') && option.type === 'boolean') {
             group.enabled = option;
