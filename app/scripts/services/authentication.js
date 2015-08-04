@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Authentication', function(PUsers, RavenTags, $http, $q, $rootScope) {
+  .factory('Authentication', function(PPins, PUsers, RavenTags, $http, $q, $rootScope) {
     var identifierSalt = 'MLawOtoMiFf5Ni9nbu0bTes2+UkrVLMZ8LSPwA+qTtA=',
         tokenRegex = /^server\.\w+\.((token_channel)|(token_channel_expire)|(token_plex))$/,
         user = null;
@@ -19,7 +19,7 @@ angular.module('configurationApp')
 
     updateAuthentication();
 
-    return {
+    var Authentication = {
       authenticated: function() {
         return user !== null;
       },
@@ -58,6 +58,66 @@ angular.module('configurationApp')
         }
 
         return value;
+      },
+      pin: {
+        create: function() {
+          var deferred = $q.defer();
+
+          PPins.create()
+            .success(function(data) {
+              deferred.resolve(data.pin);
+            })
+            .error(function(data, status) {
+              deferred.reject(data, status);
+            });
+
+          return deferred.promise;
+        },
+        get: function(id) {
+          var deferred = $q.defer();
+
+          PPins.get(id)
+            .success(function(data) {
+              if(data.pin.auth_token === null) {
+                deferred.resolve(false);
+                return;
+              }
+
+              // Retrieve account details for token
+              Authentication.pin.fetch(data.pin.auth_token).then(function() {
+                deferred.resolve(true);
+              }, function(data, status) {
+                deferred.reject(data, status);
+              });
+            })
+            .error(function(data, status) {
+              updateAuthentication();
+
+              deferred.reject(data, status);
+            });
+
+          return deferred.promise;
+        },
+        fetch: function(token) {
+          var deferred = $q.defer();
+
+          PUsers.account(token)
+            .success(function(data) {
+              Authentication.token(data.user._authenticationToken);
+              Authentication.user(data.user);
+
+              updateAuthentication(true, data.user);
+
+              deferred.resolve(data.user);
+            })
+            .error(function(data, status) {
+              updateAuthentication();
+
+              deferred.reject(data, status);
+            });
+
+          return deferred.promise;
+        }
       },
       login: function(credentials) {
         var deferred = $q.defer(),
@@ -144,4 +204,6 @@ angular.module('configurationApp')
         return deferred.promise;
       }
     };
+
+    return Authentication;
   });

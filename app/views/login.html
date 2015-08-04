@@ -17,7 +17,7 @@
         Visit <a href="https://plex.tv/pin" target="_blank">https://plex.tv/pin</a> and enter this code:
       </div>
 
-      <div class="code">1234</div>
+      <div class="code">{{ pin.data.code }}</div>
 
       <div class="buttons">
         <a class="switch button secondary small" ng-click="switch('basic')">Manual</a>
@@ -36,7 +36,7 @@
 
       <div class="buttons">
         <a class="switch button secondary small" ng-click="switch('pin')">PIN</a>
-        <input class="button small" type="submit" value="Sign in" ng-click="submit()"/>
+        <input class="button small" type="submit" value="Sign in" ng-click="basic.login()"/>
       </div>
     </form>
   </div>
