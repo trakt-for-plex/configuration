@@ -14,6 +14,7 @@ angular.module('configurationApp')
       password: null
     };
     $scope.errors = [];
+    $scope.method = 'pin';
 
     $scope.submit = function() {
       // Reset errors
@@ -35,6 +36,10 @@ angular.module('configurationApp')
           $scope.errors.push('HTTP Error: ' + status);
         }
       });
+    };
+
+    $scope.switch = function(method) {
+      $scope.method = method;
     };
 
     $scope.showAuthenticationDetails = function() {

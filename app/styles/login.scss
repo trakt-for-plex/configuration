@@ -35,11 +35,50 @@
     }
   }
 
-  form {
+  a.button, input[type="submit"] {
+    margin: 0;
+  }
+
+  .buttons {
+    height: 44px;
+
+    text-align: right;
+  }
+
+  .button.switch {
+    float: left;
+  }
+
+  .error {
+    margin: 0 -1px;
+  }
+
+  label > input {
+    margin-top: 3px;
+    margin-bottom: 14px;
+  }
+
+  .pin-authentication {
     padding: 14px;
 
-    input[type="submit"] {
-      margin: 0;
+    .instructions {
+      font-size: 14px;
     }
+
+    .code {
+      margin: 3px 0 14px;
+
+      background-color: rgba(0,0,0,0.3);
+      color: white;
+
+      font-size: 80px;
+      letter-spacing: 14px;
+      line-height: 112px;
+      text-align: center;
+    }
+  }
+
+  .basic-authentication {
+    padding: 14px;
   }
 }
