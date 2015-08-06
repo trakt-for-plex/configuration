@@ -70,16 +70,28 @@ angular
       });
   })
   .run(function(Authentication, RavenTags, $location, $rootScope) {
-    // Store metadata in root scope
-    $rootScope.$m = window.tfpc.metadata;
-
-    // Send version/revision with error reports
     var $m = window.tfpc.metadata;
 
+    // Store metadata in root scope
+    $rootScope.$m = $m;
+
+    // Send version/revision with error reports
     RavenTags.update({
       application_version: $m.version,
       application_revision: $m.revision.label
     });
+
+    // Setup plex.js
+    plex.cloud.headers.setProduct('trakt (for Plex) - Configuration', '1.0.0');
+
+    plex.cloud.xmlParser = 'x2js';
+
+    if(typeof localStorage['plex.client.identifier'] === 'undefined' ||
+       localStorage['plex.client.identifier'] === null) {
+      localStorage['plex.client.identifier'] = plex.utils.random.string();
+    }
+
+    plex.cloud.client_identifier = localStorage['plex.client.identifier'];
 
     // Redirect handler
     $rootScope.$r = {
@@ -131,7 +143,7 @@ angular
       if(!Authentication.authenticated()) {
         next.resolve = angular.extend(next.resolve || {}, {
           __authenticate__: function() {
-            Authentication.get().then(function() {
+            return Authentication.get().then(function() {
               console.log('authenticated');
             }, function() {
               $rootScope.$r.path = $location.path();

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('SConnection', function(PHeaders, $http, $q) {
+  .factory('SConnection', function($http, $q) {
     return {
       test: function(server) {
         console.debug('[%s] Testing %s connections', server.identifier, server.connections.length);
@@ -43,14 +43,14 @@ angular.module('configurationApp')
         }
 
         // Test connection
-        var deferred = $q.defer(),
-            request = $http({
-              method: 'GET',
-              url: connection.uri + '/identity',
-              headers: $.extend(PHeaders.get(), {
-                'X-Plex-Token': server.token_plex
-              })
-            });
+        //var deferred = $q.defer(),
+        //    request = $http({
+        //      method: 'GET',
+        //      url: connection.uri + '/identity',
+        //      headers: $.extend(PHeaders.get(), {
+        //        'X-Plex-Token': server.token_plex
+        //      })
+        //    });
 
         request.success(function(data) {
           var connectionIdentifier = data.MediaContainer._machineIdentifier;

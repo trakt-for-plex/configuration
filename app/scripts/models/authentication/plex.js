@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('PlexAuthentication', function(BaseAuthentication, PUsers, $q) {
+  .factory('PlexAuthentication', function(BaseAuthentication, $q) {
     function PlexAuthentication() {
       this.data = null;
 
