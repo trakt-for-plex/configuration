@@ -8,7 +8,7 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('LoginController', function(Authentication, $location, $modal, $scope, $timeout) {
+  .controller('LoginController', function(Authentication, $location, $modal, $q, $scope, $timeout) {
     $scope.credentials = {
       username: null,
       password: null
@@ -71,9 +71,9 @@ angular.module('configurationApp')
           }
 
           // Complete login
-          return Authentication.login({token: data.pin.auth_token}).then(function(user) {
+          return Authentication.login({token: data.pin.auth_token}).then(function() {
             $scope.$r.redirect();
-          }, function(data, status) {
+          }, function() {
             return $q.reject();
           });
         }, function(error) {
