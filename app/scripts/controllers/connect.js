@@ -8,7 +8,7 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('ConnectController', function(Server, RavenTags, CSystem, $location, $rootScope, $scope) {
+  .controller('ConnectController', function(PlexServer, RavenTags, $location, $rootScope, $scope) {
     $scope.state = '';
     $scope.selected = null;
 
@@ -30,7 +30,7 @@ angular.module('configurationApp')
       $scope.$apply(function() {
         // Build `Server` objects
         $scope.servers = _.map(servers, function (server) {
-          return Server.fromElement(server);
+          return PlexServer.fromElement(server);
         });
       });
     });

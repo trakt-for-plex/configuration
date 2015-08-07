@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Connection', function($http) {
-    function Connection() {
+  .factory('PlexConnection', function($http) {
+    function PlexConnection() {
       this.client = null;
       this.uri = null;
     }
 
-    Connection.prototype.request = function(path, config) {
+    PlexConnection.prototype.request = function(path, config) {
       // build url
       config.url = this.uri + '/' + path;
 
@@ -15,8 +15,8 @@ angular.module('configurationApp')
       return $http(config);
     };
 
-    Connection.fromElement = function(e) {
-      var c = new Connection();
+    PlexConnection.fromElement = function(e) {
+      var c = new PlexConnection();
 
       // Set attributes
       c.uri = e._uri;
@@ -24,5 +24,5 @@ angular.module('configurationApp')
       return c;
     };
 
-    return Connection;
+    return PlexConnection;
   });

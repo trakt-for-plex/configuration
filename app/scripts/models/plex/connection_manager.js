@@ -10,6 +10,14 @@ angular.module('configurationApp')
       this.current = null;
     }
 
+    PlexConnectionManager.prototype.reset = function() {
+      // Update server
+      this.client = null;
+      this.current = null;
+
+      this.server.client = null;
+    };
+
     PlexConnectionManager.prototype.test = function() {
       var self = this,
           connections = angular.copy(self.available),
@@ -37,6 +45,10 @@ angular.module('configurationApp')
         });
       }
 
+      // Reset current connection details
+      self.reset();
+
+      // Start testing connections
       testOne();
 
       return deferred.promise;

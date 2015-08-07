@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Server', function(Connection, CSystem, PlexConnectionManager, VersionUtil, $q) {
+  .factory('PlexServer', function(PlexConnection, PlexConnectionManager, VersionUtil, $q) {
     var identifier = 'com.plexapp.plugins.trakttv',
         pluginVersionMinimum = '0.9.10.3',
         target = 'MessageKit:Api';
 
-    function Server() {
+    function PlexServer() {
       this.name = null;
 
       this.identifier = null;
@@ -23,7 +23,7 @@ angular.module('configurationApp')
       this.error = null;
     }
 
-    Server.prototype.isAuthenticated = function() {
+    PlexServer.prototype.isAuthenticated = function() {
       if(this.token_channel === null) {
         return false;
       }
@@ -32,12 +32,29 @@ angular.module('configurationApp')
       return true;
     };
 
-    Server.prototype.authenticate = function() {
+    PlexServer.prototype.authenticate = function() {
       var self = this;
 
-      return CSystem.authenticate(this).then(function() {
-        self.save();
+      return this.call('system.authenticate', [this.token_plex]).then(function(token) {
+        if(token['X-Channel-Token'] === null || token['X-Channel-Token-Expire'] === null) {
+          // Reset authentication details
+          self.token_channel = null;
+          self.token_channel_expire = null;
 
+          // Save server details
+          self.save();
+
+          // Reject promise
+          self.error = 'Unable to authenticate with plugin';
+          return $q.reject(null);
+        }
+
+        // Retrieve authentication details
+        self.token_channel = token['X-Channel-Token'];
+        self.token_channel_expire = token['X-Channel-Token-Expire'];
+
+        // Save server details
+        self.save();
       }, function(error) {
         self.error = error;
 
@@ -45,7 +62,7 @@ angular.module('configurationApp')
       });
     };
 
-    Server.prototype.connect = function() {
+    PlexServer.prototype.connect = function() {
       var self = this;
 
       // Reset connection "error"
@@ -73,10 +90,10 @@ angular.module('configurationApp')
       });
     };
 
-    Server.prototype.check = function() {
+    PlexServer.prototype.check = function() {
       var self = this;
 
-      return CSystem.ping(this).then(function(pong) {
+      return this.call('system.ping').then(function(pong) {
         // Store server version
         self.plugin_version = pong.version;
 
@@ -95,7 +112,7 @@ angular.module('configurationApp')
       });
     };
 
-    Server.prototype.call = function(key, args, kwargs) {
+    PlexServer.prototype.call = function(key, args, kwargs) {
       args = typeof args !== 'undefined' ? args : [];
 
       // insert `key` at the front of `args`
@@ -149,7 +166,7 @@ angular.module('configurationApp')
       return deferred.promise;
     };
 
-    Server.prototype.get = function(path, config) {
+    PlexServer.prototype.get = function(path, config) {
       config = typeof config !== 'undefined' ? config : {};
 
       config.method = 'GET';
@@ -160,11 +177,11 @@ angular.module('configurationApp')
       return this.current.request(path, config);
     };
 
-    Server.prototype._attributeKey = function(name) {
+    PlexServer.prototype._attributeKey = function(name) {
       return 'server.' + this.identifier + '.' + name;
     };
 
-    Server.prototype.load = function() {
+    PlexServer.prototype.load = function() {
       if(this.identifier === null || typeof this.identifier === 'undefined') {
         return;
       }
@@ -187,7 +204,7 @@ angular.module('configurationApp')
       loadAttribute('token_channel_expire');
     };
 
-    Server.prototype.save = function() {
+    PlexServer.prototype.save = function() {
       if(this.identifier === null || typeof this.identifier === 'undefined') {
         return;
       }
@@ -204,8 +221,8 @@ angular.module('configurationApp')
       saveAttribute('token_channel_expire');
     };
 
-    Server.fromElement = function(e) {
-      var s = new Server();
+    PlexServer.fromElement = function(e) {
+      var s = new PlexServer();
 
       // Set attributes
       s.name = e._name;
@@ -219,7 +236,7 @@ angular.module('configurationApp')
 
       // Build `Connection` objects
       var connections = _.map(e.Connection, function(e) {
-        return Connection.fromElement(e);
+        return PlexConnection.fromElement(e);
       });
 
       s.connection_manager = new PlexConnectionManager(s, connections);
@@ -230,5 +247,5 @@ angular.module('configurationApp')
       return s;
     };
 
-    return Server;
+    return PlexServer;
   });
