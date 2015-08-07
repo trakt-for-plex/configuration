@@ -23,6 +23,7 @@ angular
     'angulartics',
     'angulartics.google.analytics',
 
+    'angularSpinner',
     'mm.foundation',
     'selectize',
     'xml'
