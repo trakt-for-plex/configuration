@@ -20,22 +20,33 @@ angular.module('configurationApp')
     $scope.pin = {
       data: null,
       expires_at: null,
+      state: '',
 
       opened: function() {
+        $scope.pin.state = 'create';
+
         // Create new pin code
         plex.cloud.pins().then(function(data) {
-          // Store pin details
-          $scope.pin.data = data.pin;
-          $scope.pin.expires_at = new Date(data.pin.expires_at);
+          $scope.$apply(function() {
+            // Store pin details
+            $scope.pin.data = data.pin;
+            $scope.pin.expires_at = new Date(data.pin.expires_at);
+
+            $scope.pin.state = 'check';
+          });
 
           // Schedule pin checks
           $timeout(function() {
             $scope.pin.check(2000);
           }, 4000);
-        }, function(error) {
-          console.log(error);
+        }, function(data, status) {
+          console.warn(data, status);
 
-          $scope.pin.reset();
+          $scope.$apply(function() {
+            $scope.pin.state = 'error';
+
+            $scope.pin.reset();
+          });
         });
       },
       check: function(interval) {
@@ -72,15 +83,18 @@ angular.module('configurationApp')
 
           // Complete login
           return Authentication.login({token: data.pin.auth_token}).then(function() {
+            $scope.pin.state = 'complete';
+
             $scope.$r.redirect();
           }, function() {
             return $q.reject();
           });
-        }, function(error) {
-          console.log(error);
+        }, function(data, status) {
+          console.warn(data, status);
 
-          // Schedule next check
-          //$scope.pin.schedule(interval);
+          $scope.$apply(function() {
+            $scope.pin.state = 'error';
+          });
         });
       },
       schedule: function(interval) {
@@ -92,8 +106,11 @@ angular.module('configurationApp')
         console.debug('Checking pin status in %sms', interval);
       },
       reset: function() {
-        $scope.pin.data = null;
-        $scope.pin.expires_at = null;
+        $scope.$apply(function() {
+          $scope.pin.data = null;
+          $scope.pin.expires_at = null;
+          $scope.pin.state = '';
+        });
       }
     };
 

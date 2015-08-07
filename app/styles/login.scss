@@ -66,15 +66,29 @@
     }
 
     .code {
+      position: relative;
+
+      height: 112px;
       margin: 3px 0 14px;
 
       background-color: rgba(0,0,0,0.3);
-      color: white;
 
-      font-size: 74px;
-      letter-spacing: 10px;
-      line-height: 112px;
-      text-align: center;
+      .code-spinner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .code-value {
+        color: white;
+
+        font-size: 74px;
+        letter-spacing: 10px;
+        line-height: 112px;
+        text-align: center;
+      }
     }
   }
 
