@@ -8,7 +8,7 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('LoginController', function(Authentication, $location, $modal, $scope, $timeout) {
+  .controller('LoginController', function(Authentication, $location, $modal, $q, $scope, $timeout) {
     $scope.credentials = {
       username: null,
       password: null
@@ -23,12 +23,10 @@ angular.module('configurationApp')
 
       opened: function() {
         // Create new pin code
-        Authentication.pin.create().then(function(data) {
-          console.log(data);
-
+        plex.cloud.pins().then(function(data) {
           // Store pin details
-          $scope.pin.data = data;
-          $scope.pin.expires_at = new Date(data.expires_at);
+          $scope.pin.data = data.pin;
+          $scope.pin.expires_at = new Date(data.pin.expires_at);
 
           // Schedule pin checks
           $timeout(function() {
@@ -65,15 +63,19 @@ angular.module('configurationApp')
         }
 
         // Check if pin is authenticated
-        Authentication.pin.get($scope.pin.data.id).then(function(success) {
-          if(success === true) {
-            // Login successful
-            $scope.$r.redirect();
+        plex.cloud["/pins"].get($scope.pin.data.id).then(function(data) {
+          if(data.pin.auth_token._nil === 'true') {
+            // PIN not authenticated yet, schedule next check
+            $scope.pin.schedule(interval);
             return;
           }
 
-          // Schedule next check
-          $scope.pin.schedule(interval);
+          // Complete login
+          return Authentication.login({token: data.pin.auth_token}).then(function() {
+            $scope.$r.redirect();
+          }, function() {
+            return $q.reject();
+          });
         }, function(error) {
           console.log(error);
 

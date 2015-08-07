@@ -8,13 +8,13 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('ConnectController', function(Server, RavenTags, CSystem, PAPI, SConnection, $location, $rootScope, $scope) {
+  .controller('ConnectController', function(PlexServer, RavenTags, $location, $rootScope, $scope) {
     $scope.state = '';
     $scope.selected = null;
 
     $scope.servers = [];
 
-    PAPI.resources(true).then(function(data) {
+    plex.cloud['/api'].resources(true).then(function(data) {
       // Retrieve devices
       var devices = data.MediaContainer.Device;
 
@@ -27,9 +27,11 @@ angular.module('configurationApp')
         return device._provides === 'server';
       });
 
-      // Build `Server` objects
-      $scope.servers = _.map(servers, function(server) {
-        return Server.fromElement(server);
+      $scope.$apply(function() {
+        // Build `Server` objects
+        $scope.servers = _.map(servers, function (server) {
+          return PlexServer.fromElement(server);
+        });
       });
     });
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('TraktAuthentication', function(BaseAuthentication, PUsers, $q) {
+  .factory('TraktAuthentication', function(BaseAuthentication, $q) {
     var tr = new trakt.Client(
       'c9ccd3684988a7862a8542ae0000535e0fbd2d1c0ca35583af7ea4e784650a61',
       'bf00575b1ad252b514f14b2c6171fe650d474091daad5eb6fa890ef24d581f65'

@@ -20,6 +20,7 @@
     "cerealizer.js": "git@github.com:fuzeman/Cerealizer.js.git",
     "ladda-foundation-5": "git@github.com:fuzeman/ladda-foundation-5.git",
     "trakt.js": "git@github.com:fuzeman/trakt.js.git",
+    "plex.js": "git@github.com:fuzeman/plex.js.git",
     "selectize": "~0.12.1",
     "fontawesome": "~4.3.0",
     "angular-selectize2": "~1.2.1",

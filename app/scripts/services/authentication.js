@@ -1,19 +1,28 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Authentication', function(PPins, PUsers, RavenTags, $http, $q, $rootScope) {
+  .factory('Authentication', function(RavenTags, Utils, $http, $q, $rootScope) {
     var identifierSalt = 'MLawOtoMiFf5Ni9nbu0bTes2+UkrVLMZ8LSPwA+qTtA=',
         tokenRegex = /^server\.\w+\.((token_channel)|(token_channel_expire)|(token_plex))$/,
         user = null;
 
     function updateAuthentication(authenticated, user) {
+      // Update authentication scope
       $rootScope.$a = {
-        authenticated: typeof authenticated !== 'undefined' ? authenticated : false,
-        user: typeof user !== 'undefined' ? user : null
+        authenticated: Utils.isDefined(authenticated) ? authenticated : false,
+        user: Utils.isDefined(user) ? user : null
       };
 
+      // Update server scope
       if(!$rootScope.$a.authenticated) {
         $rootScope.$s = null;
+      }
+
+      // Update plex.js token
+      if(Utils.isDefined(user)) {
+        plex.cloud.token = user._authenticationToken;
+      } else {
+        plex.cloud.token = null;
       }
     }
 
@@ -59,90 +68,45 @@ angular.module('configurationApp')
 
         return value;
       },
-      pin: {
-        create: function() {
-          var deferred = $q.defer();
-
-          PPins.create()
-            .success(function(data) {
-              deferred.resolve(data.pin);
-            })
-            .error(function(data, status) {
-              deferred.reject(data, status);
-            });
-
-          return deferred.promise;
-        },
-        get: function(id) {
-          var deferred = $q.defer();
-
-          PPins.get(id)
-            .success(function(data) {
-              if(data.pin.auth_token === null) {
-                deferred.resolve(false);
-                return;
-              }
-
-              // Retrieve account details for token
-              Authentication.pin.fetch(data.pin.auth_token).then(function() {
-                deferred.resolve(true);
-              }, function(data, status) {
-                deferred.reject(data, status);
-              });
-            })
-            .error(function(data, status) {
-              updateAuthentication();
-
-              deferred.reject(data, status);
-            });
-
-          return deferred.promise;
-        },
-        fetch: function(token) {
-          var deferred = $q.defer();
-
-          PUsers.account(token)
-            .success(function(data) {
-              Authentication.token(data.user._authenticationToken);
-              Authentication.user(data.user);
-
-              updateAuthentication(true, data.user);
-
-              deferred.resolve(data.user);
-            })
-            .error(function(data, status) {
-              updateAuthentication();
-
-              deferred.reject(data, status);
-            });
-
-          return deferred.promise;
-        }
-      },
       login: function(credentials) {
         var deferred = $q.defer(),
             self = this;
 
-        if(credentials === null || credentials.username === null || credentials.password === null) {
-          deferred.reject();
-          return deferred.promise;
+        function success(data) {
+          self.token(data.user._authenticationToken);
+          self.user(data.user);
+
+          updateAuthentication(true, data.user);
+
+          deferred.resolve(data.user);
         }
 
-        // Send request
-        PUsers.sign_in(credentials)
-          .success(function(data) {
-            self.token(data.user._authenticationToken);
-            self.user(data.user);
+        function error(data, status) {
+          updateAuthentication();
 
-            updateAuthentication(true, data.user);
+          deferred.reject(data, status);
+        }
 
-            deferred.resolve(data.user);
-          })
-          .error(function(data, status) {
-            updateAuthentication();
-
-            deferred.reject(data, status);
-          });
+        if(Utils.isDefined(credentials.username) && Utils.isDefined(credentials.password)) {
+          // Username/Password
+          plex.cloud['/users'].login(
+            credentials.username,
+            credentials.password
+          ).then(
+            success,
+            error
+          );
+        } else if(Utils.isDefined(credentials.token)) {
+          // Token
+          plex.cloud['/users'].account(
+            credentials.token
+          ).then(
+            success,
+            error
+          );
+        } else {
+          deferred.reject(null, 0);
+        }
 
         return deferred.promise;
       },
@@ -187,19 +151,17 @@ angular.module('configurationApp')
         }
 
         // Send request
-        PUsers.account(token)
-          .success(function(data) {
-            self.user(data.user);
+        plex.cloud['/users'].account(token).then(function(data) {
+          self.user(data.user);
 
-            updateAuthentication(true, data.user);
+          updateAuthentication(true, data.user);
 
-            deferred.resolve(data.user);
-          })
-          .error(function() {
-            updateAuthentication();
+          deferred.resolve(data.user);
+        }, function() {
+          updateAuthentication();
 
-            deferred.reject();
-          });
+          deferred.reject();
+        });
 
         return deferred.promise;
       }
