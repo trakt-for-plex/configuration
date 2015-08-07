@@ -8,7 +8,7 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('ConnectController', function(Server, RavenTags, CSystem, SConnection, $location, $rootScope, $scope) {
+  .controller('ConnectController', function(Server, RavenTags, CSystem, $location, $rootScope, $scope) {
     $scope.state = '';
     $scope.selected = null;
 
@@ -27,9 +27,11 @@ angular.module('configurationApp')
         return device._provides === 'server';
       });
 
-      // Build `Server` objects
-      $scope.servers = _.map(servers, function(server) {
-        return Server.fromElement(server);
+      $scope.$apply(function() {
+        // Build `Server` objects
+        $scope.servers = _.map(servers, function (server) {
+          return Server.fromElement(server);
+        });
       });
     });
 

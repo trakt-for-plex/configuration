@@ -45,10 +45,7 @@ angular.module('configurationApp')
       this.warnings = [];
 
       // Send request
-      PUsers.sign_in({
-        username: current.username,
-        password: current.password
-      }).success(function(data) {
+      plex.cloud['/users'].login(current.username, current.password).then(function(data) {
         var user = data.user;
 
         // Check authentication state
@@ -65,7 +62,7 @@ angular.module('configurationApp')
             }
           }
         });
-      }).error(function(data, status) {
+      }, function(data, status) {
         // Update errors
         if(typeof data !== 'undefined' && data !== null) {
           // Display API errors

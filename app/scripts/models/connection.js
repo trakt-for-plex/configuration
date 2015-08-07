@@ -3,6 +3,7 @@
 angular.module('configurationApp')
   .factory('Connection', function($http) {
     function Connection() {
+      this.client = null;
       this.uri = null;
     }
 

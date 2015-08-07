@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Server', function(Connection, CSystem, PMessaging, SConnection, VersionUtil, $q) {
+  .factory('Server', function(Connection, CSystem, PlexConnectionManager, VersionUtil, $q) {
     var identifier = 'com.plexapp.plugins.trakttv',
         pluginVersionMinimum = '0.9.10.3',
         target = 'MessageKit:Api';
@@ -17,8 +17,8 @@ angular.module('configurationApp')
 
       this.token_plex = null;
 
-      this.connections = null;
-      this.current = null;
+      this.client = null;
+      this.connection_manager = null;
 
       this.error = null;
     }
@@ -52,7 +52,7 @@ angular.module('configurationApp')
       self.error = null;
 
       // Test connections
-      return SConnection.test(this).then(function(connection) {
+      return this.connection_manager.test().then(function(connection) {
         // Check server
         return self.check().then(function() {
           return connection;
@@ -114,10 +114,39 @@ angular.module('configurationApp')
       });
 
       // call api function
-      return PMessaging.call(
-        this, identifier, target,
-        args, kwargs, headers
-      );
+      var deferred = $q.defer();
+
+      this.client['/:/plugins/*/messaging'].callFunction(
+        identifier, target, args, kwargs, {
+          headers: headers
+        }
+      ).then(function(data) {
+        // Parse response
+        if(typeof data === 'string') {
+          data = JSON.parse(data);
+        } else if(typeof data === 'object') {
+          console.warn('Legacy response format returned');
+        }
+
+        // Return response
+        console.debug('Response', data);
+
+        if(data.result !== undefined) {
+          deferred.resolve(data.result);
+          return;
+        }
+
+        // Handle errors
+        if(data.error !== undefined) {
+          deferred.reject(data.error);
+        } else {
+          deferred.reject(null);
+        }
+      }, function(data, status) {
+        deferred.reject(data, status);
+      });
+
+      return deferred.promise;
     };
 
     Server.prototype.get = function(path, config) {
@@ -189,9 +218,11 @@ angular.module('configurationApp')
       }
 
       // Build `Connection` objects
-      s.connections = _.map(e.Connection, function(e) {
+      var connections = _.map(e.Connection, function(e) {
         return Connection.fromElement(e);
       });
+
+      s.connection_manager = new PlexConnectionManager(s, connections);
 
       // Load attributes from storage
       s.load();

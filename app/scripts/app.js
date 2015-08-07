@@ -82,9 +82,8 @@ angular
     });
 
     // Setup plex.js
-    plex.cloud.headers.setProduct('trakt (for Plex) - Configuration', '1.0.0');
-
-    plex.cloud.xmlParser = 'x2js';
+    plex.cloud.http.headers.setProduct('trakt (for Plex) - Configuration', '1.0.0');
+    plex.cloud.http.xmlParser = 'x2js';
 
     if(typeof localStorage['plex.client.identifier'] === 'undefined' ||
        localStorage['plex.client.identifier'] === null) {
