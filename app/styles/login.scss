@@ -72,6 +72,7 @@
       margin: 3px 0 14px;
 
       background-color: rgba(0,0,0,0.3);
+      color: white;
 
       .code-spinner {
         position: absolute;
@@ -82,12 +83,14 @@
       }
 
       .code-value {
-        color: white;
-
         font-size: 74px;
         letter-spacing: 10px;
         line-height: 112px;
         text-align: center;
+      }
+
+      .code-error {
+        padding: 10px;
       }
     }
   }
