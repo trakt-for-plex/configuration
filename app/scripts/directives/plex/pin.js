@@ -14,12 +14,12 @@ angular.module('configurationApp')
       var $scope = this.$scope,
           self = this;
 
-      // TODO Ensure method is valid
-      //if($scope.method !== 'pin') {
-      //  console.debug('Login method changed, pin authentication cancelled');
-      //  self.reset();
-      //  return;
-      //}
+      // Ensure pin authentication has been enabled
+      if($scope.enabled !== true) {
+        console.debug('PIN authentication has been disabled, cancelling pin checks');
+        self.reset();
+        return;
+      }
 
       // Ensure pin details are valid
       if(typeof $scope.current === 'undefined' || $scope.current === null || $scope.current.id === null) {
@@ -64,6 +64,12 @@ angular.module('configurationApp')
           self = this;
 
       $scope.state = 'create';
+
+      // Ensure pin authentication has been enabled
+      if($scope.enabled !== true) {
+        console.debug('PIN authentication has been disabled, cancelling pin checks');
+        return;
+      }
 
       // Request new pin code
       plex.cloud.pins().then(function(data) {
@@ -114,7 +120,8 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        callback: '=coCallback'
+        callback: '=coCallback',
+        enabled: '=coEnabled'
       },
       templateUrl: 'directives/plex/pin.html',
 
