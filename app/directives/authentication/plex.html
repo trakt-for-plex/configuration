@@ -3,6 +3,9 @@
 
 <accordion close-others="true">
   <accordion-group heading="Basic" data-state="{{ plex.authorization.basic.state }}" is-open="true">
-    <co-plex-login co-authenticated="onAuthenticated"></co-plex-login>
+    <co-plex-login
+      co-authenticated="onAuthenticated"
+      co-button-size="tiny">
+    </co-plex-login>
   </accordion-group>
 </accordion>

@@ -110,9 +110,16 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        onAuthenticated: '=coAuthenticated'
+        onAuthenticated: '=coAuthenticated',
+        buttonSize: '@coButtonSize'
       },
       templateUrl: 'directives/plex/login.html',
+
+      compile: function(element, attrs) {
+        if(typeof attrs.coButtonSize === 'undefined') {
+          attrs.coButtonSize = 'small';
+        }
+      },
 
       controller: function($scope) {
         // Set initial scope values
@@ -122,8 +129,7 @@ angular.module('configurationApp')
         };
 
         $scope.errors = [];
-        //$scope.method = 'pin';
-        $scope.method = 'basic';
+        $scope.method = 'pin';
 
         // Construct main controller
         var main = new PlexLogin($scope);

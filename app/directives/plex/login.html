@@ -6,10 +6,12 @@
       Visit <a href="https://plex.tv/pin" target="_blank">https://plex.tv/pin</a> and enter this code:
     </div>
 
-    <co-plex-pin co-callback="pinLogin"></co-plex-pin>
+    <co-plex-pin
+      co-callback="pinLogin">
+    </co-plex-pin>
 
     <div class="buttons">
-      <a class="switch button secondary small" ng-click="switch('basic')">Manual</a>
+      <a class="switch button secondary {{ buttonSize }}" ng-click="switch('basic')">Manual</a>
     </div>
   </div>
 
@@ -24,8 +26,8 @@
     </div>
 
     <div class="buttons">
-      <a class="switch button secondary small" ng-click="switch('pin')">PIN</a>
-      <input class="button small" type="submit" value="Sign in" ng-click="basicLogin()"/>
+      <a class="switch button secondary {{ buttonSize }}" ng-click="switch('pin')">PIN</a>
+      <input class="button {{ buttonSize }}" type="submit" value="Sign in" ng-click="basicLogin()"/>
     </div>
   </form>
 </div>
