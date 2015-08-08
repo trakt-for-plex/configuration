@@ -79,6 +79,31 @@
   }
 
   .authentication {
+    .avatar {
+      float: left;
+      height: 85px;
+
+      margin-right: 20px;
+
+      border-radius: 50%;
+    }
+
+    .account-edit {
+      padding: 10px;
+    }
+
+    .account-view {
+      padding: 10px;
+
+      .details {
+        height: 85px;
+
+        a {
+          margin: 0;
+        }
+      }
+    }
+
     .tabs {
       dd > a {
         padding: 4px 12px;
@@ -87,17 +112,17 @@
       }
 
       dd > a:hover {
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: rgba(0, 0, 0, 0.075);
       }
 
       dd.active > a {
         color: inherit;
-        background-color: rgba(0, 0, 0, 0.075);
+        background-color: rgba(0, 0, 0, 0.05);
       }
     }
 
     .tabs-content {
-      background-color: rgba(0, 0, 0, 0.075);
+      background-color: rgba(0, 0, 0, 0.05);
 
       .content {
         padding: 5px;

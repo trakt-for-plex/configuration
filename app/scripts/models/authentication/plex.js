@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('PlexAuthentication', function(BaseAuthentication, $q) {
+  .factory('PlexAuthentication', function(BaseAuthentication, Utils, $q) {
     function PlexAuthentication() {
       this.data = null;
 
       this.id = null;
       this.username = null;
+      this.thumb_url = null;
 
       this.authorization = null;
 
@@ -17,14 +18,9 @@ angular.module('configurationApp')
     }
 
     PlexAuthentication.prototype.basicChanged = function() {
-      var current = this.authorization.basic,
-          original = this.data.authorization.basic;
+      var current = this.authorization.basic;
 
-      if(current.username !== original.username) {
-        return true;
-      }
-
-      if(current.password !== original.password) {
+      if(Utils.isDefined(current.token_plex)) {
         return true;
       }
 
@@ -37,51 +33,25 @@ angular.module('configurationApp')
       }
 
       var current = this.authorization.basic,
-        deferred = $q.defer(),
-        self = this;
+          deferred = $q.defer(),
+          self = this;
+
+      console.log(this);
 
       // Reset errors
       this.errors = [];
       this.warnings = [];
 
-      // Send request
-      plex.cloud['/users'].login(current.username, current.password).then(function(data) {
-        var user = data.user;
+      deferred.resolve({
+        plex: {
+          username: this.username,
 
-        // Check authentication state
-        self.check();
-
-        deferred.resolve({
-          plex: {
-            username: user.username,
-
-            authorization: {
-              basic: {
-                token: user._authenticationToken
-              }
+          authorization: {
+            basic: {
+              token_plex: current.token_plex
             }
           }
-        });
-      }, function(data, status) {
-        // Update errors
-        if(typeof data !== 'undefined' && data !== null) {
-          // Display API errors
-          self.errors = self.errors.concat(
-            typeof data.errors.error === 'object' ?
-              data.errors.error : [data.errors.error]
-          );
-        } else {
-          // Display HTTP error
-          self.errors.push('HTTP Error: ' + status);
         }
-
-        // Update state
-        self.authorization.basic.state = 'error';
-
-        // Check authentication state
-        self.check();
-
-        deferred.reject();
       });
 
       return deferred.promise;
@@ -92,6 +62,7 @@ angular.module('configurationApp')
 
       this.id = data.id;
       this.username = data.username;
+      this.thumb_url = data.thumb_url;
 
       this.authorization = data.authorization;
 
@@ -99,6 +70,17 @@ angular.module('configurationApp')
       this.warnings = [];
 
       this.state = '';
+    };
+
+    PlexAuthentication.prototype.updateAuthorization = function(token_plex, user) {
+      console.log('updateAuthorization', token_plex, user);
+
+      // Update account details
+      this.username = user.username;
+      this.thumb_url = user._thumb;
+
+      // Update token
+      this.authorization.basic.token_plex = token_plex;
     };
 
     PlexAuthentication.prototype.check = function() {
