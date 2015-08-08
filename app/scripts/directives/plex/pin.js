@@ -45,9 +45,13 @@ angular.module('configurationApp')
 
         // PIN has been authenticated
         $scope.$apply(function() {
-          $scope.callback({
-            token: data.pin.auth_token
-          });
+          if($scope.enabled === true) {
+            // Fire callback
+            $scope.callback({
+              token: data.pin.auth_token
+            });
+          }
+
           $scope.state = 'complete';
         });
       }, function(data, status) {
