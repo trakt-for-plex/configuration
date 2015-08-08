@@ -68,47 +68,19 @@ angular.module('configurationApp')
 
         return value;
       },
-      login: function(credentials) {
-        var deferred = $q.defer(),
-            self = this;
+      login: function(token, user) {
+        if(Utils.isDefined(token) && Utils.isDefined(user)) {
+          // Update with new authentication
+          this.token(token);
+          this.user(user);
 
-        function success(data) {
-          self.token(data.user._authenticationToken);
-          self.user(data.user);
-
-          updateAuthentication(true, data.user);
-
-          deferred.resolve(data.user);
+          updateAuthentication(true, user);
+          return true;
         }
 
-        function error(data, status) {
-          updateAuthentication();
-
-          deferred.reject(data, status);
-        }
-
-        if(Utils.isDefined(credentials.username) && Utils.isDefined(credentials.password)) {
-          // Username/Password
-          plex.cloud['/users'].login(
-            credentials.username,
-            credentials.password
-          ).then(
-            success,
-            error
-          );
-        } else if(Utils.isDefined(credentials.token)) {
-          // Token
-          plex.cloud['/users'].account(
-            credentials.token
-          ).then(
-            success,
-            error
-          );
-        } else {
-          deferred.reject(null, 0);
-        }
-
-        return deferred.promise;
+        // Clear current authentication
+        updateAuthentication();
+        return false;
       },
       logout: function() {
         // Destroy plex authentication details

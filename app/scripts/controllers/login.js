@@ -10,34 +10,11 @@
 angular.module('configurationApp')
   .controller('LoginController', function(Authentication, $location, $modal, $q, $scope) {
     $scope.onAuthenticated = function(token, user){
-      console.log('onAuthenticated', token, user);
+      if(Authentication.login(token, user)) {
+        // Login successful
+        $scope.$r.redirect();
+      }
     };
-
-    //// Basic authentication
-    //$scope.basic = {
-    //  login: function() {
-    //    // Reset errors
-    //    $scope.errors = [];
-    //
-    //    Authentication.login($scope.credentials).then(function() {
-    //      // Login successful
-    //      $scope.$r.redirect();
-    //    }, function(data, status) {
-    //      // Login failed
-    //      if(typeof data !== 'undefined' && data !== null) {
-    //        // Display API errors
-    //        $scope.errors = $scope.errors.concat(
-    //          typeof data.errors.error === 'object' ?
-    //            data.errors.error : [data.errors.error]
-    //        );
-    //      } else {
-    //        // Display HTTP error
-    //        $scope.errors.push('HTTP Error: ' + status);
-    //      }
-    //    });
-    //  }
-    //};
-
 
     $scope.showAuthenticationDetails = function() {
       var modal = $modal.open({
