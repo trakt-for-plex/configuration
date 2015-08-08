@@ -32,29 +32,22 @@ angular.module('configurationApp')
         return $q.resolve({});
       }
 
-      var current = this.authorization.basic,
-          deferred = $q.defer(),
-          self = this;
-
-      console.log(this);
-
       // Reset errors
       this.errors = [];
       this.warnings = [];
 
-      deferred.resolve({
+      // Resolve with new authentication details
+      return $q.resolve({
         plex: {
           username: this.username,
 
           authorization: {
             basic: {
-              token_plex: current.token_plex
+              token_plex: this.authorization.basic.token_plex
             }
           }
         }
       });
-
-      return deferred.promise;
     };
 
     PlexAuthentication.prototype.update = function(data) {
@@ -73,8 +66,6 @@ angular.module('configurationApp')
     };
 
     PlexAuthentication.prototype.updateAuthorization = function(token_plex, user) {
-      console.log('updateAuthorization', token_plex, user);
-
       // Update account details
       this.username = user.username;
       this.thumb_url = user._thumb;

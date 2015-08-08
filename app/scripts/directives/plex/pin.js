@@ -16,7 +16,7 @@ angular.module('configurationApp')
 
       // Ensure pin authentication has been enabled
       if($scope.enabled !== true) {
-        console.debug('PIN authentication has been disabled, cancelling pin checks');
+        console.debug('PIN authentication has been cancelled');
         self.reset();
         return;
       }
@@ -67,7 +67,7 @@ angular.module('configurationApp')
 
       // Ensure pin authentication has been enabled
       if($scope.enabled !== true) {
-        console.debug('PIN authentication has been disabled, cancelling pin checks');
+        console.debug('PIN authentication has been cancelled');
         return;
       }
 
