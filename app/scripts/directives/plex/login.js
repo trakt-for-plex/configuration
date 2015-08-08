@@ -69,7 +69,11 @@ angular.module('configurationApp')
 
       // Retrieve account details
       plex.cloud['/users'].account(
-        credentials.token
+        credentials.token, {
+          plex: {
+            useToken: false
+          }
+        }
       ).then(
         function(data) {
           $scope.$apply(function() {
