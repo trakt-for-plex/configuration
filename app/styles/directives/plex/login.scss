@@ -1,0 +1,44 @@
+co-plex-login {
+  .error {
+    margin: 0 -1px;
+  }
+
+  .fields {
+    margin-bottom: 14px;
+  }
+
+  label > input[type="text"], input[type="password"] {
+    margin: 1px 0 1rem 0;
+  }
+
+  label:last-child > input[type="text"], input[type="password"] {
+    margin-bottom: 0;
+  }
+
+  a.button, input[type="submit"] {
+    margin: 0;
+  }
+
+  .buttons {
+    height: 44px;
+
+    text-align: right;
+  }
+
+  .button.switch {
+    float: left;
+  }
+
+  .pin-authentication {
+    .instructions {
+      margin-bottom: 1px;
+
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    co-plex-pin .code {
+      margin-bottom: 14px;
+    }
+  }
+}

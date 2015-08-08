@@ -125,18 +125,6 @@
         margin-bottom: 5px;
       }
 
-      label + input {
-        margin-top: 3px;
-      }
-
-      input + label {
-        margin-top: 9px;
-      }
-
-      input {
-        margin-bottom: 3px;
-      }
-
       label[for="trakt.oauth.code"] a {
         float: right;
       }
@@ -156,6 +144,18 @@
           padding: 10px;
         }
       }
+    }
+
+    dd .content > label + input {
+      margin-top: 3px;
+    }
+
+    dd .content > input + label {
+      margin-top: 9px;
+    }
+
+    dd .content > input {
+      margin-bottom: 3px;
     }
   }
 
