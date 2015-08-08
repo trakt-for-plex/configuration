@@ -1,0 +1,29 @@
+co-plex-pin {
+  .code {
+    position: relative;
+
+    height: 112px;
+
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+
+    .code-spinner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .code-value {
+      font-size: 74px;
+      letter-spacing: 10px;
+      line-height: 112px;
+      text-align: center;
+    }
+
+    .code-error {
+      padding: 10px;
+    }
+  }
+}

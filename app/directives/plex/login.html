@@ -1,0 +1,40 @@
+<small class="error" ng-repeat="error in errors track by $index">{{ error }}</small>
+
+<div ng-switch="method">
+  <div class="pin-authentication" ng-switch-when="pin">
+    <div class="instructions">
+      Visit <a href="https://plex.tv/pin" target="_blank">https://plex.tv/pin</a> and enter this code:
+    </div>
+
+    <co-plex-pin
+      co-callback="pinLogin">
+    </co-plex-pin>
+
+    <div class="buttons {{ buttonSize }}">
+      <div class="buttons-left">
+        <a class="switch button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('basic')">Manual</a>
+      </div>
+    </div>
+  </div>
+
+  <form class="basic-authentication" ng-switch-default>
+    <div class="fields">
+      <label>Username
+        <input type="text" ng-model="credentials.username"/>
+      </label>
+      <label>Password
+        <input type="password" ng-model="credentials.password"/>
+      </label>
+    </div>
+
+    <div class="buttons {{ buttonSize }}">
+      <div class="buttons-left">
+        <a class="switch button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('pin')">PIN</a>
+      </div>
+
+      <input class="button {{ buttonSize }}" type="submit" value="Sign in" ng-click="basicLogin()"/>
+    </div>
+  </form>
+</div>

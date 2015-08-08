@@ -1,12 +1,24 @@
 <small class="error" ng-repeat="error in plex.errors track by $index">{{ error }}</small>
 <small class="warning" ng-repeat="warning in plex.warnings track by $index">{{ warning }}</small>
 
-<accordion close-others="true">
-  <accordion-group heading="Basic" data-state="{{ plex.authorization.basic.state }}" is-open="true">
-    <label for="plex.basic.username">Username</label>
-    <input id="plex.basic.username" type="text" ng-model="plex.authorization.basic.username" />
+<div ng-switch="state()">
+  <div class="account-edit" ng-switch-when="edit">
+    <co-plex-login
+      co-authenticated="onAuthenticated"
+      co-cancelled="onCancelled"
+      co-button-size="tiny">
+    </co-plex-login>
+  </div>
 
-    <label for="plex.basic.password">Password</label>
-    <input id="plex.basic.password" type="password" ng-model="plex.authorization.basic.password" />
-  </accordion-group>
-</accordion>
+  <div class="account-view" ng-switch-default>
+    <img class="avatar" ng-src="{{ plex.thumb_url }}">
+
+    <div class="details">
+      <h4>{{ plex.username }}</h4>
+
+      <div class="actions">
+        <a class="button tiny secondary" ng-click="switch('edit')">Change</a>
+      </div>
+    </div>
+  </div>
+</div>
