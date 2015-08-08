@@ -10,8 +10,11 @@
       co-callback="pinLogin">
     </co-plex-pin>
 
-    <div class="buttons">
-      <a class="switch button secondary {{ buttonSize }}" ng-click="switch('basic')">Manual</a>
+    <div class="buttons {{ buttonSize }}">
+      <div class="buttons-left">
+        <a class="switch button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('basic')">Manual</a>
+      </div>
     </div>
   </div>
 
@@ -25,8 +28,12 @@
       </label>
     </div>
 
-    <div class="buttons">
-      <a class="switch button secondary {{ buttonSize }}" ng-click="switch('pin')">PIN</a>
+    <div class="buttons {{ buttonSize }}">
+      <div class="buttons-left">
+        <a class="switch button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('pin')">PIN</a>
+      </div>
+
       <input class="button {{ buttonSize }}" type="submit" value="Sign in" ng-click="basicLogin()"/>
     </div>
   </form>

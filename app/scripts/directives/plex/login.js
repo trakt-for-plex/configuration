@@ -111,6 +111,8 @@ angular.module('configurationApp')
       restrict: 'E',
       scope: {
         onAuthenticated: '=coAuthenticated',
+        onCancelled: '=coCancelled',
+
         buttonSize: '@coButtonSize'
       },
       templateUrl: 'directives/plex/login.html',

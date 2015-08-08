@@ -20,13 +20,23 @@ co-plex-login {
   }
 
   .buttons {
-    height: 44px;
-
     text-align: right;
   }
 
-  .button.switch {
+  .buttons.small {
+    height: 44px;
+  }
+
+  .buttons.tiny {
+    height: 33px;
+  }
+
+  .buttons-left {
     float: left;
+
+    .button {
+      margin-right: 6px;
+    }
   }
 
   .pin-authentication {
