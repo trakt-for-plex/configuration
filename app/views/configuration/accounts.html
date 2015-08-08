@@ -39,16 +39,13 @@
         </div>
       </div>
 
-      <tabset>
-        <tab heading="Trakt" data-state="{{ account.authentication.trakt.state }}">
-          <co-authentication-trakt co-trakt="account.authentication.trakt"></co-authentication-trakt>
-        </tab>
-        <tab heading="Plex" data-state="{{ account.authentication.plex.state }}">
-          <co-authentication-plex co-plex="account.authentication.plex"></co-authentication-plex>
-        </tab>
-      </tabset>
+      <co-authentication-tabs
+        co-authentication="account.authentication">
+      </co-authentication-tabs>
     </div>
 
-    <co-configuration-group co-groups="account.options.groups"></co-configuration-group>
+    <co-configuration-group
+      co-groups="account.options.groups">
+    </co-configuration-group>
   </div>
 </div>

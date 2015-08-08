@@ -120,14 +120,14 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        callback: '=coCallback',
-        enabled: '=coEnabled'
+        callback: '=coCallback'
       },
       templateUrl: 'directives/plex/pin.html',
 
       controller: function($scope) {
         // Set initial scope values
         $scope.current = null;
+        $scope.enabled = true;
         $scope.expires_at = null;
         $scope.state = null;
 
@@ -136,6 +136,13 @@ angular.module('configurationApp')
 
         // Create initial pin
         main.create();
+      },
+
+      link: function(scope, element, attrs) {
+        element.on('$destroy', function() {
+          // Disable pin checks
+          scope.enabled = false;
+        });
       }
     };
   });
