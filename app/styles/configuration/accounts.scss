@@ -81,11 +81,13 @@
   .authentication {
     .avatar {
       float: left;
+      width: 85px;
       height: 85px;
 
       margin-right: 20px;
 
       border-radius: 50%;
+      box-shadow: 0 0 9px 3px rgba(0, 0, 0, 0.15);
     }
 
     .account-edit {
