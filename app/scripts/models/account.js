@@ -18,6 +18,8 @@ angular.module('configurationApp')
 
     function Account(data) {
       this.authentication = new AccountAuthentication();
+
+      this.original = null;
       this.options = null;
 
       this.id = null;
@@ -56,7 +58,7 @@ angular.module('configurationApp')
       data = $.extend(true, angular.copy(defaults), data);
 
       // Copy original values for the differ
-      this.data = angular.copy(data);
+      this.original = angular.copy(data);
 
       // Update attributes
       this.id = data.id;
@@ -83,7 +85,7 @@ angular.module('configurationApp')
 
     Account.prototype.discard = function() {
       // Discard account authentication/details
-      this.update(this.data);
+      this.update(this.original);
 
       // Discard account options
       return this.options.discard();

@@ -8,18 +8,12 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('LoginController', function(Authentication, $location, $modal, $scope) {
-    $scope.credentials = {
-      username: null,
-      password: null
-    };
-
-    $scope.submit = function() {
-      Authentication.login($scope.credentials).then(function() {
+  .controller('LoginController', function(Authentication, $location, $modal, $q, $scope) {
+    $scope.onAuthenticated = function(token, user){
+      if(Authentication.login(token, user)) {
+        // Login successful
         $scope.$r.redirect();
-      }, function() {
-        console.log('login error');
-      });
+      }
     };
 
     $scope.showAuthenticationDetails = function() {

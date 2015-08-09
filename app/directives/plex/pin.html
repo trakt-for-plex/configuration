@@ -1,0 +1,12 @@
+<div class="code" ng-switch="state">
+  <div class="code-spinner" ng-switch-when="create">
+    <span us-spinner="{color: '#FFF', length: 0, lines: 7, radius: 15, width: 10}"></span>
+  </div>
+  <div class="code-value" ng-switch-when="check">
+    {{ current.code }}
+  </div>
+  <div class="code-error" ng-switch-when="error">
+    <b>Error</b><br/>
+    Unable to retrieve pin details from plex.tv
+  </div>
+</div>

@@ -1,107 +1,76 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('PlexAuthentication', function(BaseAuthentication, PUsers, $q) {
+  .factory('PlexAuthentication', function(BaseAuthentication, Utils, $q) {
     function PlexAuthentication() {
-      this.data = null;
+      this.changed = false;
+      this.original = null;
 
+      // Account details
       this.id = null;
       this.username = null;
+      this.thumb_url = null;
 
+      // Authorization details
       this.authorization = null;
 
-      this.errors = [];
-      this.warnings = [];
-
+      // State
+      this.messages = [];
       this.state = '';
     }
 
-    PlexAuthentication.prototype.basicChanged = function() {
-      var current = this.authorization.basic,
-          original = this.data.authorization.basic;
-
-      if(current.username !== original.username) {
-        return true;
-      }
-
-      if(current.password !== original.password) {
-        return true;
-      }
-
-      return false;
+    PlexAuthentication.prototype.appendMessage = function(type, content) {
+      this.messages.push({
+        type: type,
+        content: content
+      });
     };
 
     PlexAuthentication.prototype.current = function() {
-      if(!this.basicChanged()) {
-        return $q.resolve({});
+      if(!this.changed) {
+        return {};
       }
 
-      var current = this.authorization.basic,
-        deferred = $q.defer(),
-        self = this;
+      return {
+        plex: {
+          username: this.username,
 
-      // Reset errors
-      this.errors = [];
-      this.warnings = [];
-
-      // Send request
-      PUsers.sign_in({
-        username: current.username,
-        password: current.password
-      }).success(function(data) {
-        var user = data.user;
-
-        // Check authentication state
-        self.check();
-
-        deferred.resolve({
-          plex: {
-            username: user.username,
-
-            authorization: {
-              basic: {
-                token: user._authenticationToken
-              }
+          authorization: {
+            basic: {
+              token_plex: this.authorization.basic.token_plex
             }
           }
-        });
-      }).error(function(data, status) {
-        // Update errors
-        if(typeof data !== 'undefined' && data !== null) {
-          // Display API errors
-          self.errors = self.errors.concat(
-            typeof data.errors.error === 'object' ?
-              data.errors.error : [data.errors.error]
-          );
-        } else {
-          // Display HTTP error
-          self.errors.push('HTTP Error: ' + status);
         }
-
-        // Update state
-        self.authorization.basic.state = 'error';
-
-        // Check authentication state
-        self.check();
-
-        deferred.reject();
-      });
-
-      return deferred.promise;
+      };
     };
 
     PlexAuthentication.prototype.update = function(data) {
-      this.data = angular.copy(data);
+      this.changed = false;
+      this.original = angular.copy(data);
 
+      // Account details
       this.id = data.id;
       this.username = data.username;
+      this.thumb_url = data.thumb_url;
 
+      // Authorization details
       this.authorization = data.authorization;
 
-      this.errors = [];
-      this.warnings = [];
-
+      // State
+      this.messages = [];
       this.state = '';
+    };
+
+    PlexAuthentication.prototype.updateAuthorization = function(token_plex, user) {
+      // Update account details
+      this.username = user.username;
+      this.thumb_url = user._thumb;
+
+      // Update token
+      this.authorization.basic.token_plex = token_plex;
+
+      // Set `changed` flag
+      this.changed = true;
     };
 
     PlexAuthentication.prototype.check = function() {

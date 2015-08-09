@@ -23,6 +23,7 @@ angular
     'angulartics',
     'angulartics.google.analytics',
 
+    'angularSpinner',
     'mm.foundation',
     'selectize',
     'xml'
@@ -70,16 +71,27 @@ angular
       });
   })
   .run(function(Authentication, RavenTags, $location, $rootScope) {
-    // Store metadata in root scope
-    $rootScope.$m = window.tfpc.metadata;
-
-    // Send version/revision with error reports
     var $m = window.tfpc.metadata;
 
+    // Store metadata in root scope
+    $rootScope.$m = $m;
+
+    // Send version/revision with error reports
     RavenTags.update({
       application_version: $m.version,
       application_revision: $m.revision.label
     });
+
+    // Setup plex.js
+    plex.cloud.http.headers.setProduct('trakt (for Plex) - Configuration', '1.0.0');
+    plex.cloud.http.xmlParser = 'x2js';
+
+    if(typeof localStorage['plex.client.identifier'] === 'undefined' ||
+       localStorage['plex.client.identifier'] === null) {
+      localStorage['plex.client.identifier'] = plex.utils.random.string();
+    }
+
+    plex.cloud.client_identifier = localStorage['plex.client.identifier'];
 
     // Redirect handler
     $rootScope.$r = {
@@ -87,23 +99,37 @@ angular
       search: null,
 
       redirect: function() {
-        // Update path
+        var path, search;
+
+        // Get path
         if(typeof this.path !== 'undefined' && this.path !== null) {
           // Original
-          $location.path(this.path);
+          path = this.path;
         } else {
           // Home
-          $location.path('/');
+          path = '/';
         }
 
-        // Update path
+        // Get search query
         if(typeof this.search !== 'undefined' && this.search !== null) {
           // Original
-          $location.search(this.search);
+          search = this.search;
         } else {
           // Home
-          $location.search('');
+          search = '';
         }
+
+        // Ensure destination is valid
+        if(this.path === $location.path()) {
+          path = '/';
+          search = '';
+        }
+
+        // Redirect
+        console.log('redirecting to %s (%s)', path, search);
+
+        $location.path(path);
+        $location.search(search);
       }
     };
 
@@ -117,7 +143,7 @@ angular
       if(!Authentication.authenticated()) {
         next.resolve = angular.extend(next.resolve || {}, {
           __authenticate__: function() {
-            Authentication.get().then(function() {
+            return Authentication.get().then(function() {
               console.log('authenticated');
             }, function() {
               $rootScope.$r.path = $location.path();
@@ -130,7 +156,7 @@ angular
         });
       }
 
-      if(controller === 'ConnectController') {
+      if(controller === 'ConnectController' || controller === 'LogoutController') {
         return;
       }
 

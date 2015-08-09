@@ -35,11 +35,7 @@
     }
   }
 
-  form {
+  .basic-authentication, .pin-authentication {
     padding: 14px;
-
-    input[type="submit"] {
-      margin: 0;
-    }
   }
 }

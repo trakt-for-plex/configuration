@@ -1,25 +1,34 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Authentication', function(PUsers, RavenTags, $http, $q, $rootScope) {
+  .factory('Authentication', function(RavenTags, Utils, $http, $q, $rootScope) {
     var identifierSalt = 'MLawOtoMiFf5Ni9nbu0bTes2+UkrVLMZ8LSPwA+qTtA=',
         tokenRegex = /^server\.\w+\.((token_channel)|(token_channel_expire)|(token_plex))$/,
         user = null;
 
     function updateAuthentication(authenticated, user) {
+      // Update authentication scope
       $rootScope.$a = {
-        authenticated: typeof authenticated !== 'undefined' ? authenticated : false,
-        user: typeof user !== 'undefined' ? user : null
+        authenticated: Utils.isDefined(authenticated) ? authenticated : false,
+        user: Utils.isDefined(user) ? user : null
       };
 
+      // Update server scope
       if(!$rootScope.$a.authenticated) {
         $rootScope.$s = null;
+      }
+
+      // Update plex.js token
+      if(Utils.isDefined(user)) {
+        plex.cloud.token = user._authenticationToken;
+      } else {
+        plex.cloud.token = null;
       }
     }
 
     updateAuthentication();
 
-    return {
+    var Authentication = {
       authenticated: function() {
         return user !== null;
       },
@@ -59,32 +68,19 @@ angular.module('configurationApp')
 
         return value;
       },
-      login: function(credentials) {
-        var deferred = $q.defer(),
-            self = this;
+      login: function(token, user) {
+        if(Utils.isDefined(token) && Utils.isDefined(user)) {
+          // Update with new authentication
+          this.token(token);
+          this.user(user);
 
-        if(credentials === null || credentials.username === null || credentials.password === null) {
-          deferred.reject();
-          return deferred.promise;
+          updateAuthentication(true, user);
+          return true;
         }
 
-        // Send request
-        PUsers.sign_in(credentials)
-          .success(function(data) {
-            self.token(data.user._authenticationToken);
-            self.user(data.user);
-
-            updateAuthentication(true, data.user);
-
-            deferred.resolve(data.user);
-          })
-          .error(function() {
-            updateAuthentication();
-
-            deferred.reject();
-          });
-
-        return deferred.promise;
+        // Clear current authentication
+        updateAuthentication();
+        return false;
       },
       logout: function() {
         // Destroy plex authentication details
@@ -127,21 +123,21 @@ angular.module('configurationApp')
         }
 
         // Send request
-        PUsers.account(token)
-          .success(function(data) {
-            self.user(data.user);
+        plex.cloud['/users'].account(token).then(function(data) {
+          self.user(data.user);
 
-            updateAuthentication(true, data.user);
+          updateAuthentication(true, data.user);
 
-            deferred.resolve(data.user);
-          })
-          .error(function() {
-            updateAuthentication();
+          deferred.resolve(data.user);
+        }, function() {
+          updateAuthentication();
 
-            deferred.reject();
-          });
+          deferred.reject();
+        });
 
         return deferred.promise;
       }
     };
+
+    return Authentication;
   });

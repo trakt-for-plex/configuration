@@ -1,4 +1,4 @@
-<div class="group" ng-repeat="(key, group) in groups">
+<div class="group" ng-repeat="(key, group) in groups | orderObjectBy:'order'">
   <div class="row header">
     <div class="small-8 large-10 columns">
       <h5>{{ group.name }}</h5>
@@ -11,11 +11,11 @@
   </div>
 
   <div class="row group-options">
-    <co-configuration-option class="columns" ng-repeat="option in group.options" option="option" ></co-configuration-option>
+    <co-configuration-option class="columns" ng-repeat="option in group.options | orderBy: 'order'" option="option"></co-configuration-option>
   </div>
 
   <div class="sub-group row">
-    <div class="columns" ng-repeat="(key, group) in group.groups">
+    <div class="columns" ng-repeat="(key, group) in group.groups | orderObjectBy:'order'">
       <div class="row header">
         <div class="small-12 columns">
           <h6>{{ group.name }}</h6>
@@ -23,7 +23,7 @@
       </div>
 
       <div class="row group-options">
-        <co-configuration-option class="columns" ng-repeat="option in group.options" option="option" ></co-configuration-option>
+        <co-configuration-option class="columns" ng-repeat="option in group.options | orderBy: 'order'" option="option"></co-configuration-option>
       </div>
     </div>
   </div>

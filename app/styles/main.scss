@@ -1,12 +1,17 @@
 // bower:scss
 // endbower
 
+@import 'components/message';
+
 @import 'configuration/base';
 @import 'configuration/accounts';
 @import 'configuration/server';
 @import 'configuration/rules';
 
 @import 'directives/configuration/header';
+@import 'directives/plex/login';
+@import 'directives/plex/pin';
+@import 'directives/trakt/login';
 @import 'directives/button-input';
 
 @import 'connect';
@@ -47,6 +52,13 @@ button:hover {
   background-color: #007095;
 }
 
+.scroll-container {
+  max-width: 1280px;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -79,17 +91,6 @@ button:hover {
   .extended {
     display: inline-block;
   }
-}
-
-.busy .spinner {
-  width: 40px;
-  height: 40px;
-  margin: 100px auto;
-  background-color: #333;
-
-  border-radius: 100%;
-  -webkit-animation: scaleout 1.0s infinite ease-in-out;
-  animation: scaleout 1.0s infinite ease-in-out;
 }
 
 @-webkit-keyframes scaleout {

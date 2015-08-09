@@ -79,6 +79,37 @@
   }
 
   .authentication {
+    .avatar {
+      float: left;
+      width: 85px;
+      height: 85px;
+
+      margin-right: 20px;
+
+      border-radius: 50%;
+      box-shadow: 0 0 9px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .account-edit {
+      padding: 10px;
+    }
+
+    .account-view {
+      padding: 10px;
+
+      .details {
+        height: 85px;
+
+        a {
+          margin: 0;
+        }
+
+        h4 {
+          margin-top: 0;
+        }
+      }
+    }
+
     .tabs {
       dd > a {
         padding: 4px 12px;
@@ -87,54 +118,20 @@
       }
 
       dd > a:hover {
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: rgba(0, 0, 0, 0.075);
       }
 
       dd.active > a {
         color: inherit;
-        background-color: rgba(0, 0, 0, 0.075);
+        background-color: rgba(0, 0, 0, 0.05);
       }
     }
 
     .tabs-content {
-      background-color: rgba(0, 0, 0, 0.075);
+      background-color: rgba(0, 0, 0, 0.05);
 
       .content {
         padding: 5px;
-      }
-
-      small.warning {
-        display: block;
-
-        margin-top: -1px;
-        padding: 0.375rem 0.5625rem 0.5625rem;
-
-        font-size: 0.75rem;
-        font-style: italic;
-        font-weight: normal;
-
-        background: #BDB820;
-        color: #FFFFFF;
-      }
-
-      small.error {
-        background: #BD2820;
-      }
-
-      small.error, small.warning {
-        margin-bottom: 5px;
-      }
-
-      label + input {
-        margin-top: 3px;
-      }
-
-      input + label {
-        margin-top: 9px;
-      }
-
-      input {
-        margin-bottom: 3px;
       }
 
       label[for="trakt.oauth.code"] a {
@@ -156,6 +153,18 @@
           padding: 10px;
         }
       }
+    }
+
+    dd .content > label + input {
+      margin-top: 3px;
+    }
+
+    dd .content > input + label {
+      margin-top: 9px;
+    }
+
+    dd .content > input {
+      margin-bottom: 3px;
     }
   }
 
@@ -205,6 +214,7 @@
 
 .accounts > .options {
   margin-top: 0;
+  margin-bottom: 80px;
 }
 
 .accounts > .options .group:first-child .header {
