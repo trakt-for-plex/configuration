@@ -26,7 +26,7 @@ angular.module('configurationApp')
 
     TraktAuthentication.prototype.current = function() {
       var data = {
-        trakt: { authorization: {} }
+        trakt: {}
       };
 
       // Basic

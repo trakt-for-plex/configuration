@@ -1,5 +1,4 @@
-<small class="error" ng-repeat="error in plex.errors track by $index">{{ error }}</small>
-<small class="warning" ng-repeat="warning in plex.warnings track by $index">{{ warning }}</small>
+<small class="message {{ message.type }}" ng-repeat="message in plex.messages track by $index">{{ message.content }}</small>
 
 <div ng-switch="state()">
   <div class="account-edit" ng-switch-when="edit">
