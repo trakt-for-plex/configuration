@@ -12,8 +12,12 @@ angular.module('configurationApp')
         self.basicLogin($scope.credentials);
       };
 
-      $scope.pinLogin = function(credentials) {
-        self.pinLogin(credentials);
+      $scope.onPinAuthenticated = function(credentials) {
+        self.onPinAuthenticated(credentials);
+      };
+
+      $scope.onPinExpired = function() {
+        self.onPinExpired();
       };
 
       $scope.switch = function(method) {
@@ -54,7 +58,7 @@ angular.module('configurationApp')
       );
     };
 
-    PlexLogin.prototype.pinLogin = function(credentials) {
+    PlexLogin.prototype.onPinAuthenticated = function(credentials) {
       var $scope = this.$scope,
           self = this;
 
@@ -86,6 +90,12 @@ angular.module('configurationApp')
           });
         }
       );
+    };
+
+    PlexLogin.prototype.onPinExpired = function() {
+      var $scope = this.$scope;
+
+      $scope.errors.push('Pin has expired');
     };
 
     PlexLogin.prototype.handleSuccess = function(user) {

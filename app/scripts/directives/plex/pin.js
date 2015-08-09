@@ -2,10 +2,14 @@
 
 angular.module('configurationApp')
   .directive('coPlexPin', function($timeout) {
+    var intervalMinimum = 2000,
+        intervalMaximum = 10000;
+
     function PlexPin($scope) {
       this.$scope = $scope;
 
-      this.interval = 2000;
+      this.checks = 0;
+      this.interval = intervalMinimum;
     }
 
     PlexPin.prototype.check = function() {
@@ -36,6 +40,8 @@ angular.module('configurationApp')
       }
 
       // Check if pin is authenticated
+      this.checks += 1;
+
       plex.cloud["/pins"].get($scope.current.id).then(function(data) {
         if(data.pin.auth_token._nil === 'true') {
           // PIN not authenticated yet, schedule next check
@@ -47,7 +53,7 @@ angular.module('configurationApp')
         $scope.$apply(function() {
           if($scope.enabled === true) {
             // Fire callback
-            $scope.callback({
+            $scope.onAuthenticated({
               token: data.pin.auth_token
             });
           }
@@ -55,11 +61,13 @@ angular.module('configurationApp')
           $scope.state = 'complete';
         });
       }, function(data, status) {
-        console.warn(data, status);
-
+        // Update state
         $scope.$apply(function() {
-          $scope.pin.state = 'error';
+          $scope.state = 'complete';
         });
+
+        // Fire callback
+        $scope.onExpired();
       });
     };
 
@@ -86,7 +94,7 @@ angular.module('configurationApp')
         });
 
         // Schedule pin check
-        self.schedule(4000);
+        self.schedule(8000);
       }, function() {
         $scope.$apply(function() {
           $scope.state = 'error';
@@ -99,6 +107,11 @@ angular.module('configurationApp')
     PlexPin.prototype.reset = function() {
       var $scope = this.$scope;
 
+      // Reset handler
+      this.checks = 0;
+      this.interval = intervalMinimum;
+
+      // Reset scope
       $scope.$apply(function() {
         $scope.current = null;
         $scope.expires_at = null;
@@ -109,6 +122,15 @@ angular.module('configurationApp')
     PlexPin.prototype.schedule = function(interval) {
       var self = this;
 
+      // Increase interval
+      this.interval = Math.round(intervalMinimum + ((this.checks / 3) * 1000));
+
+      if(this.interval > intervalMaximum) {
+        // Ensure interval doesn't exceed the maximum
+        this.interval = intervalMaximum;
+      }
+
+      // Use default interval
       if(typeof interval === 'undefined') {
         interval = this.interval;
       }
@@ -124,7 +146,8 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        callback: '=coCallback'
+        onAuthenticated: '=coAuthenticated',
+        onExpired: '=coExpired'
       },
       templateUrl: 'directives/plex/pin.html',
 
