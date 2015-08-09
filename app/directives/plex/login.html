@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="basic-authentication" ng-switch-default>
+  <form class="basic-authentication" ng-switch-default>
     <div class="fields">
       <label>Username
         <input type="text" ng-model="credentials.username"/>
@@ -35,7 +35,7 @@
         <a class="switch button secondary {{ buttonSize }}" ng-click="switch('pin')">PIN</a>
       </div>
 
-      <a class="button {{ buttonSize }}" ng-click="basicLogin()">Sign in</a>
+      <input type="submit" class="button {{ buttonSize }}" value="Sign in" ng-click="basicLogin()"/>
     </div>
-  </div>
+  </form>
 </div>
