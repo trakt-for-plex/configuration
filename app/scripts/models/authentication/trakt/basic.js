@@ -13,6 +13,7 @@ angular.module('configurationApp')
       this.password = null;
 
       // State
+      this.messages = [];
       this.state = '';
     }
 
@@ -34,6 +35,7 @@ angular.module('configurationApp')
       this.password = data.password;
 
       // State
+      this.messages = [];
       this.state = data.state;
     };
 

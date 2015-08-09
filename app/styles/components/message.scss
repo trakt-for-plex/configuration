@@ -1,0 +1,25 @@
+small.message {
+  display: block;
+
+  margin: -1px 0 5px;
+
+  padding: 0.375rem 0.5625rem 0.5625rem;
+
+  font-size: 0.75rem;
+  font-style: italic;
+  font-weight: normal;
+
+  color: #FFFFFF;
+}
+
+small.message.info {
+  background: #13736F;
+}
+
+small.message.warning {
+  background: #BDB820;
+}
+
+small.message.error {
+  background: #BD2820;
+}

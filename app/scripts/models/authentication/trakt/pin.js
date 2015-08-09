@@ -13,9 +13,7 @@ angular.module('configurationApp')
       this.code = null;
 
       // State
-      this.errors = [];
-      this.warnings = [];
-
+      this.messages = [];
       this.state = '';
     }
 
@@ -42,6 +40,7 @@ angular.module('configurationApp')
       this.code = data.code;
 
       // State
+      this.messages = [];
       this.state = data.state;
     };
 

@@ -14,9 +14,6 @@ angular.module('configurationApp')
       this.pin = new TraktPinAuthentication(this);
 
       // State
-      this.errors = [];
-      this.warnings = [];
-
       this.state = '';
     }
 
@@ -57,9 +54,6 @@ angular.module('configurationApp')
       this.pin.update(data.authorization.oauth);
 
       // State
-      this.errors = [];
-      this.warnings = [];
-
       this.state = '';
     };
 

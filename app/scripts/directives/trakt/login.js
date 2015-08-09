@@ -22,21 +22,33 @@ angular.module('configurationApp')
       };
 
       $scope.switch = function(method) {
-        $scope.errors = [];
+        $scope.messages = [];
         $scope.method = method;
       };
     }
+
+    TraktLogin.prototype.appendMessage = function(type, content) {
+      var $scope = this.$scope;
+
+      $scope.messages.push({
+        type: type,
+        content: content
+      });
+    };
 
     TraktLogin.prototype.reset = function() {
       var $scope = this.$scope;
 
       // Reset state
-      $scope.errors = [];
+      $scope.messages = [];
       $scope.method = 'pin';
     };
 
     TraktLogin.prototype.basicLogin = function() {
       var $scope = this.$scope;
+
+      // Reset messages
+      $scope.messages = [];
 
       // Fire callback
       $scope.basicAuthenticated({
@@ -49,7 +61,7 @@ angular.module('configurationApp')
           self = this;
 
       // Reset messages
-      $scope.errors = [];
+      $scope.messages = [];
 
       // Request token for pin code
       tr.oauth.token($scope.pin.code).then(function(authorization) {
@@ -74,11 +86,10 @@ angular.module('configurationApp')
     };
 
     TraktLogin.prototype.handleError = function(data, status, fallback) {
-      var $scope = this.$scope,
-          error = this.getError(data, status, fallback);
+      var content = this.getError(data, status, fallback);
 
       // Update messages
-      $scope.errors.push(error);
+      this.appendMessage('error', content);
     };
 
     TraktLogin.prototype.getError = function(data, status, fallback) {
@@ -139,7 +150,7 @@ angular.module('configurationApp')
         }
 
         // Set initial scope values
-        $scope.errors = [];
+        $scope.messages = [];
         $scope.method = 'pin';
 
         // Construct main controller

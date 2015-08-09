@@ -1,4 +1,4 @@
-<small class="error" ng-repeat="error in errors track by $index">{{ error }}</small>
+<small class="message {{ message.type }}" ng-repeat="message in messages track by $index">{{ message.content }}</small>
 
 <div ng-switch="method">
   <div class="pin-authentication" ng-switch-when="pin">
