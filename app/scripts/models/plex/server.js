@@ -104,7 +104,7 @@ angular.module('configurationApp')
 
         // Plugin update required
         return $q.reject({
-          message: 'Plugin update required'
+          message: 'Plugin needs to be updated to v' + pluginVersionMinimum + ' or later'
         });
       }, function(error) {
         // Unable to ping server
