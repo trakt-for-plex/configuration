@@ -67,11 +67,13 @@ angular.module('configurationApp')
       tr.oauth.token($scope.pin.code).then(function(authorization) {
         // Request account details
         return tr['users/settings'].get(authorization.access_token).then(function(settings) {
-          // Fire callback
-          $scope.pinAuthenticated({
-            authorization: authorization,
-            credentials: $scope.pin,
-            settings: settings
+          $scope.$apply(function() {
+            // Fire callback
+            $scope.pinAuthenticated({
+              authorization: authorization,
+              credentials: $scope.pin,
+              settings: settings
+            });
           });
         }, function(data, status) {
           $scope.$apply(function() {
