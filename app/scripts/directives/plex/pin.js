@@ -47,7 +47,7 @@ angular.module('configurationApp')
         $scope.$apply(function() {
           if($scope.enabled === true) {
             // Fire callback
-            $scope.callback({
+            $scope.onAuthenticated({
               token: data.pin.auth_token
             });
           }
@@ -55,11 +55,13 @@ angular.module('configurationApp')
           $scope.state = 'complete';
         });
       }, function(data, status) {
-        console.warn(data, status);
-
+        // Update state
         $scope.$apply(function() {
-          $scope.pin.state = 'error';
+          $scope.state = 'complete';
         });
+
+        // Fire callback
+        $scope.onExpired();
       });
     };
 
@@ -124,7 +126,8 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        callback: '=coCallback'
+        onAuthenticated: '=coAuthenticated',
+        onExpired: '=coExpired'
       },
       templateUrl: 'directives/plex/pin.html',
 
