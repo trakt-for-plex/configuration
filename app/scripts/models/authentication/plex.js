@@ -3,41 +3,35 @@
 angular.module('configurationApp')
   .factory('PlexAuthentication', function(BaseAuthentication, Utils, $q) {
     function PlexAuthentication() {
-      this.data = null;
+      this.changed = false;
+      this.original = null;
 
+      // Account details
       this.id = null;
       this.username = null;
       this.thumb_url = null;
 
+      // Authorization details
       this.authorization = null;
 
-      this.errors = [];
-      this.warnings = [];
-
+      // State
+      this.messages = [];
       this.state = '';
     }
 
-    PlexAuthentication.prototype.basicChanged = function() {
-      var current = this.authorization.basic;
-
-      if(Utils.isDefined(current.token_plex)) {
-        return true;
-      }
-
-      return false;
+    PlexAuthentication.prototype.appendMessage = function(type, content) {
+      this.messages.push({
+        type: type,
+        content: content
+      });
     };
 
     PlexAuthentication.prototype.current = function() {
-      if(!this.basicChanged()) {
-        return $q.resolve({});
+      if(!this.changed) {
+        return {};
       }
 
-      // Reset errors
-      this.errors = [];
-      this.warnings = [];
-
-      // Resolve with new authentication details
-      return $q.resolve({
+      return {
         plex: {
           username: this.username,
 
@@ -47,21 +41,23 @@ angular.module('configurationApp')
             }
           }
         }
-      });
+      };
     };
 
     PlexAuthentication.prototype.update = function(data) {
-      this.data = angular.copy(data);
+      this.changed = false;
+      this.original = angular.copy(data);
 
+      // Account details
       this.id = data.id;
       this.username = data.username;
       this.thumb_url = data.thumb_url;
 
+      // Authorization details
       this.authorization = data.authorization;
 
-      this.errors = [];
-      this.warnings = [];
-
+      // State
+      this.messages = [];
       this.state = '';
     };
 
@@ -72,6 +68,9 @@ angular.module('configurationApp')
 
       // Update token
       this.authorization.basic.token_plex = token_plex;
+
+      // Set `changed` flag
+      this.changed = true;
     };
 
     PlexAuthentication.prototype.check = function() {

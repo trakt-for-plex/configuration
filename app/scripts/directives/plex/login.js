@@ -21,22 +21,31 @@ angular.module('configurationApp')
       };
 
       $scope.switch = function(method) {
-        $scope.errors = [];
+        $scope.messages = [];
         $scope.method = method;
       };
     }
+
+    PlexLogin.prototype.appendMessage = function(type, content) {
+      var $scope = this.$scope;
+
+      $scope.messages.push({
+        type: type,
+        content: content
+      });
+    };
 
     PlexLogin.prototype.basicLogin = function(credentials) {
       var $scope = this.$scope,
           self = this;
 
       // Reset errors
-      $scope.errors = [];
+      $scope.messages = [];
 
       if(!Utils.isDefined(credentials) ||
          !Utils.isDefined(credentials.username) ||
          !Utils.isDefined(credentials.password)) {
-        $scope.errors.push('Invalid basic login request');
+        self.appendMessage('error', 'Invalid basic login request');
         return;
       }
 
@@ -63,11 +72,11 @@ angular.module('configurationApp')
           self = this;
 
       // Reset errors
-      $scope.errors = [];
+      $scope.messages = [];
 
       if(!Utils.isDefined(credentials) ||
          !Utils.isDefined(credentials.token)) {
-        $scope.errors.push('Invalid pin login request');
+        self.appendMessage('error', 'Invalid pin login request');
         return;
       }
 
@@ -95,7 +104,7 @@ angular.module('configurationApp')
     PlexLogin.prototype.onPinExpired = function() {
       var $scope = this.$scope;
 
-      $scope.errors.push('Pin has expired');
+      this.appendMessage('error', 'Pin has expired');
     };
 
     PlexLogin.prototype.handleSuccess = function(user) {
@@ -110,14 +119,15 @@ angular.module('configurationApp')
 
       // Login failed
       if(typeof data !== 'undefined' && data !== null) {
-        // Display API errors
-        $scope.errors = $scope.errors.concat(
-          typeof data.errors.error === 'object' ?
-            data.errors.error : [data.errors.error]
-        );
+        // Append API errors
+        var errors = typeof data.errors.error === 'object' ? data.errors.error : [data.errors.error];
+
+        for(var i = 0; i < errors.length; ++i) {
+          this.appendMessage('error', errors[i]);
+        }
       } else {
         // Display HTTP error
-        $scope.errors.push('HTTP Error: ' + status);
+        this.appendMessage('error', 'HTTP Error: ' + status);
       }
     };
 
@@ -144,7 +154,7 @@ angular.module('configurationApp')
           password: null
         };
 
-        $scope.errors = [];
+        $scope.messages = [];
         $scope.method = 'pin';
 
         // Construct main controller

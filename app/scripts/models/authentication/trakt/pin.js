@@ -13,9 +13,7 @@ angular.module('configurationApp')
       this.code = null;
 
       // State
-      this.errors = [];
-      this.warnings = [];
-
+      this.messages = [];
       this.state = '';
     }
 
@@ -27,9 +25,11 @@ angular.module('configurationApp')
       }
 
       return {
-        oauth: $.extend({
-          code: this.code
-        }, authorization)
+        authorization: {
+          oauth: $.extend({
+            code: this.code
+          }, authorization)
+        }
       };
     };
 
@@ -42,6 +42,7 @@ angular.module('configurationApp')
       this.code = data.code;
 
       // State
+      this.messages = [];
       this.state = data.state;
     };
 

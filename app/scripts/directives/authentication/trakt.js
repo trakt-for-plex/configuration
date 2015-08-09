@@ -36,30 +36,33 @@ angular.module('configurationApp')
         };
 
         $scope.switch = function(state) {
+          // Change view state
           $scope.state(state);
         };
 
         $scope.onBasicAuthenticated = function() {
-          $scope.$apply(function() {
-            // Update account details
-            $scope.trakt.basic.login();
-            $scope.trakt.updateDetails();
+          // Clear messages
+          $scope.messages = [];
 
-            $scope.state('view');
-          });
+          // Update account details
+          $scope.trakt.basic.updateAuthorization();
+          $scope.trakt.updateDetails();
+
+          // Change view state
+          $scope.state('view');
         };
 
         $scope.onPinAuthenticated = function(authorization, settings) {
-          $scope.$apply(function() {
-            // Update account details
-            $scope.trakt.pin.updateAuthorization(authorization);
-            $scope.trakt.updateDetails(settings);
+          // Update account details
+          $scope.trakt.pin.updateAuthorization(authorization);
+          $scope.trakt.updateDetails(settings);
 
-            $scope.state('view');
-          });
+          // Change view state
+          $scope.state('view');
         };
 
         $scope.onCancelled = function() {
+          // Change view state
           $scope.state('view');
         };
       }

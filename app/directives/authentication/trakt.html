@@ -1,5 +1,5 @@
-<small class="error" ng-repeat="error in trakt.errors track by $index">{{ error }}</small>
-<small class="warning" ng-repeat="warning in trakt.warnings track by $index">{{ warning }}</small>
+<small class="message {{ message.type }}" ng-repeat="message in trakt.basic.messages track by $index">{{ message.content }}</small>
+<small class="message {{ message.type }}" ng-repeat="message in trakt.pin.messages track by $index">{{ message.content }}</small>
 
 <div ng-switch="state()">
   <div class="account-edit" ng-switch-when="edit">

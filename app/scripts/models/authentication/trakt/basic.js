@@ -13,14 +13,25 @@ angular.module('configurationApp')
       this.password = null;
 
       // State
+      this.messages = [];
       this.state = '';
     }
 
+    TraktBasicAuthentication.prototype.appendMessage = function(type, content) {
+      this.messages.push({
+        type: type,
+        content: content
+      });
+    };
+
     TraktBasicAuthentication.prototype.current = function() {
       return {
-        basic: {
-          username: this.username,
-          password: this.password
+        username: this.username,
+
+        authorization: {
+          basic: {
+            password: this.password
+          }
         }
       };
     };
@@ -34,7 +45,19 @@ angular.module('configurationApp')
       this.password = data.password;
 
       // State
+      this.messages = [];
       this.state = data.state;
+    };
+
+    TraktBasicAuthentication.prototype.updateAuthorization = function() {
+      // Clear messages
+      this.messages = [];
+
+      // Set `changed` flag
+      this.changed = true;
+
+      // Update messages
+      this.appendMessage('info', "Account details are unavailable until changes have been saved");
     };
 
     return TraktBasicAuthentication;

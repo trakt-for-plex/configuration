@@ -14,9 +14,6 @@ angular.module('configurationApp')
       this.pin = new TraktPinAuthentication(this);
 
       // State
-      this.errors = [];
-      this.warnings = [];
-
       this.state = '';
     }
 
@@ -29,17 +26,17 @@ angular.module('configurationApp')
 
     TraktAuthentication.prototype.current = function() {
       var data = {
-        trakt: { authorization: {} }
+        trakt: {}
       };
 
       // Basic
       if(this.basic.changed) {
-        $.extend(true, data.trakt.authorization, this.basic.current());
+        $.extend(true, data.trakt, this.basic.current());
       }
 
       // PIN
       if(this.pin.changed) {
-        $.extend(true, data.trakt.authorization, this.pin.current());
+        $.extend(true, data.trakt, this.pin.current());
       }
 
       return data;
@@ -57,9 +54,6 @@ angular.module('configurationApp')
       this.pin.update(data.authorization.oauth);
 
       // State
-      this.errors = [];
-      this.warnings = [];
-
       this.state = '';
     };
 

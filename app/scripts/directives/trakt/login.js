@@ -22,21 +22,33 @@ angular.module('configurationApp')
       };
 
       $scope.switch = function(method) {
-        $scope.errors = [];
+        $scope.messages = [];
         $scope.method = method;
       };
     }
+
+    TraktLogin.prototype.appendMessage = function(type, content) {
+      var $scope = this.$scope;
+
+      $scope.messages.push({
+        type: type,
+        content: content
+      });
+    };
 
     TraktLogin.prototype.reset = function() {
       var $scope = this.$scope;
 
       // Reset state
-      $scope.errors = [];
+      $scope.messages = [];
       $scope.method = 'pin';
     };
 
     TraktLogin.prototype.basicLogin = function() {
       var $scope = this.$scope;
+
+      // Reset messages
+      $scope.messages = [];
 
       // Fire callback
       $scope.basicAuthenticated({
@@ -49,42 +61,61 @@ angular.module('configurationApp')
           self = this;
 
       // Reset messages
-      this.errors = [];
+      $scope.messages = [];
 
       // Request token for pin code
       tr.oauth.token($scope.pin.code).then(function(authorization) {
-        console.log('TraktLogin - authorization successful', self);
-
         // Request account details
         return tr['users/settings'].get(authorization.access_token).then(function(settings) {
-          // Fire callback
-          $scope.pinAuthenticated({
-            authorization: authorization,
-            credentials: $scope.pin,
-            settings: settings
+          $scope.$apply(function() {
+            // Fire callback
+            $scope.pinAuthenticated({
+              authorization: authorization,
+              credentials: $scope.pin,
+              settings: settings
+            });
           });
         }, function(data, status) {
-          console.log('TraktLogin - unable to retrieve account details', self);
+          $scope.$apply(function() {
+            self.handleError(data, status, 'Unable to retrieve account details');
+          });
         });
       }, function(data, status) {
-        // Retrieve error message
-        var error = null;
+        $scope.$apply(function() {
+          self.handleError(data, status, 'Unable to retrieve token');
+        });
+      });
+    };
 
-        if(data.error === 'invalid_grant') {
-          error = 'Invalid authentication pin provided';
-        } else if(typeof data.error_description !== 'undefined') {
-          error = data.error_description;
-        } else if(typeof data.error !== 'undefined') {
-          error = data.error;
-        } else {
-          error = 'HTTP Error: ' + status;
+    TraktLogin.prototype.handleError = function(data, status, fallback) {
+      var content = this.getError(data, status, fallback);
+
+      // Update messages
+      this.appendMessage('error', content);
+    };
+
+    TraktLogin.prototype.getError = function(data, status, fallback) {
+      if(Utils.isDefined(data)) {
+        // Retrieve error message from `data`
+        if(Utils.isDefined(data.error) && data.error === 'invalid_grant') {
+          return 'Invalid authentication pin provided';
         }
 
-        // Update messages
-        self.errors.push(error);
+        if(Utils.isDefined(data.error_description)) {
+          return data.error_description;
+        }
 
-        console.log('TraktLogin - authorization failure', self);
-      });
+        if(Utils.isDefined(data.error)) {
+          return data.error;
+        }
+      }
+
+      if(Utils.isDefined(status)) {
+        return 'HTTP Error: ' + status;
+      }
+
+      // Fallback to generic message
+      return fallback;
     };
 
     return {
@@ -121,7 +152,7 @@ angular.module('configurationApp')
         }
 
         // Set initial scope values
-        $scope.errors = [];
+        $scope.messages = [];
         $scope.method = 'pin';
 
         // Construct main controller

@@ -134,28 +134,6 @@
         padding: 5px;
       }
 
-      small.warning {
-        display: block;
-
-        margin-top: -1px;
-        padding: 0.375rem 0.5625rem 0.5625rem;
-
-        font-size: 0.75rem;
-        font-style: italic;
-        font-weight: normal;
-
-        background: #BDB820;
-        color: #FFFFFF;
-      }
-
-      small.error {
-        background: #BD2820;
-      }
-
-      small.error, small.warning {
-        margin-bottom: 5px;
-      }
-
       label[for="trakt.oauth.code"] a {
         float: right;
       }
