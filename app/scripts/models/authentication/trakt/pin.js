@@ -25,9 +25,11 @@ angular.module('configurationApp')
       }
 
       return {
-        oauth: $.extend({
-          code: this.code
-        }, authorization)
+        authorization: {
+          oauth: $.extend({
+            code: this.code
+          }, authorization)
+        }
       };
     };
 
