@@ -1,0 +1,53 @@
+.accounts .authentication co-plex-home .avatar {
+  float: none;
+
+  width: 60px;
+  height: 60px;
+
+  margin-right: 0;
+
+  box-shadow: 0 0 0 4px #AAA;
+}
+
+co-plex-home {
+  .container {
+    margin: 0 auto;
+  }
+
+  .avatar-container {
+    padding: 20px 0;
+
+    background-color: rgba(0, 0, 0, 0.12);
+    border-radius: 5px 5px 0 0;
+
+    text-align: center;
+  }
+
+  .title {
+    display: block;
+    height: 30px;
+
+    padding: 6px 0 0;
+
+    background-color: #555;
+    border-radius: 0 0 5px 5px;
+
+    color: #BBB;
+    font-size: 12px;
+    text-align: center;
+    text-overflow: ellipsis;
+
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .container:hover {
+    .avatar {
+      box-shadow: 0 0 0 4px #FFF;
+    }
+
+    .title {
+      color: #FFF;
+    }
+  }
+}

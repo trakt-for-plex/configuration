@@ -1,24 +1,6 @@
 <small class="message {{ message.type }}" ng-repeat="message in messages track by $index">{{ message.content }}</small>
 
 <div ng-switch="method">
-  <div class="pin-authentication" ng-switch-when="pin">
-    <div class="instructions">
-      Visit <a href="https://plex.tv/pin" target="_blank">https://plex.tv/pin</a> and enter this code:
-    </div>
-
-    <co-plex-pin
-      co-authenticated="onPinAuthenticated"
-      co-expired="onPinExpired">
-    </co-plex-pin>
-
-    <div class="buttons {{ buttonSize }}">
-      <div class="buttons-left">
-        <a class="button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
-        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#plex-mode-dropdown">Mode</a>
-      </div>
-    </div>
-  </div>
-
   <form class="basic-authentication" ng-switch-default>
     <div class="fields">
       <label>Username
@@ -38,6 +20,36 @@
       <input type="submit" class="button {{ buttonSize }}" value="Sign in" ng-click="basicLogin()"/>
     </div>
   </form>
+
+  <div class="home-authentication" ng-switch-when="home">
+    <co-plex-home>
+    </co-plex-home>
+
+    <div class="buttons {{ buttonSize }}">
+      <div class="buttons-left">
+        <a class="button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#plex-mode-dropdown">Mode</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="pin-authentication" ng-switch-when="pin">
+    <div class="instructions">
+      Visit <a href="https://plex.tv/pin" target="_blank">https://plex.tv/pin</a> and enter this code:
+    </div>
+
+    <co-plex-pin
+      co-authenticated="onPinAuthenticated"
+      co-expired="onPinExpired">
+    </co-plex-pin>
+
+    <div class="buttons {{ buttonSize }}">
+      <div class="buttons-left">
+        <a class="button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#plex-mode-dropdown">Mode</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ul id="plex-mode-dropdown" class="{{ buttonSize }} f-dropdown">
