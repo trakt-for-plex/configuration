@@ -9,8 +9,8 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="switch button secondary {{ buttonSize }}" ng-click="cancelled()" ng-show="cancelled">Cancel</a>
-        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('basic')">Manual</a>
+        <a class="button secondary {{ buttonSize }}" ng-click="cancelled()" ng-show="cancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#trakt-mode-dropdown">Mode</a>
       </div>
 
       <a class="button {{ buttonSize }}" ng-click="pinLogin()">Sign in</a>
@@ -29,11 +29,16 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="switch button secondary {{ buttonSize }}" ng-click="cancelled()" ng-show="cancelled">Cancel</a>
-        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('pin')">PIN</a>
+        <a class="button secondary {{ buttonSize }}" ng-click="cancelled()" ng-show="cancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#trakt-mode-dropdown">Mode</a>
       </div>
 
       <a class="button {{ buttonSize }}" ng-click="basicLogin()">Sign in</a>
     </div>
   </div>
 </div>
+
+<ul id="trakt-mode-dropdown" class="{{ buttonSize }} f-dropdown">
+  <li><a ng-click="switch('manual')">Basic</a></li>
+  <li><a ng-click="switch('pin')">PIN</a></li>
+</ul>

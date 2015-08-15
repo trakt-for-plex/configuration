@@ -13,8 +13,8 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="switch button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
-        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('basic')">Manual</a>
+        <a class="button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#plex-mode-dropdown">Mode</a>
       </div>
     </div>
   </div>
@@ -31,11 +31,17 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="switch button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
-        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('pin')">PIN</a>
+        <a class="button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#plex-mode-dropdown">Mode</a>
       </div>
 
       <input type="submit" class="button {{ buttonSize }}" value="Sign in" ng-click="basicLogin()"/>
     </div>
   </form>
 </div>
+
+<ul id="plex-mode-dropdown" class="{{ buttonSize }} f-dropdown">
+  <li><a ng-click="switch('manual')">Basic</a></li>
+  <li><a ng-click="switch('home')">Home</a></li>
+  <li><a ng-click="switch('pin')">PIN</a></li>
+</ul>
