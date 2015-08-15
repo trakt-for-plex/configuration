@@ -15,7 +15,9 @@ co-plex-home {
   }
 
   .avatar-container {
-    padding: 20px 0;
+    position: relative;
+
+    padding: 24px 0;
 
     background-color: rgba(0, 0, 0, 0.12);
     border-radius: 5px 5px 0 0;
@@ -39,6 +41,34 @@ co-plex-home {
 
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  .tags {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+
+    overflow: auto;
+
+    i {
+      width: 25px;
+
+      background-color: #F3F3F3;
+      border-radius: 50%;
+    }
+
+    i.admin {
+      float: right;
+
+      color: #DFA700;
+    }
+
+    i.restricted {
+      float: left;
+
+      color: #00A925;
+    }
   }
 
   .container:hover {
