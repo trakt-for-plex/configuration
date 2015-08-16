@@ -39,6 +39,10 @@
 </div>
 
 <ul id="trakt-mode-dropdown" class="{{ buttonSize }} f-dropdown">
-  <li><a ng-click="switch('manual')">Basic</a></li>
-  <li><a ng-click="switch('pin')">PIN</a></li>
+  <li ng-class="{active: method == 'manual'}">
+    <a ng-click="switch('manual')">Basic</a>
+  </li>
+  <li ng-class="{active: method == 'pin'}">
+    <a ng-click="switch('pin')">PIN</a>
+  </li>
 </ul>

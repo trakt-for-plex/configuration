@@ -54,13 +54,13 @@
 </div>
 
 <ul id="plex-mode-dropdown" class="{{ buttonSize }} f-dropdown">
-  <li ng-show="modes.basic">
+  <li ng-class="{active: method == 'manual'}" ng-show="modes.basic">
     <a ng-click="switch('manual')">Basic</a>
   </li>
-  <li ng-show="modes.home">
+  <li ng-class="{active: method == 'home'}" ng-show="modes.home">
     <a ng-click="switch('home')">Home</a>
   </li>
-  <li ng-show="modes.pin">
+  <li ng-class="{active: method == 'pin'}" ng-show="modes.pin">
     <a ng-click="switch('pin')">PIN</a>
   </li>
 </ul>
