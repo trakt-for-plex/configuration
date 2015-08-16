@@ -54,6 +54,17 @@ angular.module('configurationApp')
         $scope.onCancelled = function() {
           $scope.state('view');
         };
+
+        // Watch for account changes
+        $scope.$watch(
+          function(scope) { return scope.plex; },
+          function() {
+            $scope._state = null;
+
+            // Broadcast reset event to child directives
+            $scope.$broadcast('reset');
+          }
+        );
       }
     };
   });

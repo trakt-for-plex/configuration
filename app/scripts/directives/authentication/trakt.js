@@ -72,6 +72,17 @@ angular.module('configurationApp')
           // Change view state
           $scope.state('view');
         };
+
+        // Watch for account changes
+        $scope.$watch(
+          function(scope) { return scope.trakt; },
+          function() {
+            $scope._state = null;
+
+            // Broadcast reset event to child directives
+            $scope.$broadcast('reset');
+          }
+        );
       }
     };
   });

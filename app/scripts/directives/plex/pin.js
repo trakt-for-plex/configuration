@@ -10,7 +10,28 @@ angular.module('configurationApp')
 
       this.checks = 0;
       this.interval = intervalMinimum;
+
+      // Bind scope functions
+      var self = this;
+
+      $scope.$on('reset', function() {
+        self.reset();
+      });
     }
+
+    PlexPin.prototype.reset = function() {
+      var $scope = this.$scope;
+
+      // Reset handler
+      this.checks = 0;
+      this.interval = intervalMinimum;
+
+      // Reset scope
+      $scope.current = null;
+      $scope.enabled = true;
+      $scope.expires_at = null;
+      $scope.state = null;
+    };
 
     PlexPin.prototype.check = function() {
       console.debug('Checking pin status...');
@@ -100,23 +121,8 @@ angular.module('configurationApp')
           $scope.state = 'error';
 
           self.reset();
-        })
+        });
       })
-    };
-
-    PlexPin.prototype.reset = function() {
-      var $scope = this.$scope;
-
-      // Reset handler
-      this.checks = 0;
-      this.interval = intervalMinimum;
-
-      // Reset scope
-      $scope.$apply(function() {
-        $scope.current = null;
-        $scope.expires_at = null;
-        $scope.state = null;
-      });
     };
 
     PlexPin.prototype.schedule = function(interval) {

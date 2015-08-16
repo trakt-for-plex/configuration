@@ -8,6 +8,10 @@ angular.module('configurationApp')
       // Bind functions
       var self = this;
 
+      $scope.$on('reset', function() {
+        self.reset();
+      });
+
       $scope.basicLogin = function() {
         self.basicLogin($scope.credentials);
       };
@@ -29,6 +33,19 @@ angular.module('configurationApp')
         $scope.method = method;
       };
     }
+
+    PlexLogin.prototype.reset = function() {
+      var $scope = this.$scope;
+
+      // Reset scope values
+      $scope.credentials = {
+        username: null,
+        password: null
+      };
+
+      $scope.messages = [];
+      $scope.method = 'pin';
+    };
 
     PlexLogin.prototype.appendMessage = function(type, content) {
       var $scope = this.$scope;

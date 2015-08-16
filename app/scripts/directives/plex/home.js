@@ -8,9 +8,13 @@ angular.module('configurationApp')
       // Bind scope functions
       var self = this;
 
+      $scope.$on('reset', function() {
+        self.reset();
+      });
+
       $scope.pinKeyUp = function($event) {
         self.pinKeyUp($event);
-      }
+      };
 
       $scope.select = function(user) {
         self.select(user);
@@ -20,6 +24,16 @@ angular.module('configurationApp')
         $scope.state = state;
       };
     }
+
+    PlexHome.prototype.reset = function() {
+      var $scope = this.$scope;
+
+      // Reset scope values
+      $scope.current = null;
+      $scope.state = 'list';
+
+      $scope.users = [];
+    };
 
     PlexHome.prototype.refresh = function() {
       var $scope = this.$scope;

@@ -13,6 +13,10 @@ angular.module('configurationApp')
       // Bind scope functions
       var self = this;
 
+      $scope.$on('reset', function() {
+        self.reset();
+      });
+
       $scope.basicLogin = function() {
         self.basicLogin();
       };
