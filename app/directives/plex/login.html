@@ -28,7 +28,13 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}"
+           ng-class="{disabled: !isCancelEnabled}"
+           ng-click="onCancelled()"
+           ng-show="onCancelled"
+        >
+          Cancel
+        </a>
         <a class="button secondary {{ buttonSize }}" dropdown-toggle="#plex-mode-dropdown">Mode</a>
       </div>
     </div>
@@ -46,7 +52,13 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="button secondary {{ buttonSize }}" ng-click="onCancelled()" ng-show="onCancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}"
+           ng-class="{disabled: !isCancelEnabled}"
+           ng-click="onCancelled()"
+           ng-show="onCancelled"
+        >
+          Cancel
+        </a>
         <a class="button secondary {{ buttonSize }}" dropdown-toggle="#plex-mode-dropdown">Mode</a>
       </div>
     </div>

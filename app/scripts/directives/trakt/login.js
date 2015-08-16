@@ -122,6 +122,8 @@ angular.module('configurationApp')
       restrict: 'E',
       scope: {
         buttonSize: '@coButtonSize',
+
+        isCancelEnabled: '=coCancelEnabled',
         cancelled: '=coCancelled',
 
         basic: '=coBasic',

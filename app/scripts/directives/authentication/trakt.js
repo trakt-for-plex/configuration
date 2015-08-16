@@ -12,6 +12,13 @@ angular.module('configurationApp')
       controller: function($scope) {
         $scope._state = null;
 
+        $scope.isAuthenticated = function() {
+          return !!(
+            Utils.isDefined($scope.trakt.username) &&
+            $scope.trakt.username.length !== 0
+          );
+        };
+
         $scope.state = function(value) {
           if(Utils.isDefined(value)) {
             $scope._state = value;
@@ -23,7 +30,7 @@ angular.module('configurationApp')
             return 'view';
           }
 
-          if(!Utils.isDefined($scope.trakt.username) || $scope.trakt.username.length === 0) {
+          if(!$scope.isAuthenticated()) {
             // Account hasn't been authenticated yet
             return 'edit';
           }

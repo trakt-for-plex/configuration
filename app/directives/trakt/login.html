@@ -13,7 +13,13 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="button secondary {{ buttonSize }}" ng-click="cancelled()" ng-show="cancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}"
+           ng-class="{disabled: !isCancelEnabled}"
+           ng-click="cancelled()"
+           ng-show="cancelled"
+        >
+          Cancel
+        </a>
         <a class="button secondary {{ buttonSize }}" dropdown-toggle="#trakt-mode-dropdown">Mode</a>
       </div>
 
@@ -29,7 +35,13 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="button secondary {{ buttonSize }}" ng-click="cancelled()" ng-show="cancelled">Cancel</a>
+        <a class="button secondary {{ buttonSize }}"
+           ng-class="{disabled: !isCancelEnabled}"
+           ng-click="cancelled()"
+           ng-show="cancelled"
+        >
+          Cancel
+        </a>
         <a class="button secondary {{ buttonSize }}" dropdown-toggle="#trakt-mode-dropdown">Mode</a>
       </div>
 

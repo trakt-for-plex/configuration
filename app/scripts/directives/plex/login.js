@@ -154,6 +154,8 @@ angular.module('configurationApp')
       restrict: 'E',
       scope: {
         onAuthenticated: '=coAuthenticated',
+
+        isCancelEnabled: '=coCancelEnabled',
         onCancelled: '=coCancelled',
 
         buttonSize: '@coButtonSize',
