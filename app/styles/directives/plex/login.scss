@@ -1,3 +1,5 @@
+@import '../../mixins/no-select';
+
 co-plex-login {
   .error {
     margin: 0 -1px;
@@ -37,6 +39,12 @@ co-plex-login {
     .button {
       margin-right: 6px;
     }
+  }
+
+  .buttons,
+  .buttons .button,
+  .buttons-left {
+    @include no-select();
   }
 
   .pin-authentication {

@@ -4,8 +4,13 @@
   <div class="account-edit" ng-switch-when="edit">
     <co-plex-login
       co-authenticated="onAuthenticated"
+
+      co-cancel-enabled="isAuthenticated()"
       co-cancelled="onCancelled"
-      co-button-size="tiny">
+
+      co-button-size="tiny"
+      co-modes="{basic: true, home: true, pin: true}"
+    >
     </co-plex-login>
   </div>
 

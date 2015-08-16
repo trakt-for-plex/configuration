@@ -1,22 +1,6 @@
 <small class="message {{ message.type }}" ng-repeat="message in messages track by $index">{{ message.content }}</small>
 
 <div ng-switch="method">
-  <div class="pin-authentication" ng-switch-when="pin">
-    <div class="fields">
-      <label for="trakt.oauth.code">Authentication PIN <a href="https://trakt.tv/pin/478" target="_blank">Get PIN</a></label>
-      <input id="trakt.oauth.code" type="password" ng-model="pin.code" />
-    </div>
-
-    <div class="buttons {{ buttonSize }}">
-      <div class="buttons-left">
-        <a class="switch button secondary {{ buttonSize }}" ng-click="cancelled()" ng-show="cancelled">Cancel</a>
-        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('basic')">Manual</a>
-      </div>
-
-      <a class="button {{ buttonSize }}" ng-click="pinLogin()">Sign in</a>
-    </div>
-  </div>
-
   <div class="basic-authentication" ng-switch-default>
     <div class="fields">
       <label>Username
@@ -29,11 +13,48 @@
 
     <div class="buttons {{ buttonSize }}">
       <div class="buttons-left">
-        <a class="switch button secondary {{ buttonSize }}" ng-click="cancelled()" ng-show="cancelled">Cancel</a>
-        <a class="switch button secondary {{ buttonSize }}" ng-click="switch('pin')">PIN</a>
+        <a class="button secondary {{ buttonSize }}"
+           ng-class="{disabled: !isCancelEnabled}"
+           ng-click="cancelled()"
+           ng-show="cancelled"
+        >
+          Cancel
+        </a>
+        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#trakt-mode-dropdown">Mode</a>
       </div>
 
       <a class="button {{ buttonSize }}" ng-click="basicLogin()">Sign in</a>
     </div>
   </div>
+
+  <div class="pin-authentication" ng-switch-when="pin">
+    <div class="fields">
+      <label for="trakt.oauth.code">Authentication PIN <a href="https://trakt.tv/pin/478" target="_blank">Get PIN</a></label>
+      <input id="trakt.oauth.code" type="password" ng-model="pin.code" />
+    </div>
+
+    <div class="buttons {{ buttonSize }}">
+      <div class="buttons-left">
+        <a class="button secondary {{ buttonSize }}"
+           ng-class="{disabled: !isCancelEnabled}"
+           ng-click="cancelled()"
+           ng-show="cancelled"
+        >
+          Cancel
+        </a>
+        <a class="button secondary {{ buttonSize }}" dropdown-toggle="#trakt-mode-dropdown">Mode</a>
+      </div>
+
+      <a class="button {{ buttonSize }}" ng-click="pinLogin()">Sign in</a>
+    </div>
+  </div>
 </div>
+
+<ul id="trakt-mode-dropdown" class="{{ buttonSize }} f-dropdown">
+  <li ng-class="{active: method == 'manual'}">
+    <a ng-click="switch('manual')">Basic</a>
+  </li>
+  <li ng-class="{active: method == 'pin'}">
+    <a ng-click="switch('pin')">PIN</a>
+  </li>
+</ul>

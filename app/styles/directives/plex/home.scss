@@ -1,0 +1,144 @@
+@import '../../mixins/no-select';
+
+.accounts .authentication co-plex-home .avatar {
+  float: none;
+
+  width: 60px;
+  height: 60px;
+
+  margin-right: 0;
+
+  box-shadow: 0 0 0 4px #AAA;
+}
+
+co-plex-home {
+  h5, h6 {
+    line-height: 1.3 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .header {
+    overflow: auto;
+
+    a {
+      float: left;
+    }
+
+    h5, h6 {
+      float: left;
+    }
+
+    a.back i {
+      margin-right: 3px;
+
+      color: rgba(0, 0, 0, 0.4);
+
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    a.back:hover i {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .user {
+    margin: 0 auto;
+  }
+
+  .tile {
+    position: relative;
+
+    padding: 24px 0;
+
+    background-color: rgba(0, 0, 0, 0.12);
+    border-radius: 5px 5px 0 0;
+
+    text-align: center;
+  }
+
+  .title {
+    display: block;
+    height: 30px;
+
+    padding: 6px 0 0;
+
+    background-color: #555;
+    border-radius: 0 0 5px 5px;
+
+    color: #BBB;
+    font-size: 12px;
+    text-align: center;
+    text-overflow: ellipsis;
+
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .tags {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+
+    overflow: auto;
+
+    i {
+      width: 25px;
+
+      background-color: #F3F3F3;
+      border-radius: 50%;
+    }
+
+    i.admin {
+      float: right;
+
+      color: #DFA700;
+    }
+
+    i.protected {
+      float: left;
+
+      color: #00A925;
+    }
+  }
+
+  .pin-authentication {
+    padding-bottom: 20px;
+
+    .user {
+      padding-left: 0;
+    }
+
+    .fields {
+      span {
+        padding: 0 5px;
+      }
+
+      input[type="password"] {
+        height: 110px;
+
+        margin-top: 9px;
+
+        font-size: 70px;
+        text-align: center;
+      }
+    }
+  }
+
+  a.user:hover {
+    .avatar {
+      box-shadow: 0 0 0 4px #FFF;
+    }
+
+    .title {
+      color: #FFF;
+    }
+  }
+
+  .user,
+  .tile,
+  .title {
+    @include no-select();
+  }
+}

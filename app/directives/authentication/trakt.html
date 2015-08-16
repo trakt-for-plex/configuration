@@ -4,12 +4,17 @@
 <div ng-switch="state()">
   <div class="account-edit" ng-switch-when="edit">
     <co-trakt-login
-      co-button-size="tiny"
+      co-cancel-enabled="isAuthenticated()"
       co-cancelled="onCancelled"
+
       co-basic="trakt.basic"
       co-basic-authenticated="onBasicAuthenticated()"
+
       co-pin=trakt.pin
-      co-pin-authenticated="onPinAuthenticated(authorization, settings)">
+      co-pin-authenticated="onPinAuthenticated(authorization, settings)"
+
+      co-button-size="tiny"
+    >
     </co-trakt-login>
   </div>
 

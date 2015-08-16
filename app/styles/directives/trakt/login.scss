@@ -1,3 +1,5 @@
+@import '../../mixins/no-select';
+
 co-trakt-login {
   .fields {
     margin-bottom: 14px;
@@ -33,5 +35,11 @@ co-trakt-login {
     .button {
       margin-right: 6px;
     }
+  }
+
+  .buttons,
+  .buttons .button,
+  .buttons-left {
+    @include no-select();
   }
 }

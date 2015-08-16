@@ -9,8 +9,15 @@ angular.module('configurationApp')
       },
       templateUrl: 'directives/authentication/plex.html',
 
-      controller: function($scope) {
+      controller: function($scope, $timeout) {
         $scope._state = null;
+
+        $scope.isAuthenticated = function() {
+          return !!(
+            Utils.isDefined($scope.plex.username) &&
+            $scope.plex.username.length !== 0
+          );
+        };
 
         $scope.state = function(value) {
           if(Utils.isDefined(value)) {
@@ -23,7 +30,7 @@ angular.module('configurationApp')
             return 'view';
           }
 
-          if(!Utils.isDefined($scope.plex.username) || $scope.plex.username.length === 0) {
+          if(!$scope.isAuthenticated()) {
             // Account hasn't been authenticated yet
             return 'edit';
           }
@@ -47,6 +54,21 @@ angular.module('configurationApp')
         $scope.onCancelled = function() {
           $scope.state('view');
         };
+
+        // Watch for account changes
+        $scope.$watch(
+          function(scope) { return scope.plex; },
+          function() {
+            $scope._state = null;
+
+            // Broadcast events
+            $scope.$broadcast('reset');
+
+            $timeout(function() {
+              $scope.$broadcast('activate');
+            });
+          }
+        );
       }
     };
   });

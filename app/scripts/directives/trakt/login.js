@@ -13,6 +13,10 @@ angular.module('configurationApp')
       // Bind scope functions
       var self = this;
 
+      $scope.$on('reset', function() {
+        self.reset();
+      });
+
       $scope.basicLogin = function() {
         self.basicLogin();
       };
@@ -122,6 +126,8 @@ angular.module('configurationApp')
       restrict: 'E',
       scope: {
         buttonSize: '@coButtonSize',
+
+        isCancelEnabled: '=coCancelEnabled',
         cancelled: '=coCancelled',
 
         basic: '=coBasic',

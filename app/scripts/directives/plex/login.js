@@ -8,8 +8,16 @@ angular.module('configurationApp')
       // Bind functions
       var self = this;
 
+      $scope.$on('reset', function() {
+        self.reset();
+      });
+
       $scope.basicLogin = function() {
         self.basicLogin($scope.credentials);
+      };
+
+      $scope.onHomeAuthenticated = function(id, pin) {
+        self.onHomeAuthenticated(id, pin);
       };
 
       $scope.onPinAuthenticated = function(credentials) {
@@ -25,6 +33,19 @@ angular.module('configurationApp')
         $scope.method = method;
       };
     }
+
+    PlexLogin.prototype.reset = function() {
+      var $scope = this.$scope;
+
+      // Reset scope values
+      $scope.credentials = {
+        username: null,
+        password: null
+      };
+
+      $scope.messages = [];
+      $scope.method = 'pin';
+    };
 
     PlexLogin.prototype.appendMessage = function(type, content) {
       var $scope = this.$scope;
@@ -65,6 +86,21 @@ angular.module('configurationApp')
           });
         }
       );
+    };
+
+    PlexLogin.prototype.onHomeAuthenticated = function(id, pin) {
+      var $scope = this.$scope,
+          self = this;
+
+      plex.cloud['/api/home/users'].switch(id, pin).then(function(data) {
+        $scope.$apply(function() {
+          self.handleSuccess(data.user);
+        });
+      }, function(data, status) {
+        $scope.$apply(function() {
+          self.handleError(data, status);
+        });
+      });
     };
 
     PlexLogin.prototype.onPinAuthenticated = function(credentials) {
@@ -135,9 +171,12 @@ angular.module('configurationApp')
       restrict: 'E',
       scope: {
         onAuthenticated: '=coAuthenticated',
+
+        isCancelEnabled: '=coCancelEnabled',
         onCancelled: '=coCancelled',
 
-        buttonSize: '@coButtonSize'
+        buttonSize: '@coButtonSize',
+        modes: '=coModes'
       },
       templateUrl: 'directives/plex/login.html',
 
