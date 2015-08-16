@@ -1,6 +1,6 @@
 <ul class="small-block-grid-3 large-block-grid-4">
   <li ng-repeat="user in users">
-    <a class="container">
+    <a class="container" ng-click="select(user)">
       <div class="avatar-container">
         <img class="avatar" ng-src="{{ user._thumb }}">
 

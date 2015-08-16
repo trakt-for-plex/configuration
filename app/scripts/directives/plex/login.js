@@ -12,6 +12,10 @@ angular.module('configurationApp')
         self.basicLogin($scope.credentials);
       };
 
+      $scope.onHomeAuthenticated = function(id, pin) {
+        self.onHomeAuthenticated(id, pin);
+      };
+
       $scope.onPinAuthenticated = function(credentials) {
         self.onPinAuthenticated(credentials);
       };
@@ -65,6 +69,21 @@ angular.module('configurationApp')
           });
         }
       );
+    };
+
+    PlexLogin.prototype.onHomeAuthenticated = function(id, pin) {
+      var $scope = this.$scope,
+          self = this;
+
+      plex.cloud['/api/home/users'].switch(id, pin).then(function(data) {
+        $scope.$apply(function() {
+          self.handleSuccess(data.user);
+        });
+      }, function(data, status) {
+        $scope.$apply(function() {
+          self.handleError(data, status);
+        });
+      });
     };
 
     PlexLogin.prototype.onPinAuthenticated = function(credentials) {

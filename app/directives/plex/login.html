@@ -22,7 +22,8 @@
   </form>
 
   <div class="home-authentication" ng-switch-when="home">
-    <co-plex-home>
+    <co-plex-home
+      co-authenticated="onHomeAuthenticated">
     </co-plex-home>
 
     <div class="buttons {{ buttonSize }}">
