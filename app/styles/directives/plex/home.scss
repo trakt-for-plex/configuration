@@ -15,6 +15,31 @@ co-plex-home {
     margin-bottom: 10px !important;
   }
 
+  .header {
+    overflow: auto;
+
+    a {
+      float: left;
+    }
+
+    h5, h6 {
+      float: left;
+    }
+
+    a.back i {
+      margin-right: 3px;
+
+      color: rgba(0, 0, 0, 0.4);
+
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    a.back:hover i {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
   .user {
     margin: 0 auto;
   }

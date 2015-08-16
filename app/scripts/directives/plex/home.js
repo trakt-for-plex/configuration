@@ -8,13 +8,17 @@ angular.module('configurationApp')
       // Bind scope functions
       var self = this;
 
+      $scope.pinKeyUp = function($event) {
+        self.pinKeyUp($event);
+      }
+
       $scope.select = function(user) {
         self.select(user);
       };
 
-      $scope.pinKeyUp = function($event) {
-        self.pinKeyUp($event);
-      }
+      $scope.switch = function(state) {
+        $scope.state = state;
+      };
     }
 
     PlexHome.prototype.refresh = function() {

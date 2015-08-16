@@ -1,6 +1,8 @@
 <div ng-switch="state">
   <div ng-switch-default>
-    <h5>Select User</h5>
+    <div class="header">
+      <h5>Select User</h5>
+    </div>
 
     <ul class="small-block-grid-3 large-block-grid-4">
       <li ng-repeat="user in users">
@@ -21,7 +23,10 @@
   </div>
 
   <div class="pin-authentication row" ng-switch-when="pin">
-    <h5>Enter PIN</h5>
+    <div class="header">
+      <a class="back" ng-click="switch('list')"><i class="fa fa-chevron-left"></i></a>
+      <h5>Enter PIN</h5>
+    </div>
 
     <div class="user large-3 columns">
       <div class="tile">
