@@ -1,3 +1,5 @@
+@import '../../mixins/no-select';
+
 .accounts .authentication co-plex-home .avatar {
   float: none;
 
@@ -132,5 +134,11 @@ co-plex-home {
     .title {
       color: #FFF;
     }
+  }
+
+  .user,
+  .tile,
+  .title {
+    @include no-select();
   }
 }
