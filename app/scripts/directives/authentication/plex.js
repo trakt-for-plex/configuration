@@ -9,7 +9,7 @@ angular.module('configurationApp')
       },
       templateUrl: 'directives/authentication/plex.html',
 
-      controller: function($scope) {
+      controller: function($scope, $timeout) {
         $scope._state = null;
 
         $scope.isAuthenticated = function() {
@@ -61,8 +61,12 @@ angular.module('configurationApp')
           function() {
             $scope._state = null;
 
-            // Broadcast reset event to child directives
+            // Broadcast events
             $scope.$broadcast('reset');
+
+            $timeout(function() {
+              $scope.$broadcast('activate');
+            });
           }
         );
       }

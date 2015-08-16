@@ -10,9 +10,15 @@ angular.module('configurationApp')
 
       this.checks = 0;
       this.interval = intervalMinimum;
+      this.timer = null;
 
       // Bind scope functions
       var self = this;
+
+      $scope.$on('activate', function() {
+        // Create new pin
+        self.create();
+      });
 
       $scope.$on('reset', function() {
         self.reset();
@@ -21,6 +27,12 @@ angular.module('configurationApp')
 
     PlexPin.prototype.reset = function() {
       var $scope = this.$scope;
+
+      // Cancel timer
+      if(this.timer !== null) {
+        $timeout.cancel(this.timer);
+        this.timer = null;
+      }
 
       // Reset handler
       this.checks = 0;
@@ -105,6 +117,8 @@ angular.module('configurationApp')
       }
 
       // Request new pin code
+      console.debug('Creating new PIN...');
+
       plex.cloud.pins().then(function(data) {
         $scope.$apply(function() {
           // Update pin details
@@ -128,6 +142,12 @@ angular.module('configurationApp')
     PlexPin.prototype.schedule = function(interval) {
       var self = this;
 
+      // Cancel existing timer
+      if(self.timer !== null) {
+        $timeout.cancel(self.timer);
+        self.timer = null;
+      }
+
       // Increase interval
       this.interval = Math.round(intervalMinimum + ((this.checks / 3) * 1000));
 
@@ -142,7 +162,7 @@ angular.module('configurationApp')
       }
 
       // Schedule pin check
-      $timeout(function() {
+      self.timer = $timeout(function() {
         self.check();
       }, interval);
 
