@@ -54,7 +54,13 @@
 </div>
 
 <ul id="plex-mode-dropdown" class="{{ buttonSize }} f-dropdown">
-  <li><a ng-click="switch('manual')">Basic</a></li>
-  <li><a ng-click="switch('home')">Home</a></li>
-  <li><a ng-click="switch('pin')">PIN</a></li>
+  <li ng-show="modes.basic">
+    <a ng-click="switch('manual')">Basic</a>
+  </li>
+  <li ng-show="modes.home">
+    <a ng-click="switch('home')">Home</a>
+  </li>
+  <li ng-show="modes.pin">
+    <a ng-click="switch('pin')">PIN</a>
+  </li>
 </ul>
