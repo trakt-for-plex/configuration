@@ -1,16 +1,56 @@
-<ul class="small-block-grid-3 large-block-grid-4">
-  <li ng-repeat="user in users">
-    <a class="container" ng-click="select(user)">
-      <div class="avatar-container">
-        <img class="avatar" ng-src="{{ user._thumb }}">
+<div ng-switch="state">
+  <div ng-switch-default>
+    <h5>Select User</h5>
+
+    <ul class="small-block-grid-3 large-block-grid-4">
+      <li ng-repeat="user in users">
+        <a class="user" ng-click="select(user)">
+          <div class="tile">
+            <img class="avatar" ng-src="{{ user._thumb }}">
+
+            <div class="tags">
+              <i class="protected fi-lock" ng-show="user._protected == '1'"></i>
+              <i class="admin fi-crown" ng-show="user._admin == '1'"></i>
+            </div>
+          </div>
+
+          <span class="title">{{ user._title }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="pin-authentication row" ng-switch-when="pin">
+    <h5>Enter PIN</h5>
+
+    <div class="user large-3 columns">
+      <div class="tile">
+        <img class="avatar" ng-src="{{ current._thumb }}">
 
         <div class="tags">
-          <i class="protected fi-lock" ng-show="user._protected == '1'"></i>
-          <i class="admin fi-crown" ng-show="user._admin == '1'"></i>
+          <i class="protected fi-lock" ng-show="current._protected == '1'"></i>
+          <i class="admin fi-crown" ng-show="current._admin == '1'"></i>
         </div>
       </div>
 
-      <span class="title">{{ user._title }}</span>
-    </a>
-  </li>
-</ul>
+      <span class="title">{{ current._title }}</span>
+    </div>
+
+    <div class="fields large-9 columns">
+      <div class="large-12">
+        <span class="small-3 columns">
+          <input type="password" maxlength="1" pattern="\d" ng-keydown="pinKeyUp($event)"/>
+        </span>
+        <span class="small-3 columns">
+          <input type="password" maxlength="1" pattern="\d" ng-keydown="pinKeyUp($event)"/>
+        </span>
+        <span class="small-3 columns">
+          <input type="password" maxlength="1" pattern="\d" ng-keydown="pinKeyUp($event)"/>
+        </span>
+        <span class="small-3 columns">
+          <input type="password" maxlength="1" pattern="\d" ng-keydown="pinKeyUp($event)"/>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

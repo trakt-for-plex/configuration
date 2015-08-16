@@ -11,6 +11,10 @@ angular.module('configurationApp')
       $scope.select = function(user) {
         self.select(user);
       };
+
+      $scope.pinKeyUp = function($event) {
+        self.pinKeyUp($event);
+      }
     }
 
     PlexHome.prototype.refresh = function() {
@@ -36,8 +40,6 @@ angular.module('configurationApp')
     };
 
     PlexHome.prototype.select = function(user) {
-      console.log('select', user);
-
       if(user._protected === '1') {
         this.pinLogin(user);
       } else {
@@ -53,7 +55,72 @@ angular.module('configurationApp')
     };
 
     PlexHome.prototype.pinLogin = function(user) {
-      // TODO display pin input dialog
+      var $scope = this.$scope;
+
+      // Switch to PIN input state
+      $scope.current = user;
+      $scope.state = 'pin';
+    };
+
+    PlexHome.prototype.pinKeyUp = function($event) {
+      var $scope = this.$scope,
+          $input = $($event.target),
+          $cell = $input.parent('span'),
+          $container = $cell.parent('div');
+
+      // Prevent default character insertion
+      $event.preventDefault();
+
+      // Handle key
+      if($event.keyCode === 8) {
+        if($input.val() !== '') {
+          // Clear current field
+          $input.val('');
+          return;
+        }
+
+        // Find previous field
+        var $prev = $cell.prev();
+
+        if($prev.length === 0) {
+          return;
+        }
+
+        // Clear previous field
+        $('input', $prev)
+          .val('')
+          .focus();
+      } else {
+        // Set character
+        $input.val(String.fromCharCode($event.keyCode));
+
+        // Move to next field
+        var $next = $cell.next();
+
+        if($next.length === 0) {
+          // Done
+          var $fields = $('input', $container),
+              pin = '';
+
+          // Build pin from fields
+          for(var i = 0; i < $fields.length; ++i) {
+            var val = $($fields[i]).val();
+
+            if(val === '') {
+              return;
+            }
+
+            pin += val;
+          }
+
+          // Fire callback
+          $scope.onAuthenticated($scope.current._id, pin);
+          return;
+        }
+
+        $('input', $next)
+          .focus();
+      }
     };
 
     return {
@@ -65,6 +132,9 @@ angular.module('configurationApp')
 
       controller: function($scope) {
         // Set initial scope values
+        $scope.current = null;
+        $scope.state = 'list';
+
         $scope.users = [];
 
         // Construct main controller
