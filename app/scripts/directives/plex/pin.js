@@ -75,7 +75,9 @@ angular.module('configurationApp')
       // Check if pin is authenticated
       this.checks += 1;
 
-      plex.cloud["/pins"].get($scope.current.id).then(function(data) {
+      plex.cloud["/pins"].get($scope.current.id).then(function(response) {
+        var data = response.data;
+
         if(data.pin.auth_token._nil === 'true') {
           // PIN not authenticated yet, schedule next check
           self.schedule();
@@ -119,7 +121,9 @@ angular.module('configurationApp')
       // Request new pin code
       console.debug('Creating new PIN...');
 
-      plex.cloud.pins().then(function(data) {
+      plex.cloud.pins().then(function(response) {
+        var data = response.data;
+
         $scope.$apply(function() {
           // Update pin details
           $scope.current = data.pin;

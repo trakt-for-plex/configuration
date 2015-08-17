@@ -14,9 +14,10 @@ angular.module('configurationApp')
 
     $scope.servers = [];
 
-    plex.cloud['/api'].resources(true).then(function(data) {
+    plex.cloud['/api'].resources(true).then(function(response) {
       // Retrieve devices
-      var devices = data.MediaContainer.Device;
+      var data = response.data,
+          devices = data.MediaContainer.Device;
 
       if(typeof devices.length === 'undefined') {
         devices = [devices];

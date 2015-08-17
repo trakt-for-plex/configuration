@@ -38,8 +38,9 @@ angular.module('configurationApp')
     PlexHome.prototype.refresh = function() {
       var $scope = this.$scope;
 
-      plex.cloud['/api/home'].users().then(function(data) {
-        var users = data.MediaContainer.User;
+      plex.cloud['/api/home'].users().then(function(response) {
+        var data = response.data,
+            users = data.MediaContainer.User;
 
         if(typeof users.length === 'undefined') {
           users = [users];

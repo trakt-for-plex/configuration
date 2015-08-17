@@ -75,14 +75,14 @@ angular.module('configurationApp')
         credentials.username,
         credentials.password
       ).then(
-        function(data) {
+        function(response) {
           $scope.$apply(function() {
-            self.handleSuccess(data.user);
+            self.handleSuccess(response.data.user);
           });
         },
-        function(data, status) {
+        function(response) {
           $scope.$apply(function() {
-            self.handleError(data, status);
+            self.handleError(response.data, response.statusCode);
           });
         }
       );
@@ -92,13 +92,22 @@ angular.module('configurationApp')
       var $scope = this.$scope,
           self = this;
 
-      plex.cloud['/api/home/users'].switch(id, pin).then(function(data) {
+      // Reset errors
+      $scope.messages = [];
+
+      if(!Utils.isDefined(id)) {
+        self.appendMessage('error', 'Invalid user switch request');
+        return;
+      }
+
+      // Retrieve account details
+      plex.cloud['/api/home/users'].switch(id, pin).then(function(response) {
         $scope.$apply(function() {
-          self.handleSuccess(data.user);
+          self.handleSuccess(response.data.user);
         });
-      }, function(data, status) {
+      }, function(response) {
         $scope.$apply(function() {
-          self.handleError(data, status);
+          self.handleError(response.data, response.statusCode);
         });
       });
     };
@@ -124,14 +133,14 @@ angular.module('configurationApp')
           }
         }
       ).then(
-        function(data) {
+        function(response) {
           $scope.$apply(function() {
-            self.handleSuccess(data.user);
+            self.handleSuccess(response.data.user);
           });
         },
-        function(data, status) {
+        function(response) {
           $scope.$apply(function() {
-            self.handleError(data, status);
+            self.handleError(response.data, response.statusCode);
           });
         }
       );
@@ -154,13 +163,23 @@ angular.module('configurationApp')
       var $scope = this.$scope;
 
       // Login failed
-      if(typeof data !== 'undefined' && data !== null) {
-        // Append API errors
+      if(
+        Utils.isDefined(data) &&
+        Utils.isDefined(data.errors) &&
+        Utils.isDefined(data.errors.error)
+      ) {
+        // "Error" elements found
         var errors = typeof data.errors.error === 'object' ? data.errors.error : [data.errors.error];
 
-        for(var i = 0; i < errors.length; ++i) {
+        for (var i = 0; i < errors.length; ++i) {
           this.appendMessage('error', errors[i]);
         }
+      } else if(
+        Utils.isDefined(data.Response) &&
+        Utils.isDefined(data.Response._status)
+      ) {
+        // "Response" element found (home user switch)
+        this.appendMessage('error', data.Response._status);
       } else {
         // Display HTTP error
         this.appendMessage('error', 'HTTP Error: ' + status);

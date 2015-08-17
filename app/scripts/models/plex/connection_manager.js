@@ -75,8 +75,9 @@ angular.module('configurationApp')
       // Test connection
       var deferred = $q.defer();
 
-      client.identity().then(function(data) {
-        var connectionIdentifier = data.MediaContainer._machineIdentifier;
+      client.identity().then(function(response) {
+        var data = response.data,
+            connectionIdentifier = data.MediaContainer._machineIdentifier;
 
         if(connectionIdentifier !== self.server.identifier) {
           console.debug("Connection identifier %s doesn't match the server identifier %s", connectionIdentifier, self.server.identifier);
