@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('PlexServer', function(PlexConnection, PlexConnectionManager, VersionUtil, $q) {
+  .factory('PlexServer', function(PlexConnection, PlexConnectionManager, Utils, VersionUtil, $q) {
     var identifier = 'com.plexapp.plugins.trakttv',
         pluginVersionMinimum = '0.9.10.4',
         target = 'MessageKit:Api';
@@ -55,8 +55,14 @@ angular.module('configurationApp')
 
         // Save server details
         self.save();
-      }, function(error) {
-        self.error = error;
+      }, function(response) {
+        if(Utils.isDefined(response.data)) {
+          self.error = data;
+        } else {
+          self.error = {
+            'message': response.statusCode
+          };
+        }
 
         return $q.reject();
       });
@@ -73,11 +79,17 @@ angular.module('configurationApp')
         // Check server
         return self.check().then(function() {
           return connection;
-        }, function(error) {
+        }, function(response) {
           // Server didn't pass validation
-          self.error = error;
+          var reason;
 
-          return $q.reject(error);
+          if(Utils.isDefined(response.data)) {
+            reason = response.data;
+          } else {
+            reason = response.statusCode;
+          }
+
+          return $q.reject(reason);
         });
 
       }, function(reason) {
@@ -106,9 +118,9 @@ angular.module('configurationApp')
         return $q.reject({
           message: 'Plugin needs to be updated to v' + pluginVersionMinimum + ' or later'
         });
-      }, function(error) {
+      }, function(response) {
         // Unable to ping server
-        return $q.reject(error);
+        return $q.reject(response);
       });
     };
 
@@ -137,7 +149,9 @@ angular.module('configurationApp')
         identifier, target, args, kwargs, {
           headers: headers
         }
-      ).then(function(data) {
+      ).then(function(response) {
+        var data = response.data;
+
         // Parse response
         if(typeof data === 'string') {
           data = JSON.parse(data);
@@ -159,8 +173,8 @@ angular.module('configurationApp')
         } else {
           deferred.reject(null);
         }
-      }, function(data, status) {
-        deferred.reject(data, status);
+      }, function(response) {
+        deferred.reject(response);
       });
 
       return deferred.promise;

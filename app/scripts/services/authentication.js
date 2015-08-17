@@ -123,7 +123,9 @@ angular.module('configurationApp')
         }
 
         // Send request
-        plex.cloud['/users'].account(token).then(function(data) {
+        plex.cloud['/users'].account(token).then(function(response) {
+          var data = response.data;
+
           self.user(data.user);
 
           updateAuthentication(true, data.user);
