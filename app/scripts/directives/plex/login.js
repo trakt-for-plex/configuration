@@ -100,6 +100,11 @@ angular.module('configurationApp')
         return;
       }
 
+      if(Utils.isDefined(pin) && isNaN(pin)) {
+        self.appendMessage('error', 'PIN contains invalid characters, only numbers are allowed');
+        return;
+      }
+
       // Retrieve account details
       plex.cloud['/api/home/users'].switch(id, pin).then(function(response) {
         $scope.$apply(function() {
