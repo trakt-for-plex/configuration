@@ -79,7 +79,7 @@ angular.module('configurationApp')
          this.username.length === 0) &&
          this.authorization.basic.state === 'valid') {
         // Update warnings
-        this.warnings.push('Missing username');
+        this.appendMessage('warning', 'Missing username');
 
         // Update state
         this.authorization.basic.state = 'warning';
