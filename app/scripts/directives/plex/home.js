@@ -1,7 +1,19 @@
 'use strict';
 
 angular.module('configurationApp')
-  .directive('coPlexHome', function(Authentication) {
+  .directive('coPlexHome', function() {
+    function toNumber(keyCode) {
+      if(keyCode >= 48 && keyCode <= 57) {
+        return String.fromCharCode(keyCode);
+      }
+
+      if(keyCode >= 96 && keyCode <= 105) {
+        return String.fromCharCode(keyCode - 48);
+      }
+
+      return null;
+    }
+
     function PlexHome($scope) {
       this.$scope = $scope;
 
@@ -12,8 +24,8 @@ angular.module('configurationApp')
         self.reset();
       });
 
-      $scope.pinKeyUp = function($event) {
-        self.pinKeyUp($event);
+      $scope.pinKeyDown = function($event) {
+        self.pinKeyDown($event);
       };
 
       $scope.select = function(user) {
@@ -81,7 +93,7 @@ angular.module('configurationApp')
       $scope.state = 'pin';
     };
 
-    PlexHome.prototype.pinKeyUp = function($event) {
+    PlexHome.prototype.pinKeyDown = function($event) {
       var $scope = this.$scope,
           $input = $($event.target),
           $cell = $input.parent('span'),
@@ -111,7 +123,13 @@ angular.module('configurationApp')
           .focus();
       } else {
         // Set character
-        $input.val(String.fromCharCode($event.keyCode));
+        var char = toNumber($event.keyCode);
+
+        if(char === null) {
+          return;
+        }
+
+        $input.val(char);
 
         // Move to next field
         var $next = $cell.next();
