@@ -2,6 +2,18 @@
 
 angular.module('configurationApp')
   .directive('coPlexHome', function(Authentication) {
+    function toNumber(keyCode) {
+      if(keyCode >= 48 && keyCode <= 57) {
+        return String.fromCharCode(keyCode);
+      }
+
+      if(keyCode >= 96 && keyCode <= 105) {
+        return String.fromCharCode(keyCode - 48);
+      }
+
+      return null;
+    }
+
     function PlexHome($scope) {
       this.$scope = $scope;
 
@@ -111,7 +123,13 @@ angular.module('configurationApp')
           .focus();
       } else {
         // Set character
-        $input.val(String.fromCharCode($event.keyCode));
+        var char = toNumber($event.keyCode);
+
+        if(char === null) {
+          return;
+        }
+
+        $input.val(char);
 
         // Move to next field
         var $next = $cell.next();
