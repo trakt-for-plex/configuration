@@ -6,6 +6,27 @@ angular.module('configurationApp')
         pluginVersionMinimum = '0.9.10.4',
         target = 'MessageKit:Api';
 
+    function parseErrorResponse(response) {
+      if(Utils.isDefined(response.reason)) {
+        return response.reason;
+      }
+
+      if(Utils.isDefined(response.data) && Utils.isDefined(response.data.error)) {
+        // Retrieve error from data
+        var error = response.data.error;
+
+        if(Utils.isDefined(error.message)) {
+          return error.message;
+        }
+      }
+
+      if(Utils.isDefined(response.statusCode)) {
+        return 'HTTP Error: ' + response.statusCode;
+      }
+
+      return 'Unknown error';
+    }
+
     function PlexServer() {
       this.name = null;
 
@@ -20,7 +41,7 @@ angular.module('configurationApp')
       this.client = null;
       this.connection_manager = null;
 
-      this.error = null;
+      this.status = null;
     }
 
     PlexServer.prototype.isAuthenticated = function() {
@@ -35,6 +56,10 @@ angular.module('configurationApp')
     PlexServer.prototype.authenticate = function() {
       var self = this;
 
+      // Reset connection "error"
+      self.status = null;
+
+      // Authenticate with plugin
       return this.call('system.authenticate', [this.token_plex]).then(function(token) {
         if(token['X-Channel-Token'] === null || token['X-Channel-Token-Expire'] === null) {
           // Reset authentication details
@@ -45,7 +70,7 @@ angular.module('configurationApp')
           self.save();
 
           // Reject promise
-          self.error = 'Unable to authenticate with plugin';
+          self.status = 'Unable to authenticate with plugin';
           return $q.reject(null);
         }
 
@@ -56,13 +81,7 @@ angular.module('configurationApp')
         // Save server details
         self.save();
       }, function(response) {
-        if(Utils.isDefined(response.data)) {
-          self.error = data;
-        } else {
-          self.error = {
-            'message': response.statusCode
-          };
-        }
+        self.status = parseErrorResponse(response);
 
         return $q.reject();
       });
@@ -72,7 +91,7 @@ angular.module('configurationApp')
       var self = this;
 
       // Reset connection "error"
-      self.error = null;
+      self.status = null;
 
       // Test connections
       return this.connection_manager.test().then(function(connection) {
@@ -81,24 +100,16 @@ angular.module('configurationApp')
           return connection;
         }, function(response) {
           // Server didn't pass validation
-          var reason;
+          self.status = parseErrorResponse(response);
 
-          if(Utils.isDefined(response.data)) {
-            reason = response.data;
-          } else {
-            reason = response.statusCode;
-          }
-
-          return $q.reject(reason);
+          return $q.reject(self.status);
         });
 
       }, function(reason) {
         // Unable to connect to server
-        self.error = {
-          message: reason
-        };
+        self.status = reason;
 
-        return $q.reject(self.error);
+        return $q.reject(self.status);
       });
     };
 
@@ -116,7 +127,7 @@ angular.module('configurationApp')
 
         // Plugin update required
         return $q.reject({
-          message: 'Plugin needs to be updated to v' + pluginVersionMinimum + ' or later'
+          reason: 'Plugin needs to be updated to v' + pluginVersionMinimum + ' or later'
         });
       }, function(response) {
         // Unable to ping server
