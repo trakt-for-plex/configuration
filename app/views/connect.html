@@ -6,7 +6,7 @@
   <div class="servers" ng-switch-default>
     <div class="row server" ng-repeat="server in servers" ng-click="select(server)">
       <div class="name small-12">{{ server.name }}</div>
-      <div class="error small-12" ng-show="server.error">{{ server.error.message }}</div>
+      <div class="error small-12" ng-show="server.status">{{ server.status }}</div>
     </div>
   </div>
 

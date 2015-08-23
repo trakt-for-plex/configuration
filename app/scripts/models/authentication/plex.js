@@ -9,6 +9,8 @@ angular.module('configurationApp')
       // Account details
       this.id = null;
       this.username = null;
+
+      this.title = null;
       this.thumb_url = null;
 
       // Authorization details
@@ -51,6 +53,8 @@ angular.module('configurationApp')
       // Account details
       this.id = data.id;
       this.username = data.username;
+
+      this.title = data.title;
       this.thumb_url = data.thumb_url;
 
       // Authorization details
@@ -64,6 +68,8 @@ angular.module('configurationApp')
     PlexAuthentication.prototype.updateAuthorization = function(token_plex, user) {
       // Update account details
       this.username = user.username;
+
+      this.title = user._title;
       this.thumb_url = user._thumb;
 
       // Update token
@@ -74,12 +80,11 @@ angular.module('configurationApp')
     };
 
     PlexAuthentication.prototype.check = function() {
-      if((typeof this.username === 'undefined' ||
-         this.username === null ||
-         this.username.length === 0) &&
+      if((!Utils.isDefined(this.title) ||
+         this.title.length === 0) &&
          this.authorization.basic.state === 'valid') {
         // Update warnings
-        this.appendMessage('warning', 'Missing username');
+        this.appendMessage('warning', "Account hasn't completed the authentication process");
 
         // Update state
         this.authorization.basic.state = 'warning';
