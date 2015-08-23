@@ -14,8 +14,8 @@ angular.module('configurationApp')
 
         $scope.isAuthenticated = function() {
           return !!(
-            Utils.isDefined($scope.plex.username) &&
-            $scope.plex.username.length !== 0
+            Utils.isDefined($scope.plex.title) &&
+            $scope.plex.title.length !== 0
           );
         };
 
