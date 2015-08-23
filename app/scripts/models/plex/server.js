@@ -3,7 +3,7 @@
 angular.module('configurationApp')
   .factory('PlexServer', function(PlexConnection, PlexConnectionManager, Utils, VersionUtil, $q) {
     var identifier = 'com.plexapp.plugins.trakttv',
-        pluginVersionMinimum = '0.9.10.4',
+        pluginVersionMinimum = '0.9.10.8',
         target = 'MessageKit:Api';
 
     function parseErrorResponse(response) {
