@@ -71,7 +71,7 @@ angular.module('configurationApp')
     $scope.accountDelete = function() {
       return $scope.account.delete($rootScope.$s).then(function() {
         // Refresh accounts
-        $scope.refresh();
+        return $scope.refresh();
       });
     };
 
@@ -82,7 +82,7 @@ angular.module('configurationApp')
 
       return $rootScope.$s.call('account.create', [], {name: name}).then(function() {
         // Refresh accounts
-        $scope.refresh();
+        return $scope.refresh();
       }, function(error) {
         if(error === null || typeof error.message !== 'string') {
           return $q.reject('Unknown error');
