@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .directive('coTraktLogin', function(Utils, $http) {
+  .directive('coTraktLogin', function(Utils, $http, $q) {
     var tr = new trakt.Client(
       'c9ccd3684988a7862a8542ae0000535e0fbd2d1c0ca35583af7ea4e784650a61',
       'bf00575b1ad252b514f14b2c6171fe650d474091daad5eb6fa890ef24d581f65'
@@ -18,11 +18,11 @@ angular.module('configurationApp')
       });
 
       $scope.basicLogin = function() {
-        self.basicLogin();
+        return self.basicLogin();
       };
 
       $scope.pinLogin = function() {
-        self.pinLogin();
+        return self.pinLogin();
       };
 
       $scope.switch = function(method) {
@@ -58,6 +58,8 @@ angular.module('configurationApp')
       $scope.basicAuthenticated({
         credentials: $scope.basic
       });
+
+      return $q.resolve();
     };
 
     TraktLogin.prototype.pinLogin = function() {
@@ -68,7 +70,7 @@ angular.module('configurationApp')
       $scope.messages = [];
 
       // Request token for pin code
-      tr.oauth.token($scope.pin.code).then(function(authorization) {
+      return tr.oauth.token($scope.pin.code).then(function(authorization) {
         // Request account details
         return tr['users/settings'].get(authorization.access_token).then(function(settings) {
           $scope.$apply(function() {
@@ -83,11 +85,15 @@ angular.module('configurationApp')
           $scope.$apply(function() {
             self.handleError(data, status, 'Unable to retrieve account details');
           });
+
+          return $q.reject(data, status);
         });
       }, function(data, status) {
         $scope.$apply(function() {
           self.handleError(data, status, 'Unable to retrieve token');
         });
+
+        return $q.reject(data, status);
       });
     };
 

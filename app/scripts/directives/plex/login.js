@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .directive('coPlexLogin', function(Utils) {
+  .directive('coPlexLogin', function(Utils, $q) {
     function PlexLogin($scope) {
       this.$scope = $scope;
 
@@ -13,7 +13,7 @@ angular.module('configurationApp')
       });
 
       $scope.basicLogin = function() {
-        self.basicLogin($scope.credentials);
+        return self.basicLogin($scope.credentials);
       };
 
       $scope.onHomeAuthenticated = function(id, pin) {
@@ -67,11 +67,11 @@ angular.module('configurationApp')
          !Utils.isDefined(credentials.username) ||
          !Utils.isDefined(credentials.password)) {
         self.appendMessage('error', 'Invalid basic login request');
-        return;
+        return $q.reject();
       }
 
       // Perform login
-      plex.cloud['/users'].login(
+      return plex.cloud['/users'].login(
         credentials.username,
         credentials.password
       ).then(
@@ -84,6 +84,8 @@ angular.module('configurationApp')
           $scope.$apply(function() {
             self.handleError(response.data, response.statusCode);
           });
+
+          return $q.reject();
         }
       );
     };

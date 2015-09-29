@@ -23,7 +23,7 @@
         <a class="button secondary {{ buttonSize }}" dropdown-toggle="#trakt-mode-dropdown">Mode</a>
       </div>
 
-      <a class="button {{ buttonSize }}" ng-click="basicLogin()">Sign in</a>
+      <co-button co-size="{{ buttonSize }}" co-callback="basicLogin">Sign in</co-button>
     </div>
   </div>
 
@@ -45,7 +45,7 @@
         <a class="button secondary {{ buttonSize }}" dropdown-toggle="#trakt-mode-dropdown">Mode</a>
       </div>
 
-      <a class="button {{ buttonSize }}" ng-click="pinLogin()">Sign in</a>
+      <co-button co-size="{{ buttonSize }}" co-callback="pinLogin">Sign in</co-button>
     </div>
   </div>
 </div>
