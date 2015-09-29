@@ -10,7 +10,8 @@ angular.module('configurationApp')
         self: '=coSelf',
         refresh: '=coRefresh',
         discard: '=coDiscard',
-        save: '=coSave'
+        save: '=coSave',
+        delete: '=coDelete'
       },
       templateUrl: 'directives/configuration/header.html'
     };

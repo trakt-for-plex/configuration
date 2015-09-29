@@ -29,7 +29,8 @@
       co-title="account.name"
       co-refresh="accountRefresh"
       co-discard="accountDiscard"
-      co-save="accountSave">
+      co-save="accountSave"
+      co-delete="account.id !== 1 ? accountDelete : null">
     </co-configuration-header>
 
     <div class="authentication group" ng-show="account">

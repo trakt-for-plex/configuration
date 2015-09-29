@@ -83,6 +83,16 @@ angular.module('configurationApp')
       ]);
     };
 
+    Account.prototype.delete = function(server) {
+      var self = this;
+
+      return server.call('account.delete', [], {id: self.id}).then(function(success) {
+        if(!success) {
+          return $q.reject();
+        }
+      });
+    };
+
     Account.prototype.discard = function() {
       // Discard account authentication/details
       this.update(this.original);
