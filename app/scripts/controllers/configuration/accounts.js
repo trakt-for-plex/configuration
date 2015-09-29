@@ -8,7 +8,7 @@
  * Controller of the configurationApp
  */
 angular.module('configurationApp')
-  .controller('AccountsController', function (Account, Utils, $location, $q, $rootScope, $routeParams, $scope) {
+  .controller('AccountsController', function (Account, Utils, $location, $modal, $q, $rootScope, $routeParams, $scope) {
     $scope.accounts = {};
     $scope.account = null;
 
@@ -69,9 +69,17 @@ angular.module('configurationApp')
     };
 
     $scope.accountDelete = function() {
-      return $scope.account.delete($rootScope.$s).then(function() {
-        // Refresh accounts
-        return $scope.refresh();
+      var modal = $modal.open({
+        templateUrl: 'modals/deleteAccount.html',
+        windowClass: 'small',
+        scope: $scope
+      });
+
+      return modal.result.then(function() {
+        return $scope.account.delete($rootScope.$s).then(function () {
+          // Refresh accounts
+          return $scope.refresh();
+        });
       });
     };
 
