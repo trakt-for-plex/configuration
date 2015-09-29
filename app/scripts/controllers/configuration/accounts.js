@@ -97,7 +97,7 @@ angular.module('configurationApp')
       return $rootScope.$s.call('account.list', [], {full: true}).then(function (accounts) {
         // Parse accounts
         $scope.accounts = _.indexBy(_.map(_.filter(accounts, function (account) {
-          return account.id > 0;
+          return account.id > 0 && !account.deleted;
         }), function (account) {
           return new Account(account);
         }), function (account) {
