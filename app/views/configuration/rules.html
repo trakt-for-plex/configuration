@@ -48,7 +48,8 @@
               </selectize>
             </div>
             <div class="wrapper plain" ng-switch-default>
-              {{ rule.account.name }}
+              <span ng-if="!rule.account.deleted">{{ rule.account.name }}</span>
+              <span class="deleted" ng-if="rule.account.deleted">deleted</span>
             </div>
           </td>
           <td class="machine-identifier" ng-switch on="rule.state">
@@ -174,7 +175,8 @@
               </selectize>
             </div>
             <div class="wrapper plain" ng-switch-default>
-              {{ rule.account.name }}
+              <span ng-if="!rule.account.deleted">{{ rule.account.name }}</span>
+              <span class="deleted" ng-if="rule.account.deleted">deleted</span>
             </div>
           </td>
           <td ng-switch on="rule.state">

@@ -82,7 +82,7 @@ angular.module('configurationApp')
         $rootScope.$s.call('account.list').then(function(accounts) {
           // Filter accounts (remove "server" account)
           accounts = _.filter(accounts, function (account) {
-            return account.id > 0;
+            return account.id > 0 && !account.deleted;
           });
 
           // Map accounts
