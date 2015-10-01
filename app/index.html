@@ -88,7 +88,7 @@
 
         <div class="extended" ng-show="connectionVisible">
           <div ng-show="$s.name">
-            Connected to {{ $s.name }} via {{ $s.current.uri }}
+            Connected to {{ $s.name }} via {{ $s.connection_manager.current.uri }}
           </div>
           <div ng-show="!$s.name">
             Not connected

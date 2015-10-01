@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('PlexServer', function(PlexConnection, PlexConnectionManager, Utils, VersionUtil, $q) {
+  .factory('PlexServer', function(PlexConnection, PlexConnectionManager, Utils, VersionUtil, $location, $q, $rootScope) {
     var identifier = 'com.plexapp.plugins.trakttv',
-        pluginVersionMinimum = '0.9.10.8',
+        pluginVersionMinimum = '0.9.10.11',
         target = 'MessageKit:Api';
 
     function parseErrorResponse(response) {
@@ -45,12 +45,7 @@ angular.module('configurationApp')
     }
 
     PlexServer.prototype.isAuthenticated = function() {
-      if(this.token_channel === null) {
-        return false;
-      }
-
-      // TODO check token validity (via `token_channel_expire`)
-      return true;
+      return this.token_channel !== null;
     };
 
     PlexServer.prototype.authenticate = function() {
@@ -62,12 +57,8 @@ angular.module('configurationApp')
       // Authenticate with plugin
       return this.call('system.authenticate', [this.token_plex]).then(function(token) {
         if(token['X-Channel-Token'] === null || token['X-Channel-Token-Expire'] === null) {
-          // Reset authentication details
-          self.token_channel = null;
-          self.token_channel_expire = null;
-
-          // Save server details
-          self.save();
+          // Clear authentication details
+          self.clearAuthentication();
 
           // Reject promise
           self.status = 'Unable to authenticate with plugin';
@@ -81,10 +72,35 @@ angular.module('configurationApp')
         // Save server details
         self.save();
       }, function(response) {
+        // Clear authentication details
+        self.clearAuthentication();
+
+        // Update status
         self.status = parseErrorResponse(response);
 
         return $q.reject();
       });
+    };
+
+    PlexServer.prototype.clearAuthentication = function() {
+      // Reset authentication details
+      this.token_channel = null;
+      this.token_channel_expire = null;
+
+      // Save server details
+      this.save();
+    };
+
+    PlexServer.prototype.disconnect = function() {
+      // Clear current authentication details
+      this.clearAuthentication();
+
+      // Clear current server
+      $rootScope.$s = null;
+
+      // Redirect to server connect view
+      $location.path('/connect');
+      $location.search('');
     };
 
     PlexServer.prototype.connect = function() {
@@ -154,7 +170,8 @@ angular.module('configurationApp')
       });
 
       // call api function
-      var deferred = $q.defer();
+      var deferred = $q.defer(),
+          self = this;
 
       this.client['/:/plugins/*/messaging'].callFunction(
         identifier, target, args, kwargs, {
@@ -171,7 +188,7 @@ angular.module('configurationApp')
         }
 
         // Return response
-        console.debug('Response', data);
+        console.debug('[%s] Response', self.identifier, data);
 
         if(data.result !== undefined) {
           deferred.resolve(data.result);
@@ -180,6 +197,12 @@ angular.module('configurationApp')
 
         // Handle errors
         if(data.error !== undefined) {
+          if(data.error.code == 'error.authentication.required') {
+            // Authentication token invalid, redirect to the connect view
+            self.disconnect();
+          }
+
+          // Reject request with error
           deferred.reject(data.error);
         } else {
           deferred.reject(null);

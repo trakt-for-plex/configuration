@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .directive('coButton', function() {
+  .directive('coButton', function(Utils) {
     return {
       restrict: 'E',
       scope: {
@@ -9,11 +9,19 @@ angular.module('configurationApp')
         callback: '=coCallback',
 
         class: '@coClass',
+        size: '@coSize',
         tooltip: '@coTooltip'
       },
       templateUrl: 'directives/button.html',
       transclude: true,
 
+      compile: function(element, attrs) {
+        if(!Utils.isDefined(attrs.coSize)) {
+          attrs.coSize = 'tiny';
+        }
+
+        return this.link;
+      },
       controller: function($scope) {
         $scope.call = function() {
           if(typeof $scope.self === 'undefined' || $scope.self === null) {
@@ -37,7 +45,9 @@ angular.module('configurationApp')
         var $button = $('button', element);
 
         $button.addClass(scope.class)
-               .addClass('ladda-button');
+               .addClass(scope.size)
+               .addClass('ladda-button')
+               .css('display', '');
 
         if(scope.class === 'secondary') {
           $button.attr('data-spinner-color', '#333333');

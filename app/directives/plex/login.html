@@ -17,7 +17,7 @@
         <a class="button secondary {{ buttonSize }}" dropdown-toggle="#plex-mode-dropdown">Mode</a>
       </div>
 
-      <input type="submit" class="button {{ buttonSize }}" value="Sign in" ng-click="basicLogin()"/>
+      <co-button co-size="{{ buttonSize }}" co-callback="basicLogin">Sign in</co-button>
     </div>
   </form>
 
