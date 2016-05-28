@@ -246,8 +246,6 @@ angular.module('configurationApp')
         self[name] = value;
       }
 
-      loadAttribute('token_plex');
-
       loadAttribute('token_channel');
       loadAttribute('token_channel_expire');
     };
@@ -262,8 +260,6 @@ angular.module('configurationApp')
       function saveAttribute(name) {
         localStorage[self._attributeKey(name)] = self[name];
       }
-
-      saveAttribute('token_plex');
 
       saveAttribute('token_channel');
       saveAttribute('token_channel_expire');
