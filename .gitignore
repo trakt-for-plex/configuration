@@ -1,7 +1,9 @@
+/.idea
+/.sass-cache
+/.tmp
 /app/scripts/metadata.js
 /bower_components
 /dist
 /node_modules
-/.tmp
-/.sass-cache
 
+*.iml
