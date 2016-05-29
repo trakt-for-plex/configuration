@@ -5,7 +5,7 @@ angular.module('configurationApp')
     return {
       restrict: 'E',
       scope: {
-        authentication: '=coAuthentication'
+        account: '=coAccount'
       },
       templateUrl: 'directives/authentication/tabs.html',
 

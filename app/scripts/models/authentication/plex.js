@@ -77,6 +77,16 @@ angular.module('configurationApp')
       };
     };
 
+    PlexAuthentication.prototype.delete = function(server) {
+      var self = this;
+
+      return server.call('account.plex.delete', [], {id: self.id}).then(function(success) {
+        if(!success) {
+          return $q.reject();
+        }
+      });
+    };
+
     PlexAuthentication.prototype.update = function(data) {
       this.changed = false;
       this.original = angular.copy(data);

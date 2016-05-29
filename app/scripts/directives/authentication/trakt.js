@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('configurationApp')
-  .directive('coAuthenticationTrakt', function(Utils) {
+  .directive('coAuthenticationTrakt', function(Utils, $modal, $rootScope) {
     return {
       restrict: 'E',
       scope: {
+        account: '=coAccount',
         trakt: '=coTrakt'
       },
       templateUrl: 'directives/authentication/trakt.html',
@@ -40,6 +41,28 @@ angular.module('configurationApp')
           }
 
           return 'view';
+        };
+
+        $scope.disconnect = function() {
+          // Create new scope for modal
+          var scope = $scope.$new(true);
+          scope.account = $scope.account;
+          scope.username = $scope.plex.username;
+
+          // Create modal
+          var modal = $modal.open({
+            templateUrl: 'modals/disconnectAccount.html',
+            windowClass: 'small',
+            scope: scope
+          });
+
+          // Display modal, wait for result
+          return modal.result.then(function() {
+            // Delete trakt account on server
+            return $scope.trakt.delete($rootScope.$s).then(function() {
+              $rootScope.$broadcast('account.trakt.deleted');
+            });
+          });
         };
 
         $scope.switch = function(state) {
