@@ -1,10 +1,8 @@
 <div class="delete-account">
-  <h5>Do you want to delete the "{{ account.name }}" account?</h5>
+  <h6>Are you sure you want to delete <b>{{ account.name }}</b>?</h6>
 
   <div class="controls pull-right">
     <a class="button small secondary" ng-click="$dismiss()">Cancel</a>
     <a class="button small alert" ng-click="$close()">Delete</a>
   </div>
-
-  <a class="close-reveal-modal" aria-label="Close" ng-click="$dismiss()">&#215;</a>
 </div>
