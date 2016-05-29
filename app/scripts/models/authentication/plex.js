@@ -28,6 +28,37 @@ angular.module('configurationApp')
       });
     };
 
+    PlexAuthentication.prototype.check = function() {
+      if((!Utils.isDefined(this.title) ||
+        this.title.length === 0) &&
+        this.authorization.basic.state === 'valid') {
+        // Update warnings
+        this.appendMessage('warning', "Account hasn't completed the authentication process");
+
+        // Update state
+        this.authorization.basic.state = 'warning';
+      }
+
+      // Retrieve message states
+      var states = _.map(this.messages, function(message) {
+        return message.type;
+      });
+
+      // Extend `states` with authentication states
+      states.push(this.authorization.basic.state);
+
+      // Update state
+      this.state = BaseAuthentication.selectPriorityState(states, 'bottom');
+    };
+
+    PlexAuthentication.prototype.clear = function(data) {
+      // Clear error messages
+      this.messages = [];
+
+      // Update state
+      this.check();
+    };
+
     PlexAuthentication.prototype.current = function() {
       if(!this.changed) {
         return {};
@@ -79,20 +110,13 @@ angular.module('configurationApp')
       this.changed = true;
     };
 
-    PlexAuthentication.prototype.check = function() {
-      if((!Utils.isDefined(this.title) ||
-         this.title.length === 0) &&
-         this.authorization.basic.state === 'valid') {
-        // Update warnings
-        this.appendMessage('warning', "Account hasn't completed the authentication process");
-
-        // Update state
-        this.authorization.basic.state = 'warning';
+    PlexAuthentication.prototype.onSaveError = function(error) {
+      if(!Utils.isDefined(error) || !Utils.isDefined(error.message)) {
+        return;
       }
 
-      // Update state
-      this.state =
-        this.authorization.basic.state;
+      // Store error message
+      this.appendMessage('error', error.message);
     };
 
     return PlexAuthentication;

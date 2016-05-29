@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('configurationApp')
-  .factory('Account', function(AccountAuthentication, Differ, Options, $q) {
+  .factory('Account', function(AccountAuthentication, Differ, Options, Utils, $q) {
     var defaults = {
       plex: {
         authorization: {
@@ -104,22 +104,46 @@ angular.module('configurationApp')
     Account.prototype.save = function(server) {
       var self = this;
 
+      // Clear authentication errors
+      this.authentication.clear();
+
       // Save account changes
       return $q.all([
-        // account
+        // Update account details
         this.current().then(function(data) {
-          return server.call('account.update', [], {id: self.id, data: data}).then(function(account) {
-            self.update(account);
-          }, function() {
-            return $q.reject();
-          });
-        }, function() {
-          return $q.reject();
+          // Send changes to server
+          return server.call('account.update', [], {id: self.id, data: data})
+            .then(function(account) {
+              // Account updated successfully, update local data
+              self.update(account);
+            });
         }),
 
-        // options
+        // Update account options
         this.options.save(server)
-      ]);
+      ]).catch(function(error) {
+        // Unable to save changes to server
+        self.handleError(error);
+        return $q.reject(error);
+      });
+    };
+
+    Account.prototype.handleError = function(error) {
+      if(!Utils.isDefined(error) || !Utils.isDefined(error.code) || !Utils.isDefined(error.message)) {
+        return;
+      }
+
+      // Process error
+      if(error.code.indexOf("error.account.trakt.") == 0) {
+        this.authentication.trakt.onSaveError(error);
+      } else if(error.code.indexOf("error.account.plex.") == 0) {
+        this.authentication.plex.onSaveError(error);
+      } else {
+        this.authentication.onSaveError(error);
+      }
+
+      // Check current authentication state
+      this.authentication.check();
     };
 
     return Account;

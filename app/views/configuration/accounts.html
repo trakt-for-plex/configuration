@@ -40,6 +40,10 @@
         </div>
       </div>
 
+      <div class="messages">
+        <small class="message {{ message.type }}" ng-repeat="message in account.authentication.messages track by $index">{{ message.content }}</small>
+      </div>
+
       <co-authentication-tabs
         co-authentication="account.authentication">
       </co-authentication-tabs>

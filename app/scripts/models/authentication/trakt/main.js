@@ -14,14 +14,39 @@ angular.module('configurationApp')
       this.pin = new TraktPinAuthentication(this);
 
       // State
+      this.messages = [];
       this.state = '';
     }
 
+    TraktAuthentication.prototype.appendMessage = function(type, content) {
+      this.messages.push({
+        type: type,
+        content: content
+      });
+    };
+
     TraktAuthentication.prototype.check = function() {
-      this.state = BaseAuthentication.selectPriorityState([
+      // Retrieve message states
+      var states = _.map(this.messages, function(message) {
+        return message.type;
+      });
+
+      // Extend `states` with authentication state
+      states.push(BaseAuthentication.selectPriorityState([
         this.basic.state,
         this.pin.state
-      ]);
+      ]));
+
+      // Select highest severity state
+      this.state = BaseAuthentication.selectPriorityState(states, 'bottom');
+    };
+
+    TraktAuthentication.prototype.clear = function(data) {
+      // Clear messages
+      this.messages = [];
+
+      // Update state
+      this.check();
     };
 
     TraktAuthentication.prototype.current = function() {
@@ -53,7 +78,8 @@ angular.module('configurationApp')
       this.basic.update(data.authorization.basic);
       this.pin.update(data.authorization.oauth);
 
-      // State
+      // Reset state
+      this.messages = [];
       this.state = '';
     };
 
@@ -71,6 +97,15 @@ angular.module('configurationApp')
 
       this.username = user.username;
       this.thumb_url = avatar.full;
+    };
+
+    TraktAuthentication.prototype.onSaveError = function(error) {
+      if(!Utils.isDefined(error) || !Utils.isDefined(error.message)) {
+        return;
+      }
+
+      // Store error message
+      this.appendMessage('error', error.message);
     };
 
     return TraktAuthentication;

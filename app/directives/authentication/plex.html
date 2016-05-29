@@ -1,4 +1,6 @@
-<small class="message {{ message.type }}" ng-repeat="message in plex.messages track by $index">{{ message.content }}</small>
+<div class="messages">
+  <small class="message {{ message.type }}" ng-repeat="message in plex.messages track by $index">{{ message.content }}</small>
+</div>
 
 <div ng-switch="state()">
   <div class="account-edit" ng-switch-when="edit">
@@ -21,7 +23,9 @@
       <h4>{{ plex.title }}</h4>
 
       <div class="actions">
-        <a class="button tiny secondary" ng-click="switch('edit')">Change</a>
+        <a class="button tiny secondary" ng-click="switch('edit')" title="Edit">
+          <i class="fi-pencil"></i>
+        </a>
       </div>
     </div>
   </div>

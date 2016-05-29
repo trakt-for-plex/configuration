@@ -4,15 +4,15 @@ angular.module('configurationApp')
   .factory('BaseAuthentication', function() {
     var stateIds = {
         'valid':    0,
-        'warning':  1,
-        'error':    2,
-        'empty':    3
+        'empty':    1,
+        'warning':  2,
+        'error':    3
       },
       stateKeys = {
         0: 'valid',
-        1: 'warning',
-        2: 'error',
-        3: 'empty'
+        1: 'empty',
+        2: 'warning',
+        3: 'error'
       };
 
     return {
