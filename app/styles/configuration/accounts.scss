@@ -94,10 +94,6 @@
       padding: 10px;
     }
 
-    .messages + div .account-edit {
-      margin-top: -10px;
-    }
-
     .account-view {
       padding: 10px;
 
@@ -181,7 +177,15 @@
       }
 
       .messages {
-        padding: 10px 10px 0;
+        padding: 0 10px;
+      }
+
+      .messages small.message:first-child {
+        margin-top: 10px !important;
+      }
+
+      .messages small.message:last-child {
+        margin-bottom: 0 !important;
       }
     }
 
