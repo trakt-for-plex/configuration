@@ -75,7 +75,9 @@ angular.module('configurationApp')
       // Test connection
       var deferred = $q.defer();
 
-      client.identity().then(function(response) {
+      client.identity({
+        timeout: 1500
+      }).then(function(response) {
         var data = response.data,
             connectionIdentifier = data.MediaContainer._machineIdentifier;
 
