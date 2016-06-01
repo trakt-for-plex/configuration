@@ -60,6 +60,8 @@ module.exports = function(config) {
       'bower_components/JavaScript-MD5/js/md5.js',
       'bower_components/waypoints/lib/noframework.waypoints.min.js',
       'bower_components/SHA-1/sha1.js',
+      'bower_components/marked/lib/marked.js',
+      'bower_components/angular-marked/dist/angular-marked.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
 
