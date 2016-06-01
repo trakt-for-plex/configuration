@@ -1,0 +1,23 @@
+co-configuration-option {
+  .description {
+    display: none;;
+    position: absolute;
+    right: -50%;
+    color: #777;
+    border-left: 1px solid #BBB;
+
+    p {
+      font-size: 0.85rem;
+    }
+
+    li {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+co-configuration-option:hover {
+  .description {
+    display: block;
+  }
+}

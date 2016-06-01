@@ -3,4 +3,7 @@
     <label for="{{ option.key }}">{{ option.label }}</label>
     <select id="{{ option.key }}" ng-model="option.value" ng-options="parseKey(key) as label for (key, label) in option.choices"></select>
   </div>
+  <div class="large-6 columns description">
+    <div marked="option.description"></div>
+  </div>
 </div>
