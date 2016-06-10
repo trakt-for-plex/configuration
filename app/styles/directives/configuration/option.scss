@@ -1,10 +1,63 @@
 co-configuration-option {
+  .controls {
+    input[type="checkbox"] {
+      margin: 0.4rem 0.4rem 0 0;
+    }
+  }
+
+  .controls-inline {
+    display: flex;
+
+    margin-bottom: 8px;
+
+    .title {
+      flex: 1;
+    }
+  }
+
+  .title {
+    position: relative;
+    height: 26px;
+
+    label {
+      padding-top: 2px;
+    }
+
+    a {
+      display: none;
+      height: 21px;
+
+      position: absolute;
+      top: 1px;
+
+      margin: 0 0 0 6px;
+
+      font-size: 16px;
+      color: #CCC;
+    }
+
+    a:hover {
+      color: #999;
+    }
+  }
+
   .description {
-    display: none;;
-    position: absolute;
-    right: -50%;
-    color: #777;
-    border-left: 1px solid #BBB;
+    display: none;
+    width: 36%;
+
+    position: fixed;
+    top: 32%;
+    left: 32%;
+
+    padding: 1.66667rem;
+
+    background-color: #FFF;
+    border-radius: 3px;
+    border: solid 1px #666;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+
+    visibility: hidden;
+    z-index: 1005;
 
     p {
       font-size: 0.85rem;
@@ -13,11 +66,166 @@ co-configuration-option {
     li {
       font-size: 0.85rem;
     }
+
+    .close-description {
+      position: absolute;
+      top: 0.1rem;
+      right: 0.5rem;
+
+      font-size: 2rem;
+      font-weight: bold;
+      line-height: 1;
+
+      color: #AAA;
+      cursor: pointer;
+    }
+
+    .close-description:hover {
+      color: #777;
+    }
+  }
+
+  .description-overlay {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1004;
+  }
+
+  div.has-description {
+    .title {
+      label {
+        display: inline-block;
+      }
+    }
+
+    .description.opened {
+      display: block;
+      visibility: visible;
+    }
+
+    .description-overlay.opened {
+      display: block;
+    }
   }
 }
 
 co-configuration-option:hover {
-  .description {
-    display: block;
+  div.has-description {
+    a {
+      display: inline-block;
+    }
+  }
+}
+
+@media only screen and (max-width: 40em) {
+  co-configuration-option {
+    .description {
+      width: 100%;
+
+      top: 32%;
+      left: 0;
+
+      border: none;
+      border-radius: 0;
+    }
+  }
+}
+
+@media only screen and (min-width: 40em) {
+  co-configuration-option {
+    .description {
+      width: 52%;
+
+      top: 32%;
+      left: 24%;
+    }
+  }
+}
+
+@media only screen and (min-width: 64.063em) {
+  co-configuration-option {
+    .description {
+      width: 36%;
+
+      top: 32%;
+      left: 32%;
+    }
+  }
+}
+
+@media only screen and (min-width: 96em) {
+  co-configuration-option {
+    .title a {
+      display: none;
+    }
+
+    .description {
+      display: none;
+      width: 50%;
+
+      position: absolute;
+      top: auto;
+      left: auto;
+      right: -50%;
+
+      padding: 0 0 0 15px;
+
+      box-shadow: none;
+      border: none;
+      color: #777;
+
+      div {
+        padding: 0 0 0 15px;
+
+        border: none;
+        border-left: 1px solid #BBB;
+      }
+
+      .close-description {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .description-overlay {
+      display: none;
+    }
+
+    div.has-description {
+      .title {
+        label {
+          display: block;
+        }
+
+        a {
+          display: none;
+        }
+      }
+
+      .description.opened {
+        display: none;
+        visibility: hidden;
+      }
+
+      .description-overlay.opened {
+        display: none;
+      }
+    }
+  }
+
+  co-configuration-option:hover {
+    div.has-description {
+      .description {
+        display: block;
+        visibility: visible;
+      }
+    }
   }
 }

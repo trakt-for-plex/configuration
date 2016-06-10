@@ -17,6 +17,8 @@ angular.module('configurationApp')
             string:   'string.html'
           };
 
+        $scope.descriptionOpened = false;
+
         $scope.getTemplateUrl = function() {
           return baseUrl + templateMap[$scope.option.type];
         };
@@ -35,6 +37,14 @@ angular.module('configurationApp')
 
           // Return original string
           return id;
+        };
+
+        $scope.closeDescription = function() {
+          $scope.descriptionOpened = false;
+        };
+        
+        $scope.openDescription = function() {
+          $scope.descriptionOpened = true;
         };
       }
     };
