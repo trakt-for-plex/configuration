@@ -9,8 +9,8 @@
   </div>
 
   <div class="large-6 description" ng-class="{opened: descriptionOpened}">
+    <a class="close" aria-label="Close" ng-click="closeDescription()">&#215;</a>
     <div marked="option.description"></div>
-    <a class="close-description" aria-label="Close" ng-click="closeDescription()">&#215;</a>
   </div>
 
   <div class="description-overlay" ng-class="{opened: descriptionOpened}" ng-click="closeDescription()"></div>

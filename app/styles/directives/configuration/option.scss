@@ -49,7 +49,7 @@ co-configuration-option {
     top: 32%;
     left: 32%;
 
-    padding: 1.66667rem;
+    padding: 1.0rem 1.4rem;
 
     background-color: #FFF;
     border-radius: 3px;
@@ -68,15 +68,23 @@ co-configuration-option {
     }
 
     p {
-      margin: 0.5rem 0 0.5rem 1rem;
+      margin: 0;
+      padding: 0 0 1.0rem 0;
     }
 
-    .close-description {
-      position: absolute;
-      top: 0.1rem;
-      right: 0.5rem;
+    p:last-child {
+      margin: 0;
+    }
 
-      font-size: 2rem;
+    p + ul, p + ol {
+      margin-top: -0.5rem;
+    }
+
+    .close {
+      float: right;
+      margin: -16px -16px 0 6px;
+
+      font-size: 32px;
       font-weight: bold;
       line-height: 1;
 
@@ -84,7 +92,7 @@ co-configuration-option {
       cursor: pointer;
     }
 
-    .close-description:hover {
+    .close:hover {
       color: #777;
     }
 
@@ -96,6 +104,7 @@ co-configuration-option {
     }
 
     table {
+      width: 100%;
       margin: 0;
 
       border: none;
@@ -237,7 +246,11 @@ co-configuration-option:hover {
         border-left: 2px solid #CCC;
       }
 
-      .close-description {
+      p {
+        padding: 0.5rem 0 0.5rem 1rem;
+      }
+
+      .close {
         display: none;
         visibility: hidden;
       }
