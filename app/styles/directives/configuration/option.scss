@@ -56,15 +56,19 @@ co-configuration-option {
     border: solid 1px #666;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 
+    font-size: 0.88rem;
+    line-height: 1.6;
+
     visibility: hidden;
     z-index: 1005;
 
-    p {
-      font-size: 0.85rem;
+    p, li {
+      font-size: inherit;
+      line-height: inherit;
     }
 
-    li {
-      font-size: 0.85rem;
+    p {
+      margin: 0.5rem 0 0.5rem 1rem;
     }
 
     .close-description {
@@ -82,6 +86,46 @@ co-configuration-option {
 
     .close-description:hover {
       color: #777;
+    }
+
+    ul {
+      margin: 0 0 0 2rem;
+
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    table {
+      margin: 0;
+
+      border: none;
+      border-spacing: 0;
+
+      thead {
+        display: none;
+      }
+
+      tbody tr {
+        background: none;
+      }
+
+      tbody td {
+        padding: 0.3625rem 0.625rem;
+
+        font-size: inherit;
+        line-height: inherit;
+
+        border-top: 1px solid #CCC;
+        color: inherit;
+      }
+
+      tbody td:first-child {
+        padding: 0.3625rem 1rem;
+
+        border-right: 1px solid #CCC;
+
+        white-space: nowrap;
+      }
     }
   }
 
@@ -168,24 +212,28 @@ co-configuration-option:hover {
 
     .description {
       display: none;
-      width: 50%;
+      width: 49%;
+      min-height: 100%;
 
       position: absolute;
       top: auto;
       left: auto;
-      right: -50%;
+      right: -51%;
 
-      padding: 0 0 0 15px;
+      padding: 0;
+
+      font-size: 0.78rem;
 
       box-shadow: none;
+
       border: none;
-      color: #777;
+      border-left: 2px solid #CCC;
+      border-radius: 0;
+
+      color: #888;
 
       div {
-        padding: 0 0 0 15px;
-
         border: none;
-        border-left: 1px solid #BBB;
       }
 
       .close-description {
