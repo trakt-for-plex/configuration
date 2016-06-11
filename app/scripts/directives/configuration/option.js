@@ -10,7 +10,7 @@ angular.module('configurationApp')
         option: '='
       },
       template: '<ng-include src="getTemplateUrl()"/>',
-      controller: function($scope) {
+      controller: function($scope, $element) {
         var baseUrl = 'directives/configuration/option/',
             templateMap = {
               boolean:  'boolean.html',
@@ -46,18 +46,15 @@ angular.module('configurationApp')
         };
 
         $scope.openDescription = function() {
+          $($element).css('top', '');
+
           $scope.descriptionOpened = true;
         };
       },
       link: function(scope, element, attrs) {
-        var $description = null,
-            positioned = false;
+        var $description = null;
 
         $(element).hover(function() {
-          if(positioned) {
-            return;
-          }
-
           if($description == null) {
             $description = $('.description', element);
           }
@@ -66,6 +63,12 @@ angular.module('configurationApp')
 
           // Open description
           $description.addClass('visible');
+
+          if($description.css('display') != 'block') {
+            // Small screens (description is displayed in a modal)
+            $description.removeClass('visible');
+            return;
+          }
 
           // Position description (ensure it is within the document height)
           var offset = $description.offset(),
@@ -79,6 +82,9 @@ angular.module('configurationApp')
           if($description == null) {
             $description = $('.description', element);
           }
+
+          // Reset offset
+          $description.css('top', '');
 
           // Close description
           $description.removeClass('visible');
