@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('configurationApp')
-  .directive('coAuthenticationPlex', function(Utils) {
+  .directive('coAuthenticationPlex', function(Utils, $modal, $rootScope) {
     return {
       restrict: 'E',
       scope: {
+        account: '=coAccount',
         plex: '=coPlex'
       },
       templateUrl: 'directives/authentication/plex.html',
@@ -40,6 +41,28 @@ angular.module('configurationApp')
           }
 
           return 'view';
+        };
+
+        $scope.disconnect = function() {
+          // Create new scope for modal
+          var scope = $scope.$new(true);
+          scope.account = $scope.account;
+          scope.username = $scope.plex.title;
+
+          // Create modal
+          var modal = $modal.open({
+            templateUrl: 'modals/disconnectAccount.html',
+            windowClass: 'small',
+            scope: scope
+          });
+
+          // Display modal, wait for result
+          return modal.result.then(function() {
+            // Delete plex account on server
+            return $scope.plex.delete($rootScope.$s).then(function() {
+              $rootScope.$broadcast('account.plex.deleted');
+            });
+          });
         };
 
         $scope.switch = function(state) {

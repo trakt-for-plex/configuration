@@ -67,6 +67,16 @@ angular.module('configurationApp')
       return data;
     };
 
+    TraktAuthentication.prototype.delete = function(server) {
+      var self = this;
+
+      return server.call('account.trakt.delete', [], {id: self.id}).then(function(success) {
+        if(!success) {
+          return $q.reject();
+        }
+      });
+    };
+
     TraktAuthentication.prototype.update = function(data) {
       this.original = angular.copy(data);
 

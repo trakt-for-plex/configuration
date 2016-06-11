@@ -1,9 +1,9 @@
 <div class="tabbable">
   <dl class="tabs">
-    <dd data-state="{{ authentication.trakt.state }}" ng-class="{active: selected == 'trakt'}">
+    <dd data-state="{{ account.authentication.trakt.state }}" ng-class="{active: selected == 'trakt'}">
       <a ng-click="select('trakt')">Trakt</a>
     </dd>
-    <dd data-state="{{ authentication.plex.state }}" ng-class="{active: selected == 'plex'}">
+    <dd data-state="{{ account.authentication.plex.state }}" ng-class="{active: selected == 'plex'}">
       <a ng-click="select('plex')">Plex</a>
     </dd>
   </dl>
@@ -11,13 +11,15 @@
   <div class="tabs-content" ng-switch="selected">
     <div class="content active" ng-switch-when="trakt">
       <co-authentication-trakt
-        co-trakt="authentication.trakt">
+        co-account="account"
+        co-trakt="account.authentication.trakt">
       </co-authentication-trakt>
     </div>
 
     <div class="content active" ng-switch-when="plex">
       <co-authentication-plex
-        co-plex="authentication.plex">
+        co-account="account"
+        co-plex="account.authentication.plex">
       </co-authentication-plex>
     </div>
   </div>
