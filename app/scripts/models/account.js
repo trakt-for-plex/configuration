@@ -134,9 +134,9 @@ angular.module('configurationApp')
       }
 
       // Process error
-      if(error.code.indexOf("error.account.trakt.") == 0) {
+      if(error.code.indexOf("error.account.trakt.") === 0) {
         this.authentication.trakt.onSaveError(error);
-      } else if(error.code.indexOf("error.account.plex.") == 0) {
+      } else if(error.code.indexOf("error.account.plex.") === 0) {
         this.authentication.plex.onSaveError(error);
       } else {
         this.authentication.onSaveError(error);

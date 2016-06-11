@@ -1,6 +1,17 @@
-<div class="row">
-  <div class="large-6 columns">
-    <label for="{{ option.key }}">{{ option.label }}</label>
+<div class="row" ng-class="{'has-description': option.description}">
+  <div class="large-6 columns controls">
+    <div class="title">
+      <label for="{{ option.key }}">{{ option.label }}</label>
+      <a ng-click="openDescription()"><i class="fi-info"></i></a>
+    </div>
+
     <input id="{{ option.key }}" type="text" ng-model="option.value"/>
   </div>
+
+  <div class="large-6 description" ng-class="{opened: descriptionOpened}">
+    <div marked="option.description"></div>
+    <a class="close-description" aria-label="Close" ng-click="closeDescription()">&#215;</a>
+  </div>
+
+  <div class="description-overlay" ng-class="{opened: descriptionOpened}" ng-click="closeDescription()"></div>
 </div>

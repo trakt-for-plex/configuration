@@ -24,16 +24,24 @@ angular
     'angulartics.google.analytics',
 
     'angularSpinner',
+    'hc.marked',
     'mm.foundation',
     'selectize',
     'xml'
   ])
-  .config(function ($httpProvider, $ravenProvider, $routeProvider) {
+  .config(function ($httpProvider, markedProvider, $ravenProvider, $routeProvider) {
     // Setup angular-raven
     // $ravenProvider.development(true);
 
     // Setup angular-xml
     $httpProvider.interceptors.push('xmlHttpInterceptor');
+
+    // Setup angular-marked
+    markedProvider.setRenderer({
+      link: function(href, title, text) {
+        return "<a href='" + href + "'" + (title ? " title='" + title + "'" : '') + " target='_blank'>" + text + "</a>";
+      }
+    });
 
     // Setup routes
     $routeProvider
