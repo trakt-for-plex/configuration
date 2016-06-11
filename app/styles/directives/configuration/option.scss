@@ -212,7 +212,7 @@ co-configuration-option:hover {
 
     .description {
       display: none;
-      width: 49%;
+      width: 52.39%;
       min-height: 100%;
 
       position: absolute;
@@ -220,20 +220,21 @@ co-configuration-option:hover {
       left: auto;
       right: -51%;
 
-      padding: 0;
+      padding: 0 0 0 20px;
 
       font-size: 0.78rem;
 
       box-shadow: none;
 
       border: none;
-      border-left: 2px solid #CCC;
       border-radius: 0;
 
+      background: none;
       color: #888;
 
       div {
         border: none;
+        border-left: 2px solid #CCC;
       }
 
       .close-description {
@@ -262,17 +263,13 @@ co-configuration-option:hover {
         visibility: hidden;
       }
 
-      .description-overlay.opened {
-        display: none;
-      }
-    }
-  }
-
-  co-configuration-option:hover {
-    div.has-description {
-      .description {
+      .description:hover, .description.visible {
         display: block;
         visibility: visible;
+      }
+
+      .description-overlay.opened {
+        display: none;
       }
     }
   }
