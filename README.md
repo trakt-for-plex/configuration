@@ -1,12 +1,7 @@
-# configuration
+# Trakt.tv (for Plex) - Configuration
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.12.0.
+[![](https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square)][license]
 
-## Build & development
+Configuration site for the *Trakt.tv (for Plex)* plugin, latest build is available at http://trakt-for-plex.github.io/configuration.
 
-Run `grunt` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+[license]: https://github.com/trakt-for-plex/configuration/blob/master/LICENSE.md

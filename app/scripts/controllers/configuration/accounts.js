@@ -122,8 +122,12 @@ angular.module('configurationApp')
     // Initial account refresh
     $scope.refresh();
 
+    // Refresh when authentication accounts are deleted
+    $scope.$on('account.plex.deleted', function() { $scope.refresh(); });
+    $scope.$on('account.trakt.deleted', function() { $scope.refresh(); });
+
     // Watch for selected account change
-    $scope.$on("$routeUpdate", function() {
+    $scope.$on('$routeUpdate', function() {
       select();
     });
   });
