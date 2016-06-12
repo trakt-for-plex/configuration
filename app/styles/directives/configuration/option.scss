@@ -202,8 +202,13 @@ co-configuration-option:hover {
   }
 }
 
-@media only screen and (min-width: 64.063em) {
+@media only screen and (min-width: 64.0625em) {
   co-configuration-option {
+    .controls {
+      min-width: 50%;
+      max-width: 50%;
+    }
+
     .description {
       width: 36%;
 
@@ -215,21 +220,31 @@ co-configuration-option:hover {
 
 @media only screen and (min-width: 96em) {
   co-configuration-option {
+    .row {
+      display: flex;
+    }
+
+    .controls {
+      flex: 1;
+      float: none;
+    }
+
     .title a {
       display: none;
     }
 
     .description {
       display: none;
-      width: 52.39%;
-      min-height: 100%;
+      flex: 2;
 
       position: absolute;
+      min-height: 100%;
+      width: 52.39%;
       top: auto;
       left: auto;
-      right: -51%;
 
-      padding: 0 0 0 20px;
+      padding: 0 10px 0 10px;
+      margin: 0 0 0 50%;
 
       font-size: 0.78rem;
 
@@ -277,7 +292,7 @@ co-configuration-option:hover {
       }
 
       .description:hover, .description.visible {
-        display: block;
+        display: flex;
         visibility: visible;
       }
 

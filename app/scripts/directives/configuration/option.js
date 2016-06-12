@@ -64,7 +64,7 @@ angular.module('configurationApp')
           // Open description
           $description.addClass('visible');
 
-          if($description.css('display') != 'block') {
+          if($description.css('display') != 'flex') {
             // Small screens (description is displayed in a modal)
             $description.removeClass('visible');
             return;
