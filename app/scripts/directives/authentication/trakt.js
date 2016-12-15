@@ -47,7 +47,7 @@ angular.module('configurationApp')
           // Create new scope for modal
           var scope = $scope.$new(true);
           scope.account = $scope.account;
-          scope.username = $scope.plex.username;
+          scope.username = $scope.trakt.username;
 
           // Create modal
           var modal = $modal.open({

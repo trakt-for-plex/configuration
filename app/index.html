@@ -101,10 +101,17 @@
     <script src="bower_components/raven-js/dist/raven.js"></script>
     <!-- endbuild -->
 
+    <!-- build:js(app) scripts/metadata.js -->
+    <script src="scripts/metadata.js"></script>
+    <!-- endbuild -->
+
     <script>
+      var metadata = window.tfpc.metadata;
+
       Raven.config('http://2e2991c4808f43e0b186f690b9971230@sentry.skipthe.net/2', {
-           })
-           .install();
+        environment: metadata.revision.label.indexOf('-dirty') === 0 ? 'production' : 'development',
+        release: metadata.version
+      }).install();
     </script>
 
     <script>
@@ -164,7 +171,6 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/metadata.js"></script>
     <script src="scripts/app.js"></script>
 
     <script src="scripts/controllers/configuration/accounts.js"></script>
