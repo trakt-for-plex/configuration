@@ -1,1 +1,0 @@
-"undefined"==typeof window.tfpc&&(window.tfpc={}),window.tfpc.metadata={version:"1.4.1",revision:{label:"51562e3",hash:"51562e3"}};
